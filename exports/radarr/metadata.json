@@ -1,0 +1,559 @@
+[
+  {
+    "configContract": "MediaBrowserMetadataSettings",
+    "enable": false,
+    "fields": [
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Movie Metadata",
+        "name": "movieMetadata",
+        "order": 0,
+        "privacy": "normal",
+        "section": "metadata",
+        "type": "checkbox",
+        "value": true
+      }
+    ],
+    "id": 4,
+    "implementation": "MediaBrowserMetadata",
+    "implementationName": "Emby (Legacy)",
+    "infoLink": "https://wiki.servarr.com/radarr/supported#mediabrowsermetadata",
+    "message": {
+      "message": "Media Browser metadata is deprecated, support will be removed completely in v6.",
+      "type": "warning"
+    },
+    "name": "Emby (Legacy)",
+    "tags": []
+  },
+  {
+    "configContract": "XbmcMetadataSettings",
+    "enable": false,
+    "fields": [
+      {
+        "advanced": false,
+        "helpText": ".nfo with full movie metadata",
+        "isFloat": false,
+        "label": "Movie Metadata",
+        "name": "movieMetadata",
+        "order": 0,
+        "privacy": "normal",
+        "section": "metadata",
+        "type": "checkbox",
+        "value": true
+      },
+      {
+        "advanced": false,
+        "helpText": "Write metadata to movie.nfo instead of the default <movie-filename>.nfo",
+        "isFloat": false,
+        "label": "Use movie.nfo",
+        "name": "useMovieNfo",
+        "order": 1,
+        "privacy": "normal",
+        "section": "metadata",
+        "type": "checkbox",
+        "value": false
+      },
+      {
+        "advanced": false,
+        "helpText": "Include selected language if available in .nfo",
+        "isFloat": false,
+        "label": "Movie Metadata Language",
+        "name": "movieMetadataLanguage",
+        "order": 2,
+        "privacy": "normal",
+        "section": "metadata",
+        "selectOptions": [
+          {
+            "dividerAfter": true,
+            "name": "Original",
+            "order": 0,
+            "value": -2
+          },
+          {
+            "dividerAfter": false,
+            "name": "Afrikaans",
+            "order": 0,
+            "value": 51
+          },
+          {
+            "dividerAfter": false,
+            "name": "Albanian",
+            "order": 0,
+            "value": 50
+          },
+          {
+            "dividerAfter": false,
+            "name": "Arabic",
+            "order": 0,
+            "value": 31
+          },
+          {
+            "dividerAfter": false,
+            "name": "Bengali",
+            "order": 0,
+            "value": 34
+          },
+          {
+            "dividerAfter": false,
+            "name": "Bosnian",
+            "order": 0,
+            "value": 41
+          },
+          {
+            "dividerAfter": false,
+            "name": "Bulgarian",
+            "order": 0,
+            "value": 29
+          },
+          {
+            "dividerAfter": false,
+            "name": "Catalan",
+            "order": 0,
+            "value": 38
+          },
+          {
+            "dividerAfter": false,
+            "name": "Chinese",
+            "order": 0,
+            "value": 10
+          },
+          {
+            "dividerAfter": false,
+            "name": "Croatian",
+            "order": 0,
+            "value": 39
+          },
+          {
+            "dividerAfter": false,
+            "name": "Czech",
+            "order": 0,
+            "value": 25
+          },
+          {
+            "dividerAfter": false,
+            "name": "Danish",
+            "order": 0,
+            "value": 6
+          },
+          {
+            "dividerAfter": false,
+            "name": "Dutch",
+            "order": 0,
+            "value": 7
+          },
+          {
+            "dividerAfter": false,
+            "name": "English",
+            "order": 0,
+            "value": 1
+          },
+          {
+            "dividerAfter": false,
+            "name": "Estonian",
+            "order": 0,
+            "value": 42
+          },
+          {
+            "dividerAfter": false,
+            "name": "Finnish",
+            "order": 0,
+            "value": 16
+          },
+          {
+            "dividerAfter": false,
+            "name": "Flemish",
+            "order": 0,
+            "value": 19
+          },
+          {
+            "dividerAfter": false,
+            "name": "French",
+            "order": 0,
+            "value": 2
+          },
+          {
+            "dividerAfter": false,
+            "name": "Georgian",
+            "order": 0,
+            "value": 57
+          },
+          {
+            "dividerAfter": false,
+            "name": "German",
+            "order": 0,
+            "value": 4
+          },
+          {
+            "dividerAfter": false,
+            "name": "Greek",
+            "order": 0,
+            "value": 20
+          },
+          {
+            "dividerAfter": false,
+            "name": "Hebrew",
+            "order": 0,
+            "value": 23
+          },
+          {
+            "dividerAfter": false,
+            "name": "Hindi",
+            "order": 0,
+            "value": 26
+          },
+          {
+            "dividerAfter": false,
+            "name": "Hungarian",
+            "order": 0,
+            "value": 22
+          },
+          {
+            "dividerAfter": false,
+            "name": "Icelandic",
+            "order": 0,
+            "value": 9
+          },
+          {
+            "dividerAfter": false,
+            "name": "Indonesian",
+            "order": 0,
+            "value": 44
+          },
+          {
+            "dividerAfter": false,
+            "name": "Italian",
+            "order": 0,
+            "value": 5
+          },
+          {
+            "dividerAfter": false,
+            "name": "Japanese",
+            "order": 0,
+            "value": 8
+          },
+          {
+            "dividerAfter": false,
+            "name": "Kannada",
+            "order": 0,
+            "value": 49
+          },
+          {
+            "dividerAfter": false,
+            "name": "Korean",
+            "order": 0,
+            "value": 21
+          },
+          {
+            "dividerAfter": false,
+            "name": "Latvian",
+            "order": 0,
+            "value": 36
+          },
+          {
+            "dividerAfter": false,
+            "name": "Lithuanian",
+            "order": 0,
+            "value": 24
+          },
+          {
+            "dividerAfter": false,
+            "name": "Macedonian",
+            "order": 0,
+            "value": 46
+          },
+          {
+            "dividerAfter": false,
+            "name": "Malayalam",
+            "order": 0,
+            "value": 48
+          },
+          {
+            "dividerAfter": false,
+            "name": "Marathi",
+            "order": 0,
+            "value": 52
+          },
+          {
+            "dividerAfter": false,
+            "name": "Mongolian",
+            "order": 0,
+            "value": 56
+          },
+          {
+            "dividerAfter": false,
+            "name": "Norwegian",
+            "order": 0,
+            "value": 15
+          },
+          {
+            "dividerAfter": false,
+            "name": "Persian",
+            "order": 0,
+            "value": 33
+          },
+          {
+            "dividerAfter": false,
+            "name": "Polish",
+            "order": 0,
+            "value": 12
+          },
+          {
+            "dividerAfter": false,
+            "name": "Portuguese",
+            "order": 0,
+            "value": 18
+          },
+          {
+            "dividerAfter": false,
+            "name": "Portuguese (Brazil)",
+            "order": 0,
+            "value": 30
+          },
+          {
+            "dividerAfter": false,
+            "name": "Romanian",
+            "order": 0,
+            "value": 27
+          },
+          {
+            "dividerAfter": false,
+            "name": "Romansh",
+            "order": 0,
+            "value": 55
+          },
+          {
+            "dividerAfter": false,
+            "name": "Russian",
+            "order": 0,
+            "value": 11
+          },
+          {
+            "dividerAfter": false,
+            "name": "Serbian",
+            "order": 0,
+            "value": 40
+          },
+          {
+            "dividerAfter": false,
+            "name": "Slovak",
+            "order": 0,
+            "value": 35
+          },
+          {
+            "dividerAfter": false,
+            "name": "Slovenian",
+            "order": 0,
+            "value": 47
+          },
+          {
+            "dividerAfter": false,
+            "name": "Spanish",
+            "order": 0,
+            "value": 3
+          },
+          {
+            "dividerAfter": false,
+            "name": "Spanish (Latino)",
+            "order": 0,
+            "value": 37
+          },
+          {
+            "dividerAfter": false,
+            "name": "Swedish",
+            "order": 0,
+            "value": 14
+          },
+          {
+            "dividerAfter": false,
+            "name": "Tagalog",
+            "order": 0,
+            "value": 53
+          },
+          {
+            "dividerAfter": false,
+            "name": "Tamil",
+            "order": 0,
+            "value": 43
+          },
+          {
+            "dividerAfter": false,
+            "name": "Telugu",
+            "order": 0,
+            "value": 45
+          },
+          {
+            "dividerAfter": false,
+            "name": "Thai",
+            "order": 0,
+            "value": 28
+          },
+          {
+            "dividerAfter": false,
+            "name": "Turkish",
+            "order": 0,
+            "value": 17
+          },
+          {
+            "dividerAfter": false,
+            "name": "Ukrainian",
+            "order": 0,
+            "value": 32
+          },
+          {
+            "dividerAfter": false,
+            "name": "Urdu",
+            "order": 0,
+            "value": 54
+          },
+          {
+            "dividerAfter": false,
+            "name": "Vietnamese",
+            "order": 0,
+            "value": 13
+          }
+        ],
+        "type": "select",
+        "value": 1
+      },
+      {
+        "advanced": true,
+        "helpText": "Include TMDb and IMDb movie URLs in .nfo",
+        "isFloat": false,
+        "label": "Movie Metadata URL",
+        "name": "movieMetadataURL",
+        "order": 3,
+        "privacy": "normal",
+        "section": "metadata",
+        "type": "checkbox",
+        "value": false
+      },
+      {
+        "advanced": true,
+        "helpText": "Include collection name in .nfo",
+        "isFloat": false,
+        "label": "Movie Collection Name",
+        "name": "addCollectionName",
+        "order": 4,
+        "privacy": "normal",
+        "section": "metadata",
+        "type": "checkbox",
+        "value": true
+      },
+      {
+        "advanced": false,
+        "helpText": "fanart.jpg, poster.jpg",
+        "isFloat": false,
+        "label": "Movie Images",
+        "name": "movieImages",
+        "order": 5,
+        "privacy": "normal",
+        "section": "image",
+        "type": "checkbox",
+        "value": true
+      }
+    ],
+    "id": 1,
+    "implementation": "XbmcMetadata",
+    "implementationName": "Kodi (XBMC) / Emby",
+    "infoLink": "https://wiki.servarr.com/radarr/supported#xbmcmetadata",
+    "name": "Kodi (XBMC) / Emby",
+    "tags": []
+  },
+  {
+    "configContract": "KometaMetadataSettings",
+    "enable": false,
+    "fields": [
+      {
+        "advanced": false,
+        "hidden": "hidden",
+        "isFloat": false,
+        "label": "Deprecated",
+        "name": "deprecated",
+        "order": 0,
+        "privacy": "normal",
+        "section": "image",
+        "type": "checkbox",
+        "value": true
+      }
+    ],
+    "id": 5,
+    "implementation": "KometaMetadata",
+    "implementationName": "Kometa",
+    "infoLink": "https://wiki.servarr.com/radarr/supported#kometametadata",
+    "message": {
+      "message": "Kometa files will no longer be created, support will be removed completely in v6",
+      "type": "warning"
+    },
+    "name": "Kometa",
+    "tags": []
+  },
+  {
+    "configContract": "RoksboxMetadataSettings",
+    "enable": false,
+    "fields": [
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Movie Metadata",
+        "name": "movieMetadata",
+        "order": 0,
+        "privacy": "normal",
+        "section": "metadata",
+        "type": "checkbox",
+        "value": true
+      },
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Movie Images",
+        "name": "movieImages",
+        "order": 1,
+        "privacy": "normal",
+        "section": "image",
+        "type": "checkbox",
+        "value": true
+      }
+    ],
+    "id": 3,
+    "implementation": "RoksboxMetadata",
+    "implementationName": "Roksbox",
+    "infoLink": "https://wiki.servarr.com/radarr/supported#roksboxmetadata",
+    "name": "Roksbox",
+    "tags": []
+  },
+  {
+    "configContract": "WdtvMetadataSettings",
+    "enable": false,
+    "fields": [
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Movie Metadata",
+        "name": "movieMetadata",
+        "order": 0,
+        "privacy": "normal",
+        "section": "metadata",
+        "type": "checkbox",
+        "value": true
+      },
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Movie Images",
+        "name": "movieImages",
+        "order": 1,
+        "privacy": "normal",
+        "section": "image",
+        "type": "checkbox",
+        "value": true
+      }
+    ],
+    "id": 2,
+    "implementation": "WdtvMetadata",
+    "implementationName": "WDTV",
+    "infoLink": "https://wiki.servarr.com/radarr/supported#wdtvmetadata",
+    "name": "WDTV",
+    "tags": []
+  }
+]

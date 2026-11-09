@@ -1,0 +1,7 @@
+[Unit]
+Description=Run tdarr-swap every 20 minutes
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=20min
+[Install]
+WantedBy=timers.target

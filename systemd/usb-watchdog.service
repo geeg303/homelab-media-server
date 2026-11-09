@@ -1,0 +1,8 @@
+[Unit]
+Description=Pause rsync and alert on USB resets / disk I/O errors
+After=systemd-journald.service network-online.target
+[Service]
+ExecStart=/usr/local/sbin/usb-watchdog
+Restart=always
+[Install]
+WantedBy=multi-user.target

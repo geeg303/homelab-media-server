@@ -1,0 +1,19 @@
+{
+  "auth": true,
+  "authSecretKey": "<REDACTED>",
+  "ccextractorPath": "",
+  "cronPluginUpdate": "",
+  "ffmpegPath": "",
+  "handbrakePath": "",
+  "jobReportsPath": "",
+  "logLevel": "INFO",
+  "maxLogSizeMB": 10,
+  "mkvpropeditPath": "",
+  "openBrowser": true,
+  "seededApiKey": "",
+  "serverBindIP": false,
+  "serverDualStack": false,
+  "serverIP": "0.0.0.0",
+  "serverPort": "8266",
+  "webUIPort": "8265"
+}

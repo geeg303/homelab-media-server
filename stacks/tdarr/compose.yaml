@@ -1,0 +1,50 @@
+x-tenv: &tenv
+  PUID: ${PUID}
+  PGID: ${PGID}
+  TZ: ${TZ}
+  UMASK_SET: "002"
+  inContainer: "true"
+  ffmpegVersion: "7"
+
+services:
+  tdarr:
+    image: ghcr.io/haveagitgat/tdarr:latest
+    container_name: tdarr
+    restart: unless-stopped
+    networks: [media]
+    ports: ["8265:8265", "8266:8266"]
+    environment:
+      <<: *tenv
+      serverIP: 0.0.0.0
+      serverPort: "8266"
+      webUIPort: "8265"
+      internalNode: "false"
+    volumes:
+      - /opt/media/config/tdarr/server:/app/server
+      - /opt/media/config/tdarr/configs:/app/configs
+      - /opt/media/config/tdarr/logs:/app/logs
+      - /data/media:/data/media
+      - /scratch/tdarr:/scratch/tdarr
+
+  tdarr-node:
+    image: ghcr.io/haveagitgat/tdarr_node:latest
+    container_name: tdarr-node
+    restart: unless-stopped
+    networks: [media]
+    environment:
+      <<: *tenv
+      nodeName: box-qsv
+      apiKey: ${TDARR_API_KEY:-}
+      serverIP: tdarr
+      serverPort: "8266"
+    devices: ["/dev/dri:/dev/dri"]
+    group_add: ["${RENDER_GID}"]
+    volumes:
+      - /opt/media/config/tdarr/node-configs:/app/configs
+      - /opt/media/config/tdarr/node-logs:/app/logs
+      - /data/media:/data/media
+      - /scratch/tdarr:/scratch/tdarr
+
+networks:
+  media:
+    external: true

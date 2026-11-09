@@ -1,0 +1,7 @@
+[Unit]
+Description=Backup /opt/media config
+After=docker.service scratch.mount
+Requires=docker.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/media-config-backup

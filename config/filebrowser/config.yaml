@@ -1,0 +1,18 @@
+# FileBrowser Quantum. Storage is READ-ONLY until the migration is finished (user, Nov 8).
+# After round 5: mount the pool (/data) read-write instead of disk1 (see SWITCHOVER-PLAN.md).
+server:
+  sources:
+    - path: "/storage/disk1"
+      name: "disk1 (read-only during migration)"
+      config:
+        defaultEnabled: true
+    - path: "/storage/scratch"
+      name: "scratch (NVMe, read-only)"
+      config:
+        defaultEnabled: true
+auth:
+  methods:
+    password:
+      enabled: true
+      signup: false
+      minLength: 12

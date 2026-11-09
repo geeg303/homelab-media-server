@@ -1,0 +1,1475 @@
+[
+  {
+    "_id": "hdr10Qsv4k",
+    "description": "Approved Nov 9. Skips files already encoded by us or with video <= 8 Mbps, skips Dolby Vision and SDR. hevc_qsv Main10 q20 + HDR10 tags/metadata, duration 99.5-100.5%, size 5-95%. Writes to /scratch/tdarr/output-4k; never touches the library (read-only mount). /usr/local/sbin/tdarr-swap verifies and replaces originals (originals moved to /mnt/disk2/tdarr-originals).",
+    "flowEdges": [
+      {
+        "id": "e_hasQsv_1_start",
+        "source": "hasQsv",
+        "sourceHandle": "1",
+        "target": "start",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hasQsv_2_noQsv",
+        "source": "hasQsv",
+        "sourceHandle": "2",
+        "target": "noQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_start_1_enc",
+        "source": "start",
+        "sourceHandle": "1",
+        "target": "enc",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_1_mkv",
+        "source": "isMkv",
+        "sourceHandle": "1",
+        "target": "mkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_2_mp4",
+        "source": "isMkv",
+        "sourceHandle": "2",
+        "target": "mp4",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mkv_1_exec",
+        "source": "mkv",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mp4_1_exec",
+        "source": "mp4",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_1_out",
+        "source": "ratio",
+        "sourceHandle": "1",
+        "target": "out",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_2_tooSmall",
+        "source": "ratio",
+        "sourceHandle": "2",
+        "target": "tooSmall",
+        "targetHandle": null
+      },
+      {
+        "id": "e_exec_1_dur",
+        "source": "exec",
+        "sourceHandle": "1",
+        "target": "dur",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_1_ratio",
+        "source": "dur",
+        "sourceHandle": "1",
+        "target": "ratio",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_2_durFail",
+        "source": "dur",
+        "sourceHandle": "2",
+        "target": "durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_3_durFail",
+        "source": "dur",
+        "sourceHandle": "3",
+        "target": "durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isDv_1_isHdr",
+        "source": "isDv",
+        "sourceHandle": "1",
+        "target": "isHdr",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isHdr_1_hasQsv",
+        "source": "isHdr",
+        "sourceHandle": "1",
+        "target": "hasQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_enc_1_hdrArgs",
+        "source": "enc",
+        "sourceHandle": "1",
+        "target": "hdrArgs",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hdrArgs_1_isMkv",
+        "source": "hdrArgs",
+        "sourceHandle": "1",
+        "target": "isMkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_in_1_gate",
+        "source": "in",
+        "sourceHandle": "1",
+        "target": "gate",
+        "targetHandle": null
+      },
+      {
+        "id": "e_gate_1_isDv",
+        "source": "gate",
+        "sourceHandle": "1",
+        "target": "isDv",
+        "targetHandle": null
+      }
+    ],
+    "flowPlugins": [
+      {
+        "fpEnabled": true,
+        "id": "in",
+        "inputsDB": {},
+        "name": "Input File",
+        "pluginName": "inputFile",
+        "position": {
+          "x": 400,
+          "y": 0
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isHdr",
+        "inputsDB": {},
+        "name": "HDR / Dolby Vision? (skip)",
+        "pluginName": "checkHdr",
+        "position": {
+          "x": 600,
+          "y": 220
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "hasQsv",
+        "inputsDB": {
+          "hardwareEncoder": "hevc_qsv"
+        },
+        "name": "Node has hevc_qsv?",
+        "pluginName": "checkNodeHardwareEncoder",
+        "position": {
+          "x": 800,
+          "y": 330
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "noQsv",
+        "inputsDB": {},
+        "name": "No Quick Sync: fail (no CPU fallback)",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "start",
+        "inputsDB": {},
+        "name": "Begin Command",
+        "pluginName": "ffmpegCommandStart",
+        "position": {
+          "x": 800,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "enc",
+        "inputsDB": {
+          "ffmpegPreset": "medium",
+          "ffmpegPresetEnabled": "true",
+          "ffmpegQuality": "20",
+          "ffmpegQualityEnabled": "true",
+          "forceEncoding": "true",
+          "hardwareDecoding": "true",
+          "hardwareEncoding": "true",
+          "hardwareType": "qsv",
+          "outputCodec": "hevc"
+        },
+        "name": "HEVC Quick Sync Main10, quality 20",
+        "pluginName": "ffmpegCommandSetVideoEncoder",
+        "position": {
+          "x": 800,
+          "y": 550
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isMkv",
+        "inputsDB": {
+          "extensions": "mkv"
+        },
+        "name": "Source is MKV?",
+        "pluginName": "checkFileExtension",
+        "position": {
+          "x": 800,
+          "y": 660
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mkv",
+        "inputsDB": {
+          "container": "mkv",
+          "forceConform": "false"
+        },
+        "name": "Keep MKV",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 650,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mp4",
+        "inputsDB": {
+          "container": "mp4",
+          "forceConform": "true"
+        },
+        "name": "MP4 (conform streams)",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 950,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "exec",
+        "inputsDB": {},
+        "name": "Execute (audio + subs copied)",
+        "pluginName": "ffmpegCommandExecute",
+        "position": {
+          "x": 800,
+          "y": 880
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "ratio",
+        "inputsDB": {
+          "greaterThan": "5",
+          "lessThan": "95"
+        },
+        "name": "New file 5-95% of original? (5% = sanity floor; remuxes shrink a lot)",
+        "pluginName": "compareFileSizeRatio",
+        "position": {
+          "x": 800,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "tooSmall",
+        "inputsDB": {},
+        "name": "Outside 5-95%: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "out",
+        "inputsDB": {
+          "keepRelativePath": "true",
+          "outputDirectory": "/scratch/tdarr/output-4k"
+        },
+        "name": "Move result to /scratch/tdarr/output-4k",
+        "pluginName": "moveToDirectory",
+        "position": {
+          "x": 800,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "dur",
+        "inputsDB": {
+          "greaterThan": "99.5",
+          "lessThan": "100.5"
+        },
+        "name": "Same length as original (99.5-100.5%)?",
+        "pluginName": "compareFileDurationRatio",
+        "position": {
+          "x": 1050,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "durFail",
+        "inputsDB": {},
+        "name": "Length differs: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1300,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isDv",
+        "inputsDB": {
+          "code": "\nmodule.exports = async (args) => {\n  // Output 1 = no Dolby Vision, output 2 = Dolby Vision present (skip: Quick Sync can't keep the DV layer)\n  const streams = (args.inputFileObj.ffProbeData && args.inputFileObj.ffProbeData.streams) || [];\n  const dv = streams.some((s) => s.codec_type === 'video' && ((s.side_data_list || []).some((d) => /DOVI/i.test(d.side_data_type || ''))\n            || /dvhe|dvh1/i.test(s.codec_tag_string || '')));\n  args.jobLog(dv ? 'Dolby Vision found: skipping' : 'No Dolby Vision');\n  return { outputFileObj: args.inputFileObj, outputNumber: dv ? 2 : 1, variables: args.variables };\n};"
+        },
+        "name": "Dolby Vision? (skip)",
+        "pluginName": "customFunction",
+        "position": {
+          "x": 400,
+          "y": 110
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "hdrArgs",
+        "inputsDB": {
+          "inputArguments": "",
+          "outputArguments": "-profile:v main10 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -color_range tv"
+        },
+        "name": "Keep HDR10 colour tags (Main10, BT.2020, PQ)",
+        "pluginName": "ffmpegCommandCustomArguments",
+        "position": {
+          "x": 1050,
+          "y": 550
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "gate",
+        "inputsDB": {
+          "code": "\nmodule.exports = async (args) => {\n  // Output 1 = worth encoding. Output 2 = skip: already encoded by us (hevc_qsv ENCODER tag) or video already <= 8 Mbps.\n  const f = args.inputFileObj; const p = f.ffProbeData || {}; const st = p.streams || [];\n  const v = st.find((s) => s.codec_type === 'video') || {};\n  const enc = JSON.stringify(v.tags || {}) + JSON.stringify((p.format || {}).tags || {});\n  if (/hevc_qsv/i.test(enc)) { args.jobLog('Already encoded by Tdarr (hevc_qsv): skip'); return { outputFileObj: f, outputNumber: 2, variables: args.variables }; }\n  const total = Number((p.format || {}).bit_rate || 0) / 1000;\n  const audio = st.filter((s) => s.codec_type === 'audio').reduce((a, s) => a + Number(s.bit_rate || (s.tags || {}).BPS || (s.tags || {})['BPS-eng'] || 0) / 1000, 0);\n  const kbps = total - audio;\n  args.jobLog('Video bitrate estimate ' + Math.round(kbps) + ' kbps (total ' + Math.round(total) + ' - audio ' + Math.round(audio) + '), threshold 8000');\n  return { outputFileObj: f, outputNumber: kbps > 8000 ? 1 : 2, variables: args.variables };\n};"
+        },
+        "name": "Worth encoding? (not ours, video > 8 Mbps)",
+        "pluginName": "customFunction",
+        "position": {
+          "x": 400,
+          "y": 60
+        },
+        "sourceRepo": "Community"
+      }
+    ],
+    "name": "4K HDR10 - Quick Sync q20 (output to scratch, swapped by tdarr-swap)",
+    "tags": "4k,hdr"
+  },
+  {
+    "_id": "pilotHdr10Qsv",
+    "description": "HDR10 only: skips Dolby Vision (QSV can't keep the DV layer) and SDR. hevc_qsv Main10 quality 20, BT.2020/PQ tags, mastering-display/CLL metadata passed through. Duration check 99.5-100.5%, size gate 5-95%. Output to /scratch/tdarr/output.",
+    "flowEdges": [
+      {
+        "id": "e_hasQsv_1_start",
+        "source": "hasQsv",
+        "sourceHandle": "1",
+        "target": "start",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hasQsv_2_noQsv",
+        "source": "hasQsv",
+        "sourceHandle": "2",
+        "target": "noQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_start_1_enc",
+        "source": "start",
+        "sourceHandle": "1",
+        "target": "enc",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_1_mkv",
+        "source": "isMkv",
+        "sourceHandle": "1",
+        "target": "mkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_2_mp4",
+        "source": "isMkv",
+        "sourceHandle": "2",
+        "target": "mp4",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mkv_1_exec",
+        "source": "mkv",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mp4_1_exec",
+        "source": "mp4",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_1_out",
+        "source": "ratio",
+        "sourceHandle": "1",
+        "target": "out",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_2_tooSmall",
+        "source": "ratio",
+        "sourceHandle": "2",
+        "target": "tooSmall",
+        "targetHandle": null
+      },
+      {
+        "id": "e_exec_1_dur",
+        "source": "exec",
+        "sourceHandle": "1",
+        "target": "dur",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_1_ratio",
+        "source": "dur",
+        "sourceHandle": "1",
+        "target": "ratio",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_2_durFail",
+        "source": "dur",
+        "sourceHandle": "2",
+        "target": "durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_3_durFail",
+        "source": "dur",
+        "sourceHandle": "3",
+        "target": "durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_in_1_isDv",
+        "source": "in",
+        "sourceHandle": "1",
+        "target": "isDv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isDv_1_isHdr",
+        "source": "isDv",
+        "sourceHandle": "1",
+        "target": "isHdr",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isHdr_1_hasQsv",
+        "source": "isHdr",
+        "sourceHandle": "1",
+        "target": "hasQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_enc_1_hdrArgs",
+        "source": "enc",
+        "sourceHandle": "1",
+        "target": "hdrArgs",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hdrArgs_1_isMkv",
+        "source": "hdrArgs",
+        "sourceHandle": "1",
+        "target": "isMkv",
+        "targetHandle": null
+      }
+    ],
+    "flowPlugins": [
+      {
+        "fpEnabled": true,
+        "id": "in",
+        "inputsDB": {},
+        "name": "Input File",
+        "pluginName": "inputFile",
+        "position": {
+          "x": 400,
+          "y": 0
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isHdr",
+        "inputsDB": {},
+        "name": "HDR / Dolby Vision? (skip)",
+        "pluginName": "checkHdr",
+        "position": {
+          "x": 600,
+          "y": 220
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "hasQsv",
+        "inputsDB": {
+          "hardwareEncoder": "hevc_qsv"
+        },
+        "name": "Node has hevc_qsv?",
+        "pluginName": "checkNodeHardwareEncoder",
+        "position": {
+          "x": 800,
+          "y": 330
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "noQsv",
+        "inputsDB": {},
+        "name": "No Quick Sync: fail (no CPU fallback)",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "start",
+        "inputsDB": {},
+        "name": "Begin Command",
+        "pluginName": "ffmpegCommandStart",
+        "position": {
+          "x": 800,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "enc",
+        "inputsDB": {
+          "ffmpegPreset": "medium",
+          "ffmpegPresetEnabled": "true",
+          "ffmpegQuality": "20",
+          "ffmpegQualityEnabled": "true",
+          "forceEncoding": "true",
+          "hardwareDecoding": "true",
+          "hardwareEncoding": "true",
+          "hardwareType": "qsv",
+          "outputCodec": "hevc"
+        },
+        "name": "HEVC Quick Sync Main10, quality 20",
+        "pluginName": "ffmpegCommandSetVideoEncoder",
+        "position": {
+          "x": 800,
+          "y": 550
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isMkv",
+        "inputsDB": {
+          "extensions": "mkv"
+        },
+        "name": "Source is MKV?",
+        "pluginName": "checkFileExtension",
+        "position": {
+          "x": 800,
+          "y": 660
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mkv",
+        "inputsDB": {
+          "container": "mkv",
+          "forceConform": "false"
+        },
+        "name": "Keep MKV",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 650,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mp4",
+        "inputsDB": {
+          "container": "mp4",
+          "forceConform": "true"
+        },
+        "name": "MP4 (conform streams)",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 950,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "exec",
+        "inputsDB": {},
+        "name": "Execute (audio + subs copied)",
+        "pluginName": "ffmpegCommandExecute",
+        "position": {
+          "x": 800,
+          "y": 880
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "ratio",
+        "inputsDB": {
+          "greaterThan": "5",
+          "lessThan": "95"
+        },
+        "name": "New file 5-95% of original? (5% = sanity floor; remuxes shrink a lot)",
+        "pluginName": "compareFileSizeRatio",
+        "position": {
+          "x": 800,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "tooSmall",
+        "inputsDB": {},
+        "name": "Outside 5-95%: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "out",
+        "inputsDB": {
+          "keepRelativePath": "true",
+          "outputDirectory": "/scratch/tdarr/output"
+        },
+        "name": "PILOT: move result to /scratch/tdarr/output (original untouched)",
+        "pluginName": "moveToDirectory",
+        "position": {
+          "x": 800,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "dur",
+        "inputsDB": {
+          "greaterThan": "99.5",
+          "lessThan": "100.5"
+        },
+        "name": "Same length as original (99.5-100.5%)?",
+        "pluginName": "compareFileDurationRatio",
+        "position": {
+          "x": 1050,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "durFail",
+        "inputsDB": {},
+        "name": "Length differs: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1300,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isDv",
+        "inputsDB": {
+          "code": "\nmodule.exports = async (args) => {\n  // Output 1 = no Dolby Vision, output 2 = Dolby Vision present (skip: Quick Sync can't keep the DV layer)\n  const streams = (args.inputFileObj.ffProbeData && args.inputFileObj.ffProbeData.streams) || [];\n  const dv = streams.some((s) => s.codec_type === 'video' && ((s.side_data_list || []).some((d) => /DOVI/i.test(d.side_data_type || ''))\n            || /dvhe|dvh1/i.test(s.codec_tag_string || '')));\n  args.jobLog(dv ? 'Dolby Vision found: skipping' : 'No Dolby Vision');\n  return { outputFileObj: args.inputFileObj, outputNumber: dv ? 2 : 1, variables: args.variables };\n};"
+        },
+        "name": "Dolby Vision? (skip)",
+        "pluginName": "customFunction",
+        "position": {
+          "x": 400,
+          "y": 110
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "hdrArgs",
+        "inputsDB": {
+          "inputArguments": "",
+          "outputArguments": "-profile:v main10 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -color_range tv"
+        },
+        "name": "Keep HDR10 colour tags (Main10, BT.2020, PQ)",
+        "pluginName": "ffmpegCommandCustomArguments",
+        "position": {
+          "x": 1050,
+          "y": 550
+        },
+        "sourceRepo": "Community"
+      }
+    ],
+    "name": "PILOT - 4K HDR10 Quick Sync (keeps originals)",
+    "tags": "pilot,hdr"
+  },
+  {
+    "_id": "pilotHevcQsv",
+    "description": "hevc_qsv quality 22 preset medium. Skips HEVC + HDR/DV. Audio/subs copied. Output to /scratch/tdarr/output; never replaces originals. Ratio >95% = discarded, <40% = fail for review.",
+    "flowEdges": [
+      {
+        "id": "e_in_1_isHevc",
+        "source": "in",
+        "sourceHandle": "1",
+        "target": "isHevc",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isHevc_2_isHdr",
+        "source": "isHevc",
+        "sourceHandle": "2",
+        "target": "isHdr",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isHdr_2_hasQsv",
+        "source": "isHdr",
+        "sourceHandle": "2",
+        "target": "hasQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hasQsv_1_start",
+        "source": "hasQsv",
+        "sourceHandle": "1",
+        "target": "start",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hasQsv_2_noQsv",
+        "source": "hasQsv",
+        "sourceHandle": "2",
+        "target": "noQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_start_1_enc",
+        "source": "start",
+        "sourceHandle": "1",
+        "target": "enc",
+        "targetHandle": null
+      },
+      {
+        "id": "e_enc_1_isMkv",
+        "source": "enc",
+        "sourceHandle": "1",
+        "target": "isMkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_1_mkv",
+        "source": "isMkv",
+        "sourceHandle": "1",
+        "target": "mkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_2_mp4",
+        "source": "isMkv",
+        "sourceHandle": "2",
+        "target": "mp4",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mkv_1_exec",
+        "source": "mkv",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mp4_1_exec",
+        "source": "mp4",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_1_out",
+        "source": "ratio",
+        "sourceHandle": "1",
+        "target": "out",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_2_tooSmall",
+        "source": "ratio",
+        "sourceHandle": "2",
+        "target": "tooSmall",
+        "targetHandle": null
+      },
+      {
+        "id": "e_exec_1_dur",
+        "source": "exec",
+        "sourceHandle": "1",
+        "target": "dur",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_1_ratio",
+        "source": "dur",
+        "sourceHandle": "1",
+        "target": "ratio",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_2_durFail",
+        "source": "dur",
+        "sourceHandle": "2",
+        "target": "durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_3_durFail",
+        "source": "dur",
+        "sourceHandle": "3",
+        "target": "durFail",
+        "targetHandle": null
+      }
+    ],
+    "flowPlugins": [
+      {
+        "fpEnabled": true,
+        "id": "in",
+        "inputsDB": {},
+        "name": "Input File",
+        "pluginName": "inputFile",
+        "position": {
+          "x": 400,
+          "y": 0
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isHevc",
+        "inputsDB": {
+          "codec": "hevc"
+        },
+        "name": "Already HEVC? (skip)",
+        "pluginName": "checkVideoCodec",
+        "position": {
+          "x": 400,
+          "y": 110
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isHdr",
+        "inputsDB": {},
+        "name": "HDR / Dolby Vision? (skip)",
+        "pluginName": "checkHdr",
+        "position": {
+          "x": 600,
+          "y": 220
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "hasQsv",
+        "inputsDB": {
+          "hardwareEncoder": "hevc_qsv"
+        },
+        "name": "Node has hevc_qsv?",
+        "pluginName": "checkNodeHardwareEncoder",
+        "position": {
+          "x": 800,
+          "y": 330
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "noQsv",
+        "inputsDB": {},
+        "name": "No Quick Sync: fail (no CPU fallback)",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "start",
+        "inputsDB": {},
+        "name": "Begin Command",
+        "pluginName": "ffmpegCommandStart",
+        "position": {
+          "x": 800,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "enc",
+        "inputsDB": {
+          "ffmpegPreset": "medium",
+          "ffmpegPresetEnabled": "true",
+          "ffmpegQuality": "22",
+          "ffmpegQualityEnabled": "true",
+          "forceEncoding": "false",
+          "hardwareDecoding": "true",
+          "hardwareEncoding": "true",
+          "hardwareType": "qsv",
+          "outputCodec": "hevc"
+        },
+        "name": "HEVC Quick Sync, quality 22",
+        "pluginName": "ffmpegCommandSetVideoEncoder",
+        "position": {
+          "x": 800,
+          "y": 550
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isMkv",
+        "inputsDB": {
+          "extensions": "mkv"
+        },
+        "name": "Source is MKV?",
+        "pluginName": "checkFileExtension",
+        "position": {
+          "x": 800,
+          "y": 660
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mkv",
+        "inputsDB": {
+          "container": "mkv",
+          "forceConform": "false"
+        },
+        "name": "Keep MKV",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 650,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mp4",
+        "inputsDB": {
+          "container": "mp4",
+          "forceConform": "true"
+        },
+        "name": "MP4 (conform streams)",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 950,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "exec",
+        "inputsDB": {},
+        "name": "Execute (audio + subs copied)",
+        "pluginName": "ffmpegCommandExecute",
+        "position": {
+          "x": 800,
+          "y": 880
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "ratio",
+        "inputsDB": {
+          "greaterThan": "5",
+          "lessThan": "95"
+        },
+        "name": "New file 5-95% of original? (5% = sanity floor; remuxes shrink a lot)",
+        "pluginName": "compareFileSizeRatio",
+        "position": {
+          "x": 800,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "tooSmall",
+        "inputsDB": {},
+        "name": "Outside 5-95%: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "out",
+        "inputsDB": {
+          "keepRelativePath": "true",
+          "outputDirectory": "/scratch/tdarr/output"
+        },
+        "name": "PILOT: move result to /scratch/tdarr/output (original untouched)",
+        "pluginName": "moveToDirectory",
+        "position": {
+          "x": 800,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "dur",
+        "inputsDB": {
+          "greaterThan": "99.5",
+          "lessThan": "100.5"
+        },
+        "name": "Same length as original (99.5-100.5%)?",
+        "pluginName": "compareFileDurationRatio",
+        "position": {
+          "x": 1050,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "durFail",
+        "inputsDB": {},
+        "name": "Length differs: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1300,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      }
+    ],
+    "name": "PILOT - HEVC Quick Sync (keeps originals)",
+    "tags": "pilot"
+  },
+  {
+    "_id": "pilotHevcReencode",
+    "description": "Same as the HEVC pilot but for files that are ALREADY HEVC (SDR remuxes): no HEVC skip, forceEncoding on. Still skips HDR/DV. QSV quality 22, size gate 40-95%, output to /scratch/tdarr/output. Only re-encodes when video bitrate > 10 Mbps.",
+    "flowEdges": [
+      {
+        "id": "e_isHdr_2_hasQsv",
+        "source": "isHdr",
+        "sourceHandle": "2",
+        "target": "hasQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hasQsv_1_start",
+        "source": "hasQsv",
+        "sourceHandle": "1",
+        "target": "start",
+        "targetHandle": null
+      },
+      {
+        "id": "e_hasQsv_2_noQsv",
+        "source": "hasQsv",
+        "sourceHandle": "2",
+        "target": "noQsv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_start_1_enc",
+        "source": "start",
+        "sourceHandle": "1",
+        "target": "enc",
+        "targetHandle": null
+      },
+      {
+        "id": "e_enc_1_isMkv",
+        "source": "enc",
+        "sourceHandle": "1",
+        "target": "isMkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_1_mkv",
+        "source": "isMkv",
+        "sourceHandle": "1",
+        "target": "mkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_isMkv_2_mp4",
+        "source": "isMkv",
+        "sourceHandle": "2",
+        "target": "mp4",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mkv_1_exec",
+        "source": "mkv",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_mp4_1_exec",
+        "source": "mp4",
+        "sourceHandle": "1",
+        "target": "exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_1_out",
+        "source": "ratio",
+        "sourceHandle": "1",
+        "target": "out",
+        "targetHandle": null
+      },
+      {
+        "id": "e_ratio_2_tooSmall",
+        "source": "ratio",
+        "sourceHandle": "2",
+        "target": "tooSmall",
+        "targetHandle": null
+      },
+      {
+        "id": "e_in_1_brGate",
+        "source": "in",
+        "sourceHandle": "1",
+        "target": "brGate",
+        "targetHandle": null
+      },
+      {
+        "id": "e_brGate_1_isHdr",
+        "source": "brGate",
+        "sourceHandle": "1",
+        "target": "isHdr",
+        "targetHandle": null
+      },
+      {
+        "id": "e_exec_1_dur",
+        "source": "exec",
+        "sourceHandle": "1",
+        "target": "dur",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_1_ratio",
+        "source": "dur",
+        "sourceHandle": "1",
+        "target": "ratio",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_2_durFail",
+        "source": "dur",
+        "sourceHandle": "2",
+        "target": "durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_dur_3_durFail",
+        "source": "dur",
+        "sourceHandle": "3",
+        "target": "durFail",
+        "targetHandle": null
+      }
+    ],
+    "flowPlugins": [
+      {
+        "fpEnabled": true,
+        "id": "in",
+        "inputsDB": {},
+        "name": "Input File",
+        "pluginName": "inputFile",
+        "position": {
+          "x": 400,
+          "y": 0
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isHdr",
+        "inputsDB": {},
+        "name": "HDR / Dolby Vision? (skip)",
+        "pluginName": "checkHdr",
+        "position": {
+          "x": 600,
+          "y": 220
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "hasQsv",
+        "inputsDB": {
+          "hardwareEncoder": "hevc_qsv"
+        },
+        "name": "Node has hevc_qsv?",
+        "pluginName": "checkNodeHardwareEncoder",
+        "position": {
+          "x": 800,
+          "y": 330
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "noQsv",
+        "inputsDB": {},
+        "name": "No Quick Sync: fail (no CPU fallback)",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "start",
+        "inputsDB": {},
+        "name": "Begin Command",
+        "pluginName": "ffmpegCommandStart",
+        "position": {
+          "x": 800,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "enc",
+        "inputsDB": {
+          "ffmpegPreset": "medium",
+          "ffmpegPresetEnabled": "true",
+          "ffmpegQuality": "22",
+          "ffmpegQualityEnabled": "true",
+          "forceEncoding": "true",
+          "hardwareDecoding": "true",
+          "hardwareEncoding": "true",
+          "hardwareType": "qsv",
+          "outputCodec": "hevc"
+        },
+        "name": "HEVC Quick Sync, quality 22",
+        "pluginName": "ffmpegCommandSetVideoEncoder",
+        "position": {
+          "x": 800,
+          "y": 550
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "isMkv",
+        "inputsDB": {
+          "extensions": "mkv"
+        },
+        "name": "Source is MKV?",
+        "pluginName": "checkFileExtension",
+        "position": {
+          "x": 800,
+          "y": 660
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mkv",
+        "inputsDB": {
+          "container": "mkv",
+          "forceConform": "false"
+        },
+        "name": "Keep MKV",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 650,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "mp4",
+        "inputsDB": {
+          "container": "mp4",
+          "forceConform": "true"
+        },
+        "name": "MP4 (conform streams)",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 950,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "exec",
+        "inputsDB": {},
+        "name": "Execute (audio + subs copied)",
+        "pluginName": "ffmpegCommandExecute",
+        "position": {
+          "x": 800,
+          "y": 880
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "ratio",
+        "inputsDB": {
+          "greaterThan": "5",
+          "lessThan": "95"
+        },
+        "name": "New file 5-95% of original? (5% = sanity floor; remuxes shrink a lot)",
+        "pluginName": "compareFileSizeRatio",
+        "position": {
+          "x": 800,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "tooSmall",
+        "inputsDB": {},
+        "name": "Outside 5-95%: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1050,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "out",
+        "inputsDB": {
+          "keepRelativePath": "true",
+          "outputDirectory": "/scratch/tdarr/output"
+        },
+        "name": "PILOT: move result to /scratch/tdarr/output (original untouched)",
+        "pluginName": "moveToDirectory",
+        "position": {
+          "x": 800,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "brGate",
+        "inputsDB": {
+          "code": "\nmodule.exports = async (args) => {\n  // Output 1 = video bitrate > 10 Mbps (worth re-encoding), output 2 = already efficient (skip)\n  const f = args.inputFileObj; const p = f.ffProbeData || {}; const streams = p.streams || [];\n  const v = streams.find((s) => s.codec_type === 'video') || {};\n  const tags = v.tags || {};\n  let kbps = Number(v.bit_rate || tags.BPS || tags['BPS-eng'] || 0) / 1000;\n  if (!kbps) {\n    const total = Number((p.format || {}).bit_rate || 0) / 1000;\n    const audio = streams.filter((s) => s.codec_type === 'audio')\n      .reduce((a, s) => a + Number(s.bit_rate || (s.tags || {}).BPS || (s.tags || {})['BPS-eng'] || 0) / 1000, 0);\n    kbps = total - audio;\n  }\n  args.jobLog('Video bitrate estimate: ' + Math.round(kbps) + ' kbps (threshold 10000)');\n  return { outputFileObj: f, outputNumber: kbps > 10000 ? 1 : 2, variables: args.variables };\n};"
+        },
+        "name": "Video > 10 Mbps? (else skip)",
+        "pluginName": "customFunction",
+        "position": {
+          "x": 400,
+          "y": 110
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "dur",
+        "inputsDB": {
+          "greaterThan": "99.5",
+          "lessThan": "100.5"
+        },
+        "name": "Same length as original (99.5-100.5%)?",
+        "pluginName": "compareFileDurationRatio",
+        "position": {
+          "x": 1050,
+          "y": 990
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "durFail",
+        "inputsDB": {},
+        "name": "Length differs: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 1300,
+          "y": 1100
+        },
+        "sourceRepo": "Community"
+      }
+    ],
+    "name": "PILOT - re-encode existing HEVC (keeps originals)",
+    "tags": "pilot"
+  }
+]

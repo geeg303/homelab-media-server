@@ -1,0 +1,17 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/ubuntu-vg-1/ubuntu-lv during curtin installation
+/dev/disk/by-id/dm-uuid-LVM-vYqy4EPtBonvLZ25VEYKb2cfjcZ91HTEHiKajX0d33qjLp8ufMu21H82XE2Xf4cf / ext4 defaults 0 1
+# /boot was on /dev/nvme0n1p2 during curtin installation
+/dev/disk/by-uuid/22d85f0f-757C-2C13-8530-38e887bef1e3 /boot ext4 defaults 0 1
+# /boot/efi was on /dev/nvme0n1p1 during curtin installation
+/dev/disk/by-uuid/2759-FA08 /boot/efi vfat defaults 0 1
+/swap.img	none	swap	sw	0	0
+UUID=cd1088ae-783d-4c9f-88bf-dc72fcd7b3c8  /scratch  ext4  defaults,noatime,nofail,x-systemd.device-timeout=15s  0 2
+UUID=0c030dea-7cac-45e4-8937-bbcfde7d3a9b  /mnt/disk1  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2
+UUID=658f115b-8c7e-41ec-874d-6188bf06a9a4  /mnt/disk2  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2

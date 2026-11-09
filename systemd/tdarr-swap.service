@@ -1,0 +1,8 @@
+[Unit]
+Description=Replace library originals with verified Tdarr 4K encodes (originals deleted after verification)
+RequiresMountsFor=/mnt/disk1 /scratch
+[Service]
+Type=oneshot
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/local/sbin/tdarr-swap /scratch/tdarr/output-4k

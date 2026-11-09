@@ -1,0 +1,106 @@
+services:
+  socket-proxy:
+    image: lscr.io/linuxserver/socket-proxy:latest
+    container_name: socket-proxy
+    restart: unless-stopped
+    networks: [media]
+    read_only: true
+    tmpfs: ["/run"]
+    environment:
+      CONTAINERS: 1
+      IMAGES: 1
+      INFO: 1
+      POST: 0
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks: [media]
+    ports: ["3001:3001"]
+    volumes:
+      - /opt/media/config/uptime-kuma:/app/data
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    env_file: [homepage.env]
+    restart: unless-stopped
+    networks: [media]
+    ports: ["3000:3000"]
+    depends_on: [socket-proxy]
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      HOMEPAGE_ALLOWED_HOSTS: 192.0.2.242:3000,box:3000
+    volumes:
+      - /opt/media/config/homepage:/app/config
+
+  diun:
+    image: crazymax/diun:latest
+    container_name: diun
+    restart: unless-stopped
+    networks: [media]
+    command: serve
+    depends_on: [socket-proxy]
+    environment:
+      TZ: ${TZ}
+      LOG_LEVEL: info
+      DIUN_WATCH_SCHEDULE: "0 */6 * * *"
+      DIUN_WATCH_FIRSTCHECKNOTIF: "false"
+      DIUN_PROVIDERS_DOCKER: "true"
+      DIUN_PROVIDERS_DOCKER_ENDPOINT: tcp://socket-proxy:2375
+      DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
+      DIUN_NOTIF_NTFY_ENDPOINT: https://ntfy.sh
+      DIUN_NOTIF_NTFY_TOPIC: ${NTFY_TOPIC}
+    volumes:
+      - /opt/media/config/diun:/data
+
+  status:
+    image: busybox:stable
+    container_name: status
+    restart: unless-stopped
+    networks: [media]
+    read_only: true
+    command: ["httpd", "-f", "-p", "80", "-h", "/www"]
+    volumes:
+      - /opt/media/status:/www:ro
+
+  filebrowser:
+    image: gtstef/filebrowser:stable
+    container_name: filebrowser
+    restart: unless-stopped
+    user: "1000:1000"
+    networks: [media]
+    ports: ["8099:80"]
+    environment:
+      FILEBROWSER_CONFIG: data/config.yaml
+      TZ: ${TZ}
+    volumes:
+      - /opt/media/config/filebrowser:/home/filebrowser/data
+      - /mnt/disk1:/storage/disk1:ro      # READ-ONLY during the migration; becomes /data:/storage (rw) after round 5
+      - /scratch:/storage/scratch:ro       # NVMe scratch (Tdarr pilot output, SAB incomplete, backups), view only
+
+  wud:
+    image: getwud/wud:9
+    container_name: wud
+    restart: unless-stopped
+    env_file: [wud.env]          # admin login (600, not in git)
+    networks: [media]
+    ports: ["3002:3000"]
+    environment:
+      TZ: ${TZ}
+      # read-only Docker API via socket-proxy; no triggers configured = WUD can never update anything
+      WUD_WATCHER_LOCAL_HOST: socket-proxy
+      WUD_WATCHER_LOCAL_PORT: "2375"
+      WUD_WATCHER_LOCAL_CRON: "15 */6 * * *"
+      WUD_WATCHER_LOCAL_WATCHDIGESTDEFAULT: "true"
+      WUD_SERVER_FEATURE_DELETE: "false"
+    volumes:
+      - /opt/media/config/wud:/store
+
+networks:
+  media:
+    external: true

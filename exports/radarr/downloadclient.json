@@ -1,0 +1,196 @@
+[
+  {
+    "configContract": "SabnzbdSettings",
+    "enable": true,
+    "fields": [
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Host",
+        "name": "host",
+        "order": 0,
+        "privacy": "normal",
+        "type": "textbox",
+        "value": "sabnzbd"
+      },
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Port",
+        "name": "port",
+        "order": 1,
+        "privacy": "normal",
+        "type": "textbox",
+        "value": 8080
+      },
+      {
+        "advanced": false,
+        "helpText": "Use secure connection when connection to Sabnzbd",
+        "isFloat": false,
+        "label": "Use SSL",
+        "name": "useSsl",
+        "order": 2,
+        "privacy": "normal",
+        "type": "checkbox",
+        "value": false
+      },
+      {
+        "advanced": true,
+        "helpText": "Adds a prefix to the Sabnzbd url, such as http://[host]:[port]/[urlBase]/api",
+        "isFloat": false,
+        "label": "URL Base",
+        "name": "urlBase",
+        "order": 3,
+        "privacy": "normal",
+        "type": "textbox"
+      },
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "API Key",
+        "name": "apiKey",
+        "order": 4,
+        "privacy": "apiKey",
+        "type": "textbox",
+        "value": "<REDACTED>"
+      },
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Username",
+        "name": "username",
+        "order": 5,
+        "privacy": "userName",
+        "type": "textbox"
+      },
+      {
+        "advanced": false,
+        "isFloat": false,
+        "label": "Password",
+        "name": "password",
+        "order": 6,
+        "privacy": "password",
+        "type": "password"
+      },
+      {
+        "advanced": false,
+        "helpText": "Adding a category specific to Radarr avoids conflicts with unrelated non-Radarr downloads. Using a category is optional, but strongly recommended.",
+        "isFloat": false,
+        "label": "Category",
+        "name": "movieCategory",
+        "order": 7,
+        "privacy": "normal",
+        "type": "textbox",
+        "value": "movies"
+      },
+      {
+        "advanced": false,
+        "helpText": "Priority to use when grabbing movies that aired within the last 21 days",
+        "isFloat": false,
+        "label": "Recent Priority",
+        "name": "recentMoviePriority",
+        "order": 8,
+        "privacy": "normal",
+        "selectOptions": [
+          {
+            "dividerAfter": false,
+            "name": "Default",
+            "order": -100,
+            "value": -100
+          },
+          {
+            "dividerAfter": false,
+            "name": "Paused",
+            "order": -2,
+            "value": -2
+          },
+          {
+            "dividerAfter": false,
+            "name": "Low",
+            "order": -1,
+            "value": -1
+          },
+          {
+            "dividerAfter": false,
+            "name": "Normal",
+            "order": 0,
+            "value": 0
+          },
+          {
+            "dividerAfter": false,
+            "name": "High",
+            "order": 1,
+            "value": 1
+          },
+          {
+            "dividerAfter": false,
+            "name": "Force",
+            "order": 2,
+            "value": 2
+          }
+        ],
+        "type": "select",
+        "value": -100
+      },
+      {
+        "advanced": false,
+        "helpText": "Priority to use when grabbing movies that aired over 21 days ago",
+        "isFloat": false,
+        "label": "Older Priority",
+        "name": "olderMoviePriority",
+        "order": 9,
+        "privacy": "normal",
+        "selectOptions": [
+          {
+            "dividerAfter": false,
+            "name": "Default",
+            "order": -100,
+            "value": -100
+          },
+          {
+            "dividerAfter": false,
+            "name": "Paused",
+            "order": -2,
+            "value": -2
+          },
+          {
+            "dividerAfter": false,
+            "name": "Low",
+            "order": -1,
+            "value": -1
+          },
+          {
+            "dividerAfter": false,
+            "name": "Normal",
+            "order": 0,
+            "value": 0
+          },
+          {
+            "dividerAfter": false,
+            "name": "High",
+            "order": 1,
+            "value": 1
+          },
+          {
+            "dividerAfter": false,
+            "name": "Force",
+            "order": 2,
+            "value": 2
+          }
+        ],
+        "type": "select",
+        "value": -100
+      }
+    ],
+    "id": 1,
+    "implementation": "Sabnzbd",
+    "implementationName": "SABnzbd",
+    "infoLink": "https://wiki.servarr.com/radarr/supported#sabnzbd",
+    "name": "SABnzbd",
+    "priority": 1,
+    "protocol": "usenet",
+    "removeCompletedDownloads": true,
+    "removeFailedDownloads": true,
+    "tags": []
+  }
+]

@@ -1,0 +1,15 @@
+# TEMPORARY (migration in progress): strips all /data mounts. Remove this file + COMPOSE_FILE line in .env when /data (mergerfs) is live.
+services:
+  sabnzbd:
+    volumes: !override
+      - /opt/media/config/sabnzbd:/config
+      - /scratch/sabnzbd:/scratch/sabnzbd
+  sonarr:
+    volumes: !override
+      - /opt/media/config/sonarr:/config
+  radarr:
+    volumes: !override
+      - /opt/media/config/radarr:/config
+  bazarr:
+    volumes: !override
+      - /opt/media/config/bazarr:/config

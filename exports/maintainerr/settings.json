@@ -1,0 +1,426 @@
+{
+  "collection": [],
+  "exclusion": [],
+  "log_settings": [
+    {
+      "id": 1,
+      "level": "info",
+      "max_files": 7
+    }
+  ],
+  "notification": [],
+  "notification_rulegroup": [],
+  "overlay_settings": [
+    {
+      "cronSchedule": null,
+      "enabled": 0,
+      "id": 1,
+      "posterFrame": {
+        "dockPosition": "bottom",
+        "dockStyle": "pill",
+        "frameColor": "#B20710",
+        "frameInnerRadius": 2,
+        "frameInnerRadiusMode": "auto",
+        "frameInset": "outside",
+        "frameRadius": 2,
+        "frameWidth": 1.5,
+        "useFrame": false
+      },
+      "posterOverlayStyle": {
+        "backColor": "#B20710",
+        "backRadius": 3,
+        "fontColor": "#FFFFFF",
+        "fontPath": "Inter-Bold.ttf",
+        "horizontalAlign": "left",
+        "horizontalOffset": 3,
+        "overlayBottomCenter": false,
+        "padding": 1.5,
+        "verticalAlign": "top",
+        "verticalOffset": 4
+      },
+      "posterOverlayText": {
+        "dateFormat": "MMM d",
+        "enableDaySuffix": false,
+        "enableUppercase": false,
+        "language": "en-US",
+        "overlayText": "Leaving",
+        "textDay": "in 1 day",
+        "textDays": "in {0} days",
+        "textToday": "today",
+        "useDays": false
+      },
+      "titleCardFrame": {
+        "dockPosition": "bottom",
+        "dockStyle": "pill",
+        "frameColor": "#B20710",
+        "frameInnerRadius": 2,
+        "frameInnerRadiusMode": "auto",
+        "frameInset": "outside",
+        "frameRadius": 2,
+        "frameWidth": 1.5,
+        "useFrame": false
+      },
+      "titleCardOverlayStyle": {
+        "backColor": "#B20710",
+        "backRadius": 3,
+        "fontColor": "#FFFFFF",
+        "fontPath": "Inter-Bold.ttf",
+        "horizontalAlign": "left",
+        "horizontalOffset": 3,
+        "overlayBottomCenter": false,
+        "padding": 1.5,
+        "verticalAlign": "top",
+        "verticalOffset": 4
+      },
+      "titleCardOverlayText": {
+        "dateFormat": "MMM d",
+        "enableDaySuffix": false,
+        "enableUppercase": false,
+        "language": "en-US",
+        "overlayText": "Leaving",
+        "textDay": "in 1 day",
+        "textDays": "in {0} days",
+        "textToday": "today",
+        "useDays": false
+      }
+    }
+  ],
+  "overlay_templates": [
+    {
+      "canvasHeight": 1080,
+      "canvasWidth": 1920,
+      "description": "Rounded pill overlay for title cards (episodes) showing \"Leaving <date>\"",
+      "elements": [
+        {
+          "cornerRadius": 35,
+          "fillColor": "#B20710",
+          "height": 70,
+          "id": "tc-pill-bg",
+          "layerOrder": 0,
+          "opacity": 1,
+          "rotation": 0,
+          "shapeType": "rectangle",
+          "strokeColor": null,
+          "strokeWidth": 0,
+          "type": "shape",
+          "visible": true,
+          "width": 480,
+          "x": 40,
+          "y": 40
+        },
+        {
+          "backgroundColor": null,
+          "backgroundPadding": 0,
+          "backgroundRadius": 0,
+          "dateFormat": "MMM d",
+          "enableDaySuffix": false,
+          "fontColor": "#FFFFFF",
+          "fontFamily": "Inter",
+          "fontPath": "Inter-Bold.ttf",
+          "fontWeight": "bold",
+          "height": 70,
+          "id": "tc-pill-text",
+          "language": "en-US",
+          "layerOrder": 1,
+          "opacity": 1,
+          "rotation": 0,
+          "segments": [
+            {
+              "type": "text",
+              "value": "Leaving "
+            },
+            {
+              "field": "date",
+              "type": "variable"
+            }
+          ],
+          "shadow": true,
+          "textAlign": "center",
+          "textDay": "in 1 day",
+          "textDays": "in {0} days",
+          "textToday": "today",
+          "type": "variable",
+          "uppercase": false,
+          "verticalAlign": "middle",
+          "visible": true,
+          "width": 480,
+          "x": 40,
+          "y": 40
+        }
+      ],
+      "id": 4,
+      "isDefault": 1,
+      "isPreset": 1,
+      "mode": "titlecard",
+      "name": "Title Card Pill"
+    },
+    {
+      "canvasHeight": 1500,
+      "canvasWidth": 1000,
+      "description": "Full-width bar at the bottom with a countdown in days",
+      "elements": [
+        {
+          "cornerRadius": 0,
+          "fillColor": "#000000",
+          "height": 70,
+          "id": "bar-bg",
+          "layerOrder": 0,
+          "opacity": 0.85,
+          "rotation": 0,
+          "shapeType": "rectangle",
+          "strokeColor": null,
+          "strokeWidth": 0,
+          "type": "shape",
+          "visible": true,
+          "width": 1000,
+          "x": 0,
+          "y": 1430
+        },
+        {
+          "backgroundColor": null,
+          "backgroundPadding": 0,
+          "backgroundRadius": 0,
+          "dateFormat": "MMM d",
+          "enableDaySuffix": false,
+          "fontColor": "#FFFFFF",
+          "fontFamily": "Inter",
+          "fontPath": "Inter-Bold.ttf",
+          "fontWeight": "bold",
+          "height": 70,
+          "id": "bar-text",
+          "language": "en-US",
+          "layerOrder": 1,
+          "opacity": 1,
+          "rotation": 0,
+          "segments": [
+            {
+              "field": "daysText",
+              "type": "variable"
+            }
+          ],
+          "shadow": false,
+          "textAlign": "center",
+          "textDay": "LEAVING IN 1 DAY",
+          "textDays": "LEAVING IN {0} DAYS",
+          "textToday": "TODAY",
+          "type": "variable",
+          "uppercase": true,
+          "verticalAlign": "middle",
+          "visible": true,
+          "width": 1000,
+          "x": 0,
+          "y": 1430
+        }
+      ],
+      "id": 2,
+      "isDefault": 0,
+      "isPreset": 1,
+      "mode": "poster",
+      "name": "Countdown Bar"
+    },
+    {
+      "canvasHeight": 1500,
+      "canvasWidth": 1000,
+      "description": "Rounded pill in the top-left corner showing \"Leaving <date>\"",
+      "elements": [
+        {
+          "cornerRadius": 35,
+          "fillColor": "#B20710",
+          "height": 70,
+          "id": "pill-bg",
+          "layerOrder": 0,
+          "opacity": 1,
+          "rotation": 0,
+          "shapeType": "rectangle",
+          "strokeColor": null,
+          "strokeWidth": 0,
+          "type": "shape",
+          "visible": true,
+          "width": 400,
+          "x": 30,
+          "y": 60
+        },
+        {
+          "backgroundColor": null,
+          "backgroundPadding": 0,
+          "backgroundRadius": 0,
+          "dateFormat": "MMM d",
+          "enableDaySuffix": false,
+          "fontColor": "#FFFFFF",
+          "fontFamily": "Inter",
+          "fontPath": "Inter-Bold.ttf",
+          "fontWeight": "bold",
+          "height": 70,
+          "id": "pill-text",
+          "language": "en-US",
+          "layerOrder": 1,
+          "opacity": 1,
+          "rotation": 0,
+          "segments": [
+            {
+              "type": "text",
+              "value": "Leaving "
+            },
+            {
+              "field": "date",
+              "type": "variable"
+            }
+          ],
+          "shadow": true,
+          "textAlign": "center",
+          "textDay": "in 1 day",
+          "textDays": "in {0} days",
+          "textToday": "today",
+          "type": "variable",
+          "uppercase": false,
+          "verticalAlign": "middle",
+          "visible": true,
+          "width": 400,
+          "x": 30,
+          "y": 60
+        }
+      ],
+      "id": 1,
+      "isDefault": 1,
+      "isPreset": 1,
+      "mode": "poster",
+      "name": "Classic Pill"
+    },
+    {
+      "canvasHeight": 1500,
+      "canvasWidth": 1000,
+      "description": "Small circular badge in the top-right with days remaining",
+      "elements": [
+        {
+          "cornerRadius": 0,
+          "fillColor": "#B20710",
+          "height": 80,
+          "id": "badge-bg",
+          "layerOrder": 0,
+          "opacity": 0.9,
+          "rotation": 0,
+          "shapeType": "ellipse",
+          "strokeColor": "#FFFFFF",
+          "strokeWidth": 3,
+          "type": "shape",
+          "visible": true,
+          "width": 80,
+          "x": 890,
+          "y": 30
+        },
+        {
+          "backgroundColor": null,
+          "backgroundPadding": 0,
+          "backgroundRadius": 0,
+          "dateFormat": "MMM d",
+          "enableDaySuffix": false,
+          "fontColor": "#FFFFFF",
+          "fontFamily": "Inter",
+          "fontPath": "Inter-Bold.ttf",
+          "fontWeight": "bold",
+          "height": 80,
+          "id": "badge-text",
+          "language": "en-US",
+          "layerOrder": 1,
+          "opacity": 1,
+          "rotation": 0,
+          "segments": [
+            {
+              "field": "days",
+              "type": "variable"
+            }
+          ],
+          "shadow": false,
+          "textAlign": "center",
+          "textDay": "1",
+          "textDays": "{0}",
+          "textToday": "0",
+          "type": "variable",
+          "uppercase": false,
+          "verticalAlign": "middle",
+          "visible": true,
+          "width": 80,
+          "x": 890,
+          "y": 30
+        }
+      ],
+      "id": 3,
+      "isDefault": 0,
+      "isPreset": 1,
+      "mode": "poster",
+      "name": "Corner Badge"
+    }
+  ],
+  "radarr_settings": [
+    {
+      "apiKey": "<REDACTED>",
+      "exclusionTag": "dnd",
+      "id": 1,
+      "serverName": "radar",
+      "tagExclusions": 0,
+      "untagOnUnexclude": 0,
+      "url": "http://192.0.2.242:7878"
+    }
+  ],
+  "rule_group": [],
+  "rules": [],
+  "settings": [
+    {
+      "apikey": "<REDACTED>",
+      "applicationTitle": "Maintainerr",
+      "applicationUrl": "localhost",
+      "clientId": "<REDACTED>",
+      "collection_handler_job_cron": "0 0-23/12 * * *",
+      "download_client_delete_data": 1,
+      "download_client_fallback_ratio": 0.5,
+      "download_client_password": null,
+      "download_client_type": null,
+      "download_client_url": null,
+      "download_client_username": null,
+      "emby_api_key": null,
+      "emby_server_name": null,
+      "emby_url": null,
+      "emby_user_id": null,
+      "id": 1,
+      "jellyfin_api_key": null,
+      "jellyfin_server_name": null,
+      "jellyfin_url": null,
+      "jellyfin_user_id": null,
+      "locale": "en",
+      "media_server_type": "plex",
+      "metadata_provider_preference": "tmdb_primary",
+      "ombi_api_key": null,
+      "ombi_url": null,
+      "plex_auth_token": "<REDACTED>",
+      "plex_hostname": "192.0.2.242",
+      "plex_machine_id": "<REDACTED>",
+      "plex_manual_mode": 0,
+      "plex_name": "box",
+      "plex_port": 32400,
+      "plex_ssl": 0,
+      "rules_handler_job_cron": "0 0-23/8 * * *",
+      "seerr_api_key": null,
+      "seerr_url": null,
+      "streamystats_url": null,
+      "tautulli_api_key": "<REDACTED>",
+      "tautulli_url": "http://192.0.2.242:8181",
+      "telemetryEnabled": 1,
+      "tmdb_api_key": "<REDACTED>",
+      "tracearr_api_key": null,
+      "tracearr_server_id": null,
+      "tracearr_url": null,
+      "tvdb_api_key": null
+    }
+  ],
+  "sonarr_settings": [
+    {
+      "apiKey": "<REDACTED>",
+      "exclusionTag": "dnd",
+      "id": 1,
+      "serverName": "Sonarr",
+      "tagExclusions": 0,
+      "untagOnUnexclude": 0,
+      "url": "http://192.0.2.242:8989"
+    }
+  ]
+}

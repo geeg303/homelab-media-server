@@ -1,0 +1,12 @@
+[
+  {
+    "gpuSelect": "-",
+    "priority": 0,
+    "workerLimits": {
+      "healthcheckcpu": 0,
+      "healthcheckgpu": 0,
+      "transcodecpu": 0,
+      "transcodegpu": 2
+    }
+  }
+]

@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/kometa-team/kometa/nightly/json-schema/config-schema.json
+## PENDING: rename to config.yml after the Plex libraries "Movies" and "TV Shows" exist (post-migration).
+## Decision (user, Nov 8): collections + overlays. Ratings overlay left out (needs an OMDb/MDBList key).
+libraries:
+  Movies:
+    remove_overlays: false
+    collection_files:
+      - default: basic
+      - default: imdb
+      - default: tmdb
+      - default: franchise
+      - default: universe
+      - default: studio
+    overlay_files:
+      - default: resolution
+      - default: audio_codec
+      - default: ribbon
+  TV Shows:
+    remove_overlays: false
+    collection_files:
+      - default: basic
+      - default: imdb
+      - default: tmdb
+      - default: network
+      - default: studio
+    overlay_files:
+      - default: resolution
+      - default: audio_codec
+      - default: ribbon
+      - default: status
+settings:
+  run_order: [operations, metadata, collections, overlays]
+  cache: true
+  asset_directory: config/assets
+  delete_below_minimum: true
+  minimum_items: 1
+plex:
+  url: http://192.0.2.242:32400
+  token: <REDACTED>
+  timeout: 60
+  db_cache: 40
+  clean_bundles: false
+  empty_trash: false
+  optimize: false
+  verify_ssl: false
+tmdb:
+  apikey: <REDACTED>
+  cache_expiration: 60
+  language: en
+  region: US

@@ -1,0 +1,18 @@
+# Consolidated by Hermes (Phase 4). Previous files: /root/netplan-backup/
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s31f6:
+      match:
+        macaddress: "02:00:00:00:00:03"
+      set-name: enp0s31f6
+      dhcp4: true
+      optional: true
+  wifis:
+    wlp0s20f3:
+      dhcp4: true
+      regulatory-domain: "US"
+      access-points:
+        "example-ssid":
+          password: <REDACTED>

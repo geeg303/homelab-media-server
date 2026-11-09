@@ -1,0 +1,75 @@
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      VERSION: docker
+      PLEX_CLAIM: ${PLEX_CLAIM}
+    devices: ["/dev/dri:/dev/dri"]
+    volumes:
+      - /opt/media/config/plex:/config
+      - /data/media:/data/media
+      - /scratch/plex-transcode:/transcode
+
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    restart: unless-stopped
+    networks: [media]
+    ports: ["8181:8181"]
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - /opt/media/config/tautulli:/config
+
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    init: true
+    restart: unless-stopped
+    networks: [media]
+    ports: ["5055:5055"]
+    environment:
+      TZ: ${TZ}
+      LOG_LEVEL: info
+    volumes:
+      - /opt/media/config/seerr:/app/config
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+
+  kometa:
+    image: lscr.io/linuxserver/kometa:latest
+    container_name: kometa
+    restart: unless-stopped
+    networks: [media]
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      KOMETA_CONFIG: /config/config.yml
+      KOMETA_TIME: "05:00"
+    volumes:
+      - /opt/media/config/kometa:/config
+
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:latest
+    container_name: maintainerr
+    restart: unless-stopped
+    networks: [media]
+    user: "${PUID}:${PGID}"
+    ports: ["6246:6246"]
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - /opt/media/config/maintainerr:/opt/data   # deliberately no /data mount
+
+networks:
+  media:
+    external: true

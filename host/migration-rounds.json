@@ -1,0 +1,6 @@
+{
+ "2": {"formatted": true, "next": "round 3 after enclosure B arrives (Tue) and the WD drives pass their tests"},
+ "3": {"label": "sdd → disk3 (WD #1)", "format": "sdd → disk7"},
+ "4": {"label": "sde → disk4 (WD #2)", "format": "sde → disk8"},
+ "5": {"label": "sdb → disk5 (WD #3)", "format": "sdb → parity1"}
+}

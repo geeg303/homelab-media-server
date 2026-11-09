@@ -1,0 +1,12 @@
+{
+ "AdvertiseRoutes": [
+  "192.0.2.0/24"
+ ],
+ "AdvertiseTags": null,
+ "CorpDNS": true,
+ "ExitNodeID": "",
+ "Hostname": "box",
+ "RouteAll": false,
+ "RunSSH": false,
+ "ShieldsUp": false
+}

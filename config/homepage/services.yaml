@@ -1,0 +1,200 @@
+# Live widgets. Secrets come from /opt/media/stacks/ops/homepage.env as {{HOMEPAGE_VAR_*}} (quoted for Homepage v2).
+# Widget URLs use container names on the 'media' network; Plex uses the host IP (host networking).
+- Migration:
+    - NTFS → ext4 migration:
+        icon: mdi-harddisk-plus
+        description: "live from the box, refreshes every minute"
+        widget:
+          type: customapi
+          url: http://status/migration.json
+          refreshInterval: 60000
+          display: list
+          mappings:
+            - field: round
+              label: Round
+            - field: stage
+              label: Now
+            - field: copy_bar
+              label: Copy
+            - field: verify_bar
+              label: Checksum check
+            - field: eta
+              label: ETA
+            - field: overall_bar
+              label: Overall
+            - field: rounds
+              label: Rounds
+            - field: health
+              label: Health
+            - field: updated
+              label: Updated
+- Conversions:
+    - Tdarr conversions (live):
+        href: "http://192.0.2.242:8265"
+        icon: tdarr.png
+        description: "refreshes every 30 s · pilot output stays in /scratch/tdarr/output"
+        widget:
+          type: customapi
+          url: http://status/tdarr.json
+          refreshInterval: 30000
+          display: list
+          mappings:
+            - field: now
+              label: Now
+            - field: job1
+              label: Job 1
+            - field: job2
+              label: Job 2
+            - field: totals
+              label: Totals
+            - field: saved
+              label: Saved
+            - field: swap
+              label: Library
+            - field: pilot
+              label: Pilot
+            - field: workers
+              label: Workers
+            - field: updated
+              label: Updated
+- Media:
+    - Plex:
+        href: "http://192.0.2.242:32400/web"
+        icon: plex.png
+        server: box
+        container: plex
+        widget:
+          type: plex
+          url: "http://192.0.2.242:32400"
+          key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+    - Tautulli:
+        href: "http://192.0.2.242:8181"
+        icon: tautulli.png
+        server: box
+        container: tautulli
+        widget:
+          type: tautulli
+          url: "http://tautulli:8181"
+          key: "{{HOMEPAGE_VAR_TAUTULLI_KEY}}"
+    - Seerr:
+        href: "http://192.0.2.242:5055"
+        icon: overseerr.png
+        server: box
+        container: seerr
+        widget:
+          type: seerr
+          url: "http://seerr:5055"
+          key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
+    - Maintainerr:
+        href: "http://192.0.2.242:6246"
+        icon: maintainerr.png
+        server: box
+        container: maintainerr
+        widget:
+          type: maintainerr
+          url: "http://maintainerr:6246"
+    - Kometa:
+        href: "http://192.0.2.242:5001"
+        icon: kometa.png
+        description: "collections + overlays, daily 05:00 (logs in Dockge)"
+        server: box
+        container: kometa
+- Automation:
+    - Sonarr:
+        href: "http://192.0.2.242:8989"
+        icon: sonarr.png
+        server: box
+        container: sonarr
+        widget:
+          type: sonarr
+          url: "http://sonarr:8989"
+          key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+          enableQueue: true
+    - Radarr:
+        href: "http://192.0.2.242:7878"
+        icon: radarr.png
+        server: box
+        container: radarr
+        widget:
+          type: radarr
+          url: "http://radarr:7878"
+          key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+          enableQueue: true
+    - SABnzbd:
+        href: "http://192.0.2.242:8080"
+        icon: sabnzbd.png
+        server: box
+        container: sabnzbd
+        widget:
+          type: sabnzbd
+          url: "http://sabnzbd:8080"
+          key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
+    - Prowlarr:
+        href: "http://192.0.2.242:9696"
+        icon: prowlarr.png
+        server: box
+        container: prowlarr
+        widget:
+          type: prowlarr
+          url: "http://prowlarr:9696"
+          key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+    - Bazarr:
+        href: "http://192.0.2.242:6767"
+        icon: bazarr.png
+        server: box
+        container: bazarr
+        widget:
+          type: bazarr
+          url: "http://bazarr:6767"
+          key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+    - Tdarr:
+        href: "http://192.0.2.242:8265"
+        icon: tdarr.png
+        server: box
+        container: tdarr
+        widget:
+          type: tdarr
+          url: "http://tdarr:8265"
+          key: "{{HOMEPAGE_VAR_TDARR_KEY}}"
+    - Recyclarr:
+        icon: recyclarr.png
+        description: "TRaSH profiles sync, daily 04:00"
+        server: box
+        container: recyclarr
+- Ops:
+    - Updates:
+        href: "http://192.0.2.242:3002"
+        icon: whats-up-docker.png
+        description: "image updates waiting (notify only, apply in Dockge)"
+        server: box
+        container: wud
+        widget:
+          type: whatsupdocker
+          url: http://wud:3000
+          username: "{{HOMEPAGE_VAR_WUD_USER}}"
+          password: "{{HOMEPAGE_VAR_WUD_PASSWORD}}"
+    - Files:
+        href: "http://192.0.2.242:8099"
+        icon: filebrowser.png
+        description: "FileBrowser · disk1 read-only during migration"
+        server: box
+        container: filebrowser
+    - Dockge:
+        href: "http://192.0.2.242:5001"
+        icon: dockge.png
+        siteMonitor: "http://192.0.2.242:5001"
+    - Uptime Kuma:
+        href: "http://192.0.2.242:3001"
+        icon: uptime-kuma.png
+        server: box
+        container: uptime-kuma
+    - Tdarr node:
+        icon: tdarr.png
+        description: "Quick Sync node box-qsv"
+        server: box
+        container: tdarr-node
+    - DIUN:
+        icon: diun.png
+        description: "image update notices via ntfy"
+        server: box
+        container: diun

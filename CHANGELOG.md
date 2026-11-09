@@ -1,0 +1,78 @@
+# Changelog — box media server
+
+All notable changes to the server, newest first. Times local.
+
+## 2026-11-09
+- **Public mirror:** this repo stays private (exact values, for recovery). New public repo `homelab-media-server` is generated from it by `tools/publish-public.py`: IPs, MACs, Wi-Fi names, disk serials, UUIDs, tailnet/Tailscale names, usernames/e-mail/handle, Discord/Notion IDs, timezone and every show/movie/episode title are replaced by stable placeholders (`192.0.2.x`, `SERIAL-DISK1`, `Show 23`, `Movie 042`); the placeholder map lives outside both repos (`media-server-stack/sanitize-map.json`). A verify step refuses to push if any real value or guard pattern survives. `sync-from-box.sh` updates the public mirror after every private push. Public history is a single squashed commit
+- ⚠️ **Originals deleted (user's instruction):** the 9 held originals on disk2 (55 GB) and the pilot copies on /scratch (61 GB) were deleted after re-checking that every held file matched a logged, verified swap with its encode present in the library. `tdarr-swap` now **deletes** each original right after verification (atomic rename of the verified encode over it) and records the path in `/var/lib/media-server/tdarr-swapped.list` so nothing is replaced twice. There is no copy of replaced originals any more
+- **First library replacements (user's OK):** the 9 pilot encodes replaced their originals on disk1 via new `/usr/local/sbin/tdarr-swap` (verifies duration ±2 s, identical frame count, same audio track count, HDR10 kept; copies with sha256 check; **moves** the original to `/mnt/disk2/tdarr-originals/<same path>`; refuses a second replacement of the same file). 9/9 swapped, 0 failed, 41.6 GB freed on disk1. Originals are kept on disk2 until user OKs deleting them (after SnapRAID)
+- **4K HDR10 run started (09:00):** Tdarr server + node got **read-only** `/mnt/disk1/media/tv → /media/disk1/tv` (write test blocked; still no /data). Flow `hdr10Qsv4k` (= approved HDR pilot flow + gate: skip files already encoded by us via the hevc_qsv ENCODER tag or with video ≤ 8 Mbps; Dolby Vision and SDR skipped) writes to `/scratch/tdarr/output-4k`; `tdarr-swap.timer` (every 20 min) verifies and swaps them in. One library per show: Show 76, Show 16, Show 17, Show 56, Show 70, Show 10, Show 78. **Show 21 held back** (8-bit with HDR tags, to be tested separately). GPU workers 2. Conversions tile gained a "Library" line (replaced / GB freed / waiting / failed)
+- **Tailscale subnet route approved** by user and verified on the box: `PrimaryRoutes` = 192.0.2.0/24 (active), AllowedIPs include the LAN, IP forwarding on, `ts-forward` rules present. End-to-end test pending a second tailnet device (none joined yet)
+- **4K HDR10 pilot complete, approved by user:** Show 76 S01E05 10.75 → 3.53 GB (67% smaller), Show 16 S01E01 4.94 → 1.21 GB (76% smaller); identical frame counts and durations, all audio tracks kept, output Main10 BT.2020/PQ with mastering-display + content-light metadata; Show 10 (Dolby Vision) skipped. Whole pilot: 10 files, 58.9 → 17.4 GB. GPU workers back to 0. `tdarr-pilot-report` fixed (`-nostdin`; PSNR measured before labels are drawn — labelled crops read ~27 dB falsely)
+- **Tdarr decisions (user):** quality 22 for H.264→HEVC; re-encode HEVC too (now gated to video > 10 Mbps via a custom-function plugin); test 4K HDR. All pilot flows gained a duration check (output length 99.5–100.5% of original)
+- **4K HDR10 pilot (06:35):** manual tests first proved `hevc_qsv` keeps HDR10 (Main10, BT.2020/PQ, mastering-display + content-light metadata); same-frame tests q18/q20/q22 ≈ 5.4/4.3/3.3 Mbps, PSNR 42.9/41.7/40.8 dB → q20 chosen for 4K. New flow `pilotHdr10Qsv` (skips Dolby Vision, explicit HDR10 colour args) + library "PILOT 3 - 4K HDR10": Show 76 S01E05 (Blu-ray HDR10), Show 16 S01E01 (WEB HDR10), Show 10 S01E01 (Dolby Vision P8 — skipped as designed). ~28 fps per 4K job. GPU workers 2 for the test. Report helper `/usr/local/sbin/tdarr-pilot-report`
+- ⚠️ **Incident:** a test ffmpeg (4-way split filter graph) ran the host out of memory at 06:24 and the kernel killed that ffmpeg (28.8 GB RSS). Nothing else was killed; all 21 containers stayed up. Every later test ran in a throwaway container capped at 6 GB (`--memory 6g`), which contained a second runaway
+- **Tdarr pilot complete (06:16):** 8/8 processed, 0 errors. H.264 set (5 files, QSV HEVC q22): 31.83 GB → 5.20 GB (**84% smaller**; per file 79–90%). HEVC re-encode set (2 Show 09 remuxes): 11.42 GB → 7.45 GB (**35% smaller**). Show 76 4K HDR skipped as designed. Every output: same duration to the second, all audio tracks kept (lossless DTS-HD MA/FLAC/E-AC3 copied untouched). Side-by-side crops in `/scratch/tdarr/compare`. GPU workers back to 0. Nothing in the library replaced
+- **FileBrowser:** `/scratch` added as a second **read-only** source (write test blocked), so the Tdarr pilot output can be browsed and played
+- Tdarr pilot: both Show 20 WEB-DL episodes had started before the gate fix and failed the old 40% floor (21.1% / 21.0%); requeued under the 5–95% gate. 5/8 done before that (31.5 GB → 10.2 GB, 68% smaller incl. the 2 HEVC re-encodes)
+
+## 2026-11-08
+- **Tdarr pilot fix (22:40):** Show 47 S03E16 and Show 108 S04E06 "errored" — not a crash: the flow's own size gate (keep only 40–95% of original) rejected them because the remux encodes came out at 19.7% and 9.7%. Remuxes legitimately shrink that much, so both pilot flows now use a 5–95% gate (5% = sanity floor against truncated output) and the two files were requeued. Outputs get a duration/stream integrity check before review
+- **Tdarr pilot started (22:29, user's OK):** 8 test copies (54 GB) on `/scratch/tdarr/pilot-input` (originals on disk1 untouched; Tdarr still has no media mount). Library "PILOT 1" (5 H.264: Show 23, Show 47, Show 108 remuxes + 2 Show 20 WEB-DL) → flow `pilotHevcQsv`; library "PILOT 2" (2 Show 09 remuxes that are already HEVC + Show 76 4K HDR as skip test) → new flow `pilotHevcReencode` (no HEVC skip, forced re-encode, HDR still skipped). Node GPU workers 0 → 2 for the pilot; ~76–82 fps per job on Quick Sync
+- **Live Tdarr conversions tile** on Homepage (new full-width "Conversions" group under Migration): `tdarr-status` (30 s timer, idle I/O) reads Tdarr's API + the pilot folders → `/opt/media/status/tdarr.json` → `status` container → customapi list: state, up to 2 running jobs with progress bar / fps / ETA, queue/done/errors, GB saved, pilot before→after summary, worker limits
+- **Round 2 verified clean** (41/41 shows, 0 differences, 0 USB errors). ⚠️ **sda (SERIAL-DISK2) formatted → ext4 disk2** on user's "Format sda" (22:11), 7.998 TB usable, /mnt/disk2 (fstab UUID, nofail, immutable mountpoint), SMART PASSED. Kuma push monitor + migration tile updated; tile now reads per-round `formatted`/`next` from /etc/media-server/migration-rounds.json
+- **Seerr public access (Tailscale Funnel) prepared, then paused:** Funnel enabled on the tailnet by user; Seerr set to applicationUrl `https://box.tailnet-example.ts.net`, local login off (admin is a Plex user), trust proxy on, restarted. Public test returned HTTPS 200, but Seerr redirected to `/setup` (setup wizard not finished until /data exists), so Funnel was turned off again after ~3 min; other ports confirmed unreachable on the public name. Funnel goes back on after the Seerr wizard is done (SWITCHOVER-PLAN B5 step 6)
+- Home Assistant adapter ordered: Netgear A8000 (MT7921AU), arrives Tue Nov 10 with enclosure B
+- **Home Assistant planned:** HAOS in a KVM VM with its own passed-through USB Wi-Fi adapter (MediaTek MT7921AU, driver + firmware confirmed in HAOS 18.5), since the box's Wi-Fi can't be bridged. Plan: docs/HOME-ASSISTANT-PLAN.md. Nothing installed yet
+- **Tailscale subnet router:** box advertises 192.0.2.0/24 (`tailscale set --advertise-routes`), IP forwarding persisted in `/etc/sysctl.d/99-tailscale.conf`, so the dashboard's 192.0.2.242 links work remotely over Tailscale. Route needs approval in the Tailscale admin console
+- **What's Up Docker** added to the ops stack (:3002) for a Homepage "Updates" tile (containers watched / updates waiting). Notify-only: read-only socket-proxy, no triggers, delete feature off, checks 15 */6. WUD v9 requires a login: admin password generated on the box into `ops/wud.env` (600) and `HOMEPAGE_VAR_WUD_*`. Uptime Kuma monitor added (in the nightly window). DIUN stays the ntfy notifier
+- Radarr updated by user to 6.4.4.10685 (ls326), verified running
+- **Expansion planned:** second identical USB enclosure (arrives Tue Nov 10) + 5 × WD80EMAZ 8 TB (CMR, mfd 10/2018). New target 8 data + 2 parity (~64 TB data). Rounds 3–5 re-planned to copy straight onto new disks (SWITCHOVER-PLAN "v2 layout"); sda still becomes disk2
+- **App settings exports** added to the sync (`exports/`, via `tools/box-export.py`): Sonarr, Radarr, Prowlarr, Bazarr, SABnzbd, Tautulli, Seerr, Plex, Uptime Kuma, Maintainerr, Tdarr. Secrets redacted (39 values), and every redacted value is added to the pre-commit secret scan
+- **Repo now mirrors the box:** `tools/sync-from-box.sh` (whitelist + redaction + secret-value scan) runs after every change; added `config/`, `systemd/`, `host/`, `INVENTORY.md`; per-stack `env.example`
+- **FileBrowser Quantum** added to the ops stack (:8099): disk1 mounted **read-only** (write test blocked), no app configs, signup off; Homepage "Files" tile + Uptime Kuma monitor. Becomes `/data` read-write after round 5 (switch-over plan B5 step 11)
+- **Migration progress tile** on Homepage: `migration-status` (1-min timer, idle I/O) → `/opt/media/status/migration.json` → read-only busybox `status` container → customapi widget (copy + checksum bars, ETA, overall, health)
+- Docs: **SWITCHOVER-PLAN.md** (draft, needs approval: mergerfs from round 3, SnapRAID with a 100-deletion sync gate, app switch-over order) and **SNAPRAID-PRIMER.md**; MIGRATION-PLAN round 1 list corrected from the real logs; Show 28 stays in TV
+- **Tdarr:** server+node up with API key (`TDARR_API_KEY` in `.env`), node `box-qsv` (hevc_qsv/h264_qsv OK, AV1 encode unsupported); flow "PILOT - HEVC Quick Sync (keeps originals)" built (skips HEVC + all HDR/DV, QSV quality 22, 40–95% size gate, output to `/scratch/tdarr/output`), workers 0 until the pilot is approved
+- **Backup restore test passed** (3,313 files, 16 DBs integrity OK); fixed `media-config-backup` excludes (the `./config/` prefix never matched) + excluded `recyclarr/resources`
+- **Homepage** live tiles for all apps (secrets via `HOMEPAGE_VAR_*` in `ops/homepage.env`, 600)
+- **Uptime Kuma:** 25 monitors in 4 groups + mount/backup push monitors, ntfy alerts, nightly-backup maintenance window
+- **Plex** claimed; LAN networks incl. Tailscale 100.64.0.0/10; empty-trash off, **media deletion off**; transcode on `/scratch`
+- **Kometa** config drafted (`config.yml.pending`: collections + overlays, no ratings), activates once libraries exist
+- **App wiring:** Sonarr/Radarr → SABnzbd (categories tv/movies), Prowlarr full sync (NZBgeek), Bazarr → Sonarr/Radarr with English default profile, Recyclarr WEB-1080p (Sonarr) / HD Bluray + WEB (Radarr), x265 (HD) penalty removed
+- **All app stacks started without `/data`:** `compose.nodata.yaml` overrides via `COMPOSE_FILE`; `/data` is an empty `chattr +i` guard dir until the pool exists
+- DHCP reservation confirmed (192.0.2.242 ↔ Wi-Fi MAC); decided no Ethernet, no ratings overlays
+- Incidents: Tdarr key echoed into a Discord progress message (deleted after ~70 min; rule: secrets never on a command line); an unbounded `find /` ran ~90 s during the copy (stopped; rule: named paths only)
+- Round 2 migration running: sda (TV 5.287 TB + staged 1.997 TB) → disk1 `media/tv/`
+- Decision: Tdarr will run 24/7 (was: night window)
+- Repo published to GitHub
+
+## 2026-11-07
+- Round 1 verify complete: 21 shows, 4.28 TB, **0 checksum differences**
+- ⚠️ sdc (SERIAL-DISK1) formatted → ext4 **disk1**, 7.998 TB usable, mounted /mnt/disk1 (fstab UUID, nofail)
+- Round 2 started 07:47
+
+## 2026-11-06
+- Round 1 started 21:07 (prev. day), copy finished 06:40, verify finished 21:38 — all clean, zero USB events
+- MIGRATION-PLAN v2 (media-only, parity-ready ordering) approved for round 1
+
+## 2026-11-05 (build day)
+- **Access:** Hermes agent key auth to box; temporary NOPASSWD sudo (to be removed at wrap-up)
+- **Base OS:** tools installed (smartmontools, iw, vainfo, iperf3, hdparm, zstd); root LV +200G → 295G; TZ Region/City; sleep/suspend masked
+- **GPU verified:** vainfo — HEVC Main/Main10 encode, AV1 decode-only → Tdarr flow = hevc_qsv
+- **Wi-Fi:** power save disabled persistently (iwlmvm power_scheme=1 + oneshot unit); netplan consolidated to 01-media-server.yaml with regulatory-domain US (applied over SSH with 4-min auto-rollback); reg domain was world/00 before
+- **SMART:** all 7 drives PASSED, zero reallocated/pending/uncorrectable
+- **NTFS inventory (read-only):** ~28 TiB media found; 5 duplicate episodes across disks (17.3 GB); SnapRAID postponed (doesn't fit)
+- ⚠️ **nvme0n1 wiped** (old stale Ubuntu install) → ext4 `/scratch` (458 G)
+- **Docker CE 29.9.3** + Compose v5.7.0 from Docker repo; log rotation; `media` network; docker.service ordered after data/scratch mounts
+- **Tailscale 1.104.5** installed on host, logged in (box = 100.64.0.11)
+- **Stacks deployed (ops only):** Dockge :5001, Uptime Kuma :3001, Homepage :3000, DIUN + read-only socket-proxy; core/plex/tdarr written+pulled but stopped until /data exists
+- **Recyclarr pinned to :8** — no `latest` tag exists on GHCR
+- **Backups:** nightly 04:30 config backup (14 daily + 8 weekly), test run OK
+- **usb-watchdog:** pauses rsync and alerts via ntfy on USB reset / disk I/O error
+- **safekeep:** pc-backup folder, personal project folder, both Music folders → /scratch/safekeep, checksum-verified
+- **Incident + hard rules:** ntfsfix was run on dirty NTFS volumes (once while ro-mounted elsewhere) → banned by owner; no NTFS rw mounts without plan approval; all chains stop at first failure. Full ntfsck v1.0.0 (built from verified upstream) report-only check later cleared all five volumes: 0 errors.
+- **Plan approvals:** 14 build decisions; MIGRATION-PLAN v1 → v2 (media-only: TV+Movies only, Recycle Bins/pc-backup folder/Music/ROMs erased at format; Show 55 + Show 49 → media/tv)
+
+## Earlier
+- Ubuntu Server 26.04.1 installed on the OptiPlex (by user); second NVMe carried a stale duplicate install (removed 11-05)
