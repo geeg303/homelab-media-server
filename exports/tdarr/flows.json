@@ -1,7 +1,7 @@
 [
   {
     "_id": "hdr10Qsv4k",
-    "description": "Approved Nov 9. Skips files already encoded by us or with video <= 8 Mbps, skips Dolby Vision and SDR. hevc_qsv Main10 q20 + HDR10 tags/metadata, duration 99.5-100.5%, size 5-95%. Writes to /scratch/tdarr/output-4k; never touches the library (read-only mount). /usr/local/sbin/tdarr-swap verifies and replaces originals (originals moved to /mnt/disk2/tdarr-originals).",
+    "description": "Approved Nov 9. CPU decode + QSV encode since Nov 9 evening; in-flow frame-count check. Skips files already encoded by us or with video <= 8 Mbps, skips Dolby Vision and SDR. hevc_qsv Main10 q20 + HDR10 tags/metadata, duration 99.5-100.5%, size 5-95%. Writes to /scratch/tdarr/output-4k; never touches the library (read-only mount). /usr/local/sbin/tdarr-swap verifies and replaces originals (originals moved to /mnt/disk2/tdarr-originals).",
     "flowEdges": [
       {
         "id": "e_hasQsv_1_start",
@@ -67,13 +67,6 @@
         "targetHandle": null
       },
       {
-        "id": "e_exec_1_dur",
-        "source": "exec",
-        "sourceHandle": "1",
-        "target": "dur",
-        "targetHandle": null
-      },
-      {
         "id": "e_dur_1_ratio",
         "source": "dur",
         "sourceHandle": "1",
@@ -134,6 +127,27 @@
         "source": "gate",
         "sourceHandle": "1",
         "target": "isDv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_exec_frames",
+        "source": "exec",
+        "sourceHandle": "1",
+        "target": "frames",
+        "targetHandle": null
+      },
+      {
+        "id": "e_frames_1_dur",
+        "source": "frames",
+        "sourceHandle": "1",
+        "target": "dur",
+        "targetHandle": null
+      },
+      {
+        "id": "e_frames_2_fail",
+        "source": "frames",
+        "sourceHandle": "2",
+        "target": "framesFail",
         "targetHandle": null
       }
     ],
@@ -209,12 +223,12 @@
           "ffmpegQuality": "20",
           "ffmpegQualityEnabled": "true",
           "forceEncoding": "true",
-          "hardwareDecoding": "true",
+          "hardwareDecoding": "false",
           "hardwareEncoding": "true",
           "hardwareType": "qsv",
           "outputCodec": "hevc"
         },
-        "name": "HEVC Quick Sync Main10, quality 20",
+        "name": "HEVC Quick Sync Main10, quality 20 (CPU decode: QSV decoder hangs on some files when 2 run at once)",
         "pluginName": "ffmpegCommandSetVideoEncoder",
         "position": {
           "x": 800,
@@ -366,7 +380,7 @@
         "id": "hdrArgs",
         "inputsDB": {
           "inputArguments": "",
-          "outputArguments": "-profile:v main10 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -color_range tv"
+          "outputArguments": "-pix_fmt p010le -profile:v main10 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -color_range tv"
         },
         "name": "Keep HDR10 colour tags (Main10, BT.2020, PQ)",
         "pluginName": "ffmpegCommandCustomArguments",
@@ -387,6 +401,32 @@
         "position": {
           "x": 400,
           "y": 60
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "frames",
+        "inputsDB": {
+          "code": "\nmodule.exports = async (args) => {\n  // Output 1 = new file has the same number of video frames as the original (±0.1%, min 2). Output 2 = frames lost: fail.\n  // Catches encodes that ffmpeg reports as successful but that silently lost video (e.g. after a GPU decoder hang).\n  const { execFile } = require('child_process');\n  const count = (f) => new Promise((res, rej) => execFile('/usr/local/bin/ffprobe',\n    ['-v', 'error', '-select_streams', 'v:0', '-count_packets', '-show_entries', 'stream=nb_read_packets', '-of', 'csv=p=0', f],\n    { maxBuffer: 1e7 }, (e, out) => (e ? rej(e) : res(parseInt(String(out).trim().replace(/,/g, ''), 10)))));\n  const a = await count(args.originalLibraryFile._id);\n  const b = await count(args.inputFileObj._id);\n  const ok = a > 0 && Math.abs(a - b) <= Math.max(2, a * 0.001);\n  args.jobLog('Frame check: original ' + a + ', new ' + b + (ok ? ' OK' : ' -> FRAMES LOST, failing'));\n  return { outputFileObj: args.inputFileObj, outputNumber: ok ? 1 : 2, variables: args.variables };\n};"
+        },
+        "name": "Same number of video frames as original?",
+        "pluginName": "customFunction",
+        "position": {
+          "x": 400,
+          "y": 1260
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "framesFail",
+        "inputsDB": {},
+        "name": "Frames lost: fail for review",
+        "pluginName": "failFlow",
+        "position": {
+          "x": 700,
+          "y": 1260
         },
         "sourceRepo": "Community"
       }
