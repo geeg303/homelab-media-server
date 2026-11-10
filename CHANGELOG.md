@@ -2,6 +2,9 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-10
+- Show 36: 78 episodes replaced overnight (203.3 → 97.5 GB, 52 % smaller), ~7/h, 500 left (~3 days). 2 HDTV episodes (S13E11, S13E18) stopped by the frame check; investigation scheduled after the enclosure setup
+
 ## 2026-11-09
 - Tdarr stays at 2 GPU workers (user): GPU render engine already 99% busy. Quick Sync low-power encoding test added to the post-enclosure to-dos (SWITCHOVER-PLAN)
 - **1080p production run started with one show (user): Show 36** (the biggest 1080p show: 589 episodes, 1.68 TB; 567 H.264, 16 HEVC, 6 AV1). New flow `hevcQsv1080p` = the approved pilot settings (H.264 → HEVC Quick Sync q22; existing HEVC only if video > 10 Mbps) plus the 4K-run lessons: CPU decode + QSV encode, in-flow frame-count check, duration 99.5–100.5 %, size 5–95 %; skips files already encoded by us, anything above 1080p, AV1/VP9 and HDR. Output `/scratch/tdarr/output-1080p`; `tdarr-swap.service` now runs for both output dirs (originals deleted after verification). Library `1080p - Show 36` (disk1 read-only). First fixed 4K re-runs verified: Show 56 S01E01/E02 frame check 45816/45816 and 48528/48528, swapped (80 %/79 % smaller), 0 GPU hangs

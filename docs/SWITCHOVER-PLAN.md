@@ -222,4 +222,5 @@ Then, app by app (each one verified before the next):
 5. **Pool fill:** disks end at about 94%, with `minfreespace=100G` per disk. New downloads have about 1.9 TB until Tdarr frees space. OK?
 
 ## To test after the second enclosure is set up (user, Nov 9)
+- **Show 36 HDTV frame-check failures** (user, Nov 10): S13E11 + S13E18 (HDTV-1080p) lost frames in the encode (S13E11: 117,924 → 90,250) and were stopped by the in-flow frame check; originals untouched. Find the cause (likely irregular broadcast frame timing), fix, retest on scratch copies, requeue.
 - **Quick Sync low-power encoding for more Tdarr throughput.** With 2 jobs the GPU render engine is 99% busy while the video engines sit at ~18%, so a 3rd worker adds nothing. Test `hevc_qsv` `low_power=1` (VDENC) on scratch copies of a few Show 36 episodes: size, speed and PSNR vs the current q22. Keep 2 workers and current settings until user decides.
