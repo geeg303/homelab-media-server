@@ -100,7 +100,7 @@ try:
     for l in sw:
         m = re.search(r"\| (\d+) -> (\d+) bytes", l)
         if m and " SWAPPED " in l: saved_b += int(m.group(1)) - int(m.group(2))
-    pend = len([f for _, _, fs in os.walk("/scratch/tdarr/output-4k") for f in fs if f.lower().endswith(VIDEO)])
+    pend = len([f for d in ("/scratch/tdarr/output-4k", "/scratch/tdarr/output-1080p") for _, _, fs in os.walk(d) for f in fs if f.lower().endswith(VIDEO)])
     data["swap"] = f"{n_ok} replaced in library · {saved_b/1e9:.1f} GB freed on disk1 · {pend} waiting · {n_bad} failed checks"
 except FileNotFoundError:
     data["swap"] = "no replacements yet"
