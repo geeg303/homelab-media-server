@@ -38,6 +38,7 @@ cp_if /etc/fstab host/fstab
 cp_if /etc/snapraid.conf host/snapraid.conf
 cp_if /etc/media-server/migration-rounds.json host/migration-rounds.json
 for f in /etc/sysctl.d/99-*.conf; do cp_if "$f" "host/sysctl.d/$(basename "$f")"; done
+if command -v virsh >/dev/null && virsh -c qemu:///system dominfo haos >/dev/null 2>&1; then mkdir -p "$S/host/libvirt"; virsh -c qemu:///system dumpxml --inactive --security-info haos | sed -E "/<uuid>|<nvram|<source file=.*nvram/d" > "$S/host/libvirt/haos.xml"; fi
 if command -v tailscale >/dev/null; then mkdir -p "$S/host"; tailscale debug prefs 2>/dev/null | python3 -c 'import json,sys; p=json.load(sys.stdin); print(json.dumps({k: p.get(k) for k in ("AdvertiseRoutes","RouteAll","ExitNodeID","AdvertiseTags","RunSSH","ShieldsUp","Hostname","CorpDNS")}, indent=1, sort_keys=True))' > "$S/host/tailscale-prefs.json" || true; fi
 if [ -f /etc/netplan/01-media-server.yaml ]; then
   mkdir -p "$S/host"; sed -E 's/^([[:space:]]*password:).*/\1 <REDACTED>/' /etc/netplan/01-media-server.yaml > "$S/host/netplan-01-media-server.yaml"
