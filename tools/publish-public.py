@@ -17,7 +17,7 @@ PRIV = r"C:/Users/user/media-server-repo"
 PUB = r"C:/Users/user/media-server-public"
 MAP = r"C:/Users/user/media-server-stack/sanitize-map.json"
 GH = r"C:/Program Files/GitHub CLI/gh.exe"
-TEXT_EXT = (".md", ".yml", ".yaml", ".json", ".sh", ".py", ".conf", ".service", ".timer", ".txt", ".tsv", ".example", ".js", ".css",
+TEXT_EXT = (".md", ".xml", ".yml", ".yaml", ".json", ".sh", ".py", ".conf", ".service", ".timer", ".txt", ".tsv", ".example", ".js", ".css",
             ".pending", ".gitignore", ".gitattributes")
 TEXT_NAMES = ("fstab",)
 
