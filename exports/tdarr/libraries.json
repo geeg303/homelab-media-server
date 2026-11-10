@@ -805,7 +805,7 @@
       }
     ],
     "scheduledScanFindNew": false,
-    "sizeDiff": 2.8933724256CE27CA,
+    "sizeDiff": 13.378795213997364,
     "useFsEvents": false
   },
   {
@@ -3232,7 +3232,7 @@
       }
     ],
     "scheduledScanFindNew": false,
-    "sizeDiff": 0,
+    "sizeDiff": 0.0,
     "useFsEvents": false
   },
   {
@@ -5659,7 +5659,7 @@
       }
     ],
     "scheduledScanFindNew": false,
-    "sizeDiff": 0,
+    "sizeDiff": 0.0,
     "useFsEvents": false
   },
   {
