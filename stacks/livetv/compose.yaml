@@ -1,0 +1,37 @@
+# Live TV: PrismCast captures YouTube TV channels in Chrome and serves them to Plex as an HDHomeRun tuner.
+# Web UI :5589 (LAN), noVNC :6080 (LAN, password in livetv.env) for the one-time YouTube TV login,
+# raw VNC only on localhost, HDHomeRun emulation :5004 (Plex runs with host networking -> 127.0.0.1:5004).
+# CPU capture for now (no /dev/dri): the GPU render engine is busy with Tdarr.
+services:
+  prismcast:
+    image: ghcr.io/hjdhjd/prismcast:latest
+    container_name: prismcast
+    hostname: prismcast
+    shm_size: "2gb"
+    mem_limit: 6g
+    env_file: livetv.env
+    environment:
+      - TZ=Region/City
+      - PORT=5589
+      - VNC_PORT=5900
+      - NOVNC_PORT=6080
+      - HDHR_PORT=5004
+      - HDHR_FRIENDLY_NAME=PrismCast (YouTube TV)
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+      - QUALITY_PRESET=720p-high
+      - MAX_CONCURRENT_STREAMS=2
+    ports:
+      - "5589:5589"
+      - "6080:6080"
+      - "127.0.0.1:5900:5900"
+      - "5004:5004"
+    volumes:
+      - /opt/media/config/prismcast:/root/.prismcast
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:5589/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped

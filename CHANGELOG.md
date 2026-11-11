@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-10
+- **Live TV stack `livetv` (user: try PrismCast):** PrismCast v1.14.0 (`ghcr.io/hjdhjd/prismcast`), Chrome capture of YouTube TV served to Plex as an HDHomeRun tuner (`:5004`, 2 tuners, 213-channel built-in lineup). Web UI `:5589`, noVNC `:6080` (password in `stacks/livetv/livetv.env`, 600) for user's one-time YouTube TV login; raw VNC localhost only. 720p-high preset, max 2 streams, CPU capture (no GPU while Tdarr runs), 6 GB memory cap, data in `/opt/media/config/prismcast`. Plex DVR + Homepage tile + Kuma monitor after the test
 - Research: live TV / IPTV in Plex (`docs/IPTV-RESEARCH.md`): Dispatcharr (tuner emulator) + FastChannels (legal free-channel sources), HDHomeRun for locals, legal paid services with trials and their DRM limits. Nothing installed
 - Show 36: 78 episodes replaced overnight (203.3 → 97.5 GB, 52 % smaller), ~7/h, 500 left (~3 days). 2 HDTV episodes (S13E11, S13E18) stopped by the frame check; investigation scheduled after the enclosure setup
 

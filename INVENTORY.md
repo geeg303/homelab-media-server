@@ -11,6 +11,7 @@ homepage      ghcr.io/gethomepage/homepage:latest      running
 kometa        lscr.io/linuxserver/kometa:latest        running
 maintainerr   ghcr.io/maintainerr/maintainerr:latest   running
 plex          lscr.io/linuxserver/plex:latest          running
+prismcast     ghcr.io/hjdhjd/prismcast:latest          running
 prowlarr      lscr.io/linuxserver/prowlarr:latest      running
 radarr        lscr.io/linuxserver/radarr:latest        running
 recyclarr     ghcr.io/recyclarr/recyclarr:8            running
