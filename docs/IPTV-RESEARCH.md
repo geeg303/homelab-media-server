@@ -43,3 +43,9 @@ The paid services are all encrypted (Widevine), so they can't be piped straight 
 3. **Paid channels:** only if 1–2 aren't enough. Start a Philo or Frndly 7-day trial and test the DRM bridge on one channel before paying. Cancel inside the trial if it's flaky.
 
 Box impact: both containers are small (no transcoding unless an output profile is enabled); streams are ~3–8 Mbps each over Wi-Fi. Tdarr isn't affected (no GPU use).
+
+## YouTube TV (user has the Family plan) — Nov 10
+- No official way: YouTube TV has no M3U/tuner output and its streams are DRM-encrypted.
+- **PrismCast** (github hjdhjd/prismcast, active) has **YouTube TV built in** (plus Hulu, Sling, Fox, HBO Max, DirecTV Stream, Spectrum, Xfinity) and **HDHomeRun emulation for Plex**. It logs in once in its own Chrome, plays the channel, captures it with FFmpeg and serves it to Plex as a tuner, so Plex gets live TV + DVR. Docker image includes Chrome.
+- Costs/limits: one Chrome capture per channel being watched/recorded (CPU encode; the box can likely do 2–3 at once next to Tdarr); up to 1080p capture quality; each tuner uses one of the plan's simultaneous streams (Family plan: 3, shared with the household); a few channels reported missing by users; guide mapping in Plex to be tested. Automated capture is against YouTube TV's terms of service (personal use; the realistic risk is account trouble, not legal).
+- Alternative path: YouTube TV as a TV Everywhere login for network sources in FastChannels (ESPN, FOX, NBCU, Discovery…). Not in FastChannels' verified provider list; still DRM → bridge needed. PrismCast is the direct route.
