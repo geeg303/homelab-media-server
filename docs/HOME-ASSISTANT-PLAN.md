@@ -1,4 +1,4 @@
-# Home Assistant OS in a VM on box (VM RUNNING since Nov 9; waiting for the Wi-Fi adapter)
+# Home Assistant OS in a VM on box (RUNNING on its own Wi-Fi at 192.0.2.150 since Nov 11)
 
 Decided Nov 8 (user): **HAOS in a KVM virtual machine** with its **own USB Wi-Fi adapter** passed through, because the box is Wi-Fi only and Wi-Fi can't be bridged. The VM joins the home Wi-Fi itself as a normal LAN device (own IP via DHCP), so discovery, mDNS, Matter and add-ons all work.
 
@@ -32,6 +32,8 @@ Plug it into a **USB 2/3 port away from the drive enclosures**, ideally on a sho
 - Tue: adapter → `lsusb` check → hostdev passthrough → Wi-Fi set in HAOS (password typed by user) → DHCP reservation → remove the temporary NIC (the qemu:commandline block) → Homepage tile + Kuma monitor + backups.
 
 - ✅ Nov 11: Netgear A8000 arrived and verified (USB 0846:9060, MediaTek, host bound `mt7921u`, firmware 20260224). Passed through to `haos` (managed USB hostdev by vendor/product + a `qemu-xhci` controller so it runs at USB 3 speed). Graceful VM shutdown timed out after 2 min (HAOS ignored ACPI), so the VM was force-stopped once; HA came back fine. Adapter MAC 02:00:00:00:00:05 (for the DHCP reservation). Next: user sets Wi-Fi in HA → reservation → remove temp NIC.
+
+- ✅ Nov 11: user joined HA to Wi-Fi (DHCP reservation for 02:00:00:00:00:05 → **192.0.2.150**). Temporary QEMU user NIC removed from the VM definition, host :8123 forward removed; VM cold-restarted after user's in-HA "Shut down system" (Restart → Advanced options). HA serves on port **80** (http://192.0.2.150). Homepage tile (Ops) + Uptime Kuma monitor "Home Assistant" added. Still to do: HA widget token (user), HAOS backups target.
 
 ## Notes
 - When the box reboots, automations pause; keep life-safety things (locks, smoke) not dependent on HA.

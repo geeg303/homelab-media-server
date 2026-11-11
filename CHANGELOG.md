@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **Home Assistant on its own Wi-Fi:** 192.0.2.150 (UniFi reservation for the adapter). Temporary QEMU user NIC and host :8123 forward removed; VM definition now has only the passed-through adapter. Homepage tile + Kuma monitor added
 - **HAOS Wi-Fi adapter passed through:** Netgear A8000 (MT7921AU, 0846:9060) verified on the host, then attached to VM `haos` as a USB hostdev with a qemu-xhci controller. VM had to be force-stopped once (graceful shutdown timed out). HA up. Wi-Fi setup in HA pending (user)
 - PrismCast: YouTube TV logins done; lineup cleanup to user's Sports plan (+ forcing channels to the YouTube TV service; HGTV defaulted to the Food Network site) postponed by user
 

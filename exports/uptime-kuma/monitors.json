@@ -3359,6 +3359,129 @@
       "auth_domain": null,
       "auth_method": null,
       "auth_workstation": null,
+      "basic_auth_pass": "",
+      "basic_auth_user": "",
+      "bearer_token": "",
+      "body": null,
+      "cache_bust": 0,
+      "conditions": [],
+      "database_connection_string": null,
+      "database_query": null,
+      "description": null,
+      "dns_last_result": null,
+      "dns_resolve_server": "",
+      "dns_resolve_type": "A",
+      "docker_container": "",
+      "docker_host": null,
+      "domain_expiry_notification": 0,
+      "expected_tls_alert": null,
+      "expected_value": null,
+      "expiry_notification": 0,
+      "game": null,
+      "gamedig_given_port_only": 1,
+      "gamedig_token": "",
+      "grpc_body": null,
+      "grpc_enable_tls": 0,
+      "grpc_metadata": null,
+      "grpc_method": null,
+      "grpc_protobuf": null,
+      "grpc_service_name": null,
+      "grpc_url": null,
+      "headers": null,
+      "hostname": null,
+      "http_body_encoding": "json",
+      "id": 29,
+      "ignore_tls": 0,
+      "interval": 60,
+      "invert_keyword": 0,
+      "ip_family": null,
+      "json_path": null,
+      "json_path_operator": null,
+      "kafka_producer_allow_auto_topic_creation": 0,
+      "kafka_producer_brokers": [],
+      "kafka_producer_message": null,
+      "kafka_producer_sasl_options": {
+        "mechanism": "None"
+      },
+      "kafka_producer_ssl": 0,
+      "kafka_producer_topic": null,
+      "keyword": null,
+      "location": "world",
+      "manual_status": null,
+      "maxredirects": 10,
+      "maxretries": 2,
+      "method": "GET",
+      "mqtt_check_type": "keyword",
+      "mqtt_password": "",
+      "mqtt_success_message": "",
+      "mqtt_topic": "",
+      "mqtt_username": "",
+      "mqtt_websocket_path": "",
+      "name": "Home Assistant",
+      "ntp_root_dispersion_threshold": 500,
+      "ntp_stratum_threshold": 5,
+      "ntp_time_offset_threshold": 1000,
+      "oauth_audience": null,
+      "oauth_auth_method": "client_secret_basic",
+      "oauth_client_id": null,
+      "oauth_client_secret": null,
+      "oauth_scopes": null,
+      "oauth_token_url": null,
+      "parent": 18,
+      "ping_numeric": 1,
+      "ping_per_request_timeout": 2,
+      "port": null,
+      "protocol": null,
+      "proxy_id": null,
+      "push_token": null,
+      "rabbitmq_nodes": [],
+      "rabbitmq_password": "",
+      "rabbitmq_username": "",
+      "radius_called_station_id": null,
+      "radius_calling_station_id": null,
+      "radius_password": null,
+      "radius_secret": null,
+      "radius_username": null,
+      "remote_browser": null,
+      "resend_interval": 0,
+      "response_max_length": 1024,
+      "retry_interval": 60,
+      "retry_only_on_status_code_failure": 0,
+      "save_error_response": 1,
+      "save_response": 0,
+      "screenshot_delay": 0,
+      "sftp_path": null,
+      "smtp_security": null,
+      "snmp_oid": null,
+      "snmp_v3_username": null,
+      "snmp_version": "2c",
+      "ssh_auth_method": "password",
+      "ssh_passphrase": null,
+      "ssh_password": null,
+      "ssh_private_key": null,
+      "ssh_username": null,
+      "subtype": null,
+      "system_service_name": "",
+      "timeout": 48.0,
+      "tls_ca": null,
+      "tls_cert": null,
+      "tls_key": null,
+      "type": "http",
+      "upside_down": 0,
+      "url": "http://192.0.2.150/",
+      "user_id": 1,
+      "weight": 2000,
+      "ws_ignore_sec_websocket_accept_header": 0,
+      "ws_subprotocol": ""
+    },
+    {
+      "accepted_statuscodes_json": [
+        "200-299"
+      ],
+      "active": 1,
+      "auth_domain": null,
+      "auth_method": null,
+      "auth_workstation": null,
       "basic_auth_pass": null,
       "basic_auth_user": null,
       "bearer_token": null,
@@ -3478,119 +3601,124 @@
   "monitor_group": [],
   "monitor_maintenance": [
     {
-      "id": 65,
-      "maintenance_id": 1,
-      "monitor_id": 1
-    },
-    {
-      "id": 66,
-      "maintenance_id": 1,
-      "monitor_id": 2
-    },
-    {
-      "id": 67,
-      "maintenance_id": 1,
-      "monitor_id": 3
-    },
-    {
-      "id": 68,
-      "maintenance_id": 1,
-      "monitor_id": 4
-    },
-    {
-      "id": 69,
-      "maintenance_id": 1,
-      "monitor_id": 5
-    },
-    {
-      "id": 70,
-      "maintenance_id": 1,
-      "monitor_id": 6
-    },
-    {
-      "id": 71,
-      "maintenance_id": 1,
-      "monitor_id": 7
-    },
-    {
-      "id": 72,
-      "maintenance_id": 1,
-      "monitor_id": 8
-    },
-    {
-      "id": 73,
-      "maintenance_id": 1,
-      "monitor_id": 9
-    },
-    {
-      "id": 74,
-      "maintenance_id": 1,
-      "monitor_id": 10
-    },
-    {
-      "id": 75,
-      "maintenance_id": 1,
-      "monitor_id": 11
-    },
-    {
-      "id": 76,
-      "maintenance_id": 1,
-      "monitor_id": 12
-    },
-    {
-      "id": 77,
+      "id": 100,
       "maintenance_id": 1,
       "monitor_id": 13
     },
     {
-      "id": 78,
+      "id": 101,
       "maintenance_id": 1,
       "monitor_id": 14
     },
     {
-      "id": 79,
+      "id": 102,
       "maintenance_id": 1,
       "monitor_id": 15
     },
     {
-      "id": 80,
+      "id": 103,
       "maintenance_id": 1,
       "monitor_id": 16
     },
     {
-      "id": 81,
+      "id": 104,
       "maintenance_id": 1,
       "monitor_id": 17
     },
     {
-      "id": 82,
+      "id": 105,
       "maintenance_id": 1,
       "monitor_id": 18
     },
     {
-      "id": 83,
+      "id": 106,
       "maintenance_id": 1,
       "monitor_id": 19
     },
     {
-      "id": 84,
+      "id": 107,
       "maintenance_id": 1,
       "monitor_id": 20
     },
     {
-      "id": 85,
+      "id": 108,
       "maintenance_id": 1,
       "monitor_id": 21
     },
     {
-      "id": 86,
+      "id": 109,
       "maintenance_id": 1,
       "monitor_id": 26
     },
     {
-      "id": 87,
+      "id": 110,
       "maintenance_id": 1,
       "monitor_id": 27
+    },
+    {
+      "id": 111,
+      "maintenance_id": 1,
+      "monitor_id": 29
+    },
+    {
+      "id": 88,
+      "maintenance_id": 1,
+      "monitor_id": 1
+    },
+    {
+      "id": 89,
+      "maintenance_id": 1,
+      "monitor_id": 2
+    },
+    {
+      "id": 90,
+      "maintenance_id": 1,
+      "monitor_id": 3
+    },
+    {
+      "id": 91,
+      "maintenance_id": 1,
+      "monitor_id": 4
+    },
+    {
+      "id": 92,
+      "maintenance_id": 1,
+      "monitor_id": 5
+    },
+    {
+      "id": 93,
+      "maintenance_id": 1,
+      "monitor_id": 6
+    },
+    {
+      "id": 94,
+      "maintenance_id": 1,
+      "monitor_id": 7
+    },
+    {
+      "id": 95,
+      "maintenance_id": 1,
+      "monitor_id": 8
+    },
+    {
+      "id": 96,
+      "maintenance_id": 1,
+      "monitor_id": 9
+    },
+    {
+      "id": 97,
+      "maintenance_id": 1,
+      "monitor_id": 10
+    },
+    {
+      "id": 98,
+      "maintenance_id": 1,
+      "monitor_id": 11
+    },
+    {
+      "id": 99,
+      "maintenance_id": 1,
+      "monitor_id": 12
     }
   ],
   "monitor_notification": [
@@ -3697,6 +3825,11 @@
     {
       "id": 28,
       "monitor_id": 28,
+      "notification_id": 1
+    },
+    {
+      "id": 29,
+      "monitor_id": 29,
       "notification_id": 1
     },
     {

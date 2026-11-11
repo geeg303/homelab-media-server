@@ -1,6 +1,6 @@
-<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm'>
   <name>haos</name>
-  <description>Home Assistant OS (Nov 9). TEMP slirp NIC :8123 until the USB Wi-Fi adapter is passed through</description>
+  <description>Home Assistant OS (Nov 9). Network: passed-through USB Wi-Fi adapter (Netgear A8000) only</description>
   <memory unit='KiB'>4194304</memory>
   <currentMemory unit='KiB'>4194304</currentMemory>
   <vcpu placement='static'>2</vcpu>
@@ -79,11 +79,5 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
     </memballoon>
   </devices>
-  <qemu:commandline>
-    <qemu:arg value='-netdev'/>
-    <qemu:arg value='user,id=tmpnet,hostfwd=tcp:0.0.0.0:8123-:80'/>
-    <qemu:arg value='-device'/>
-    <qemu:arg value='virtio-net-pci,netdev=tmpnet,mac=02:00:00:00:00:04,bus=pci.0,addr=0x10'/>
-  </qemu:commandline>
 </domain>
 

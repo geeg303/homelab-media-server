@@ -173,6 +173,11 @@
           url: http://wud:3000
           username: "{{HOMEPAGE_VAR_WUD_USER}}"
           password: "{{HOMEPAGE_VAR_WUD_PASSWORD}}"
+    - Home Assistant:
+        href: "http://192.0.2.150"
+        icon: home-assistant.png
+        description: "HAOS VM · own Wi-Fi adapter"
+        siteMonitor: "http://192.0.2.150"
     - Files:
         href: "http://192.0.2.242:8099"
         icon: filebrowser.png
