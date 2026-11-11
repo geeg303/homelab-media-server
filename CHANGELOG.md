@@ -2,6 +2,10 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-11
+- **HAOS Wi-Fi adapter passed through:** Netgear A8000 (MT7921AU, 0846:9060) verified on the host, then attached to VM `haos` as a USB hostdev with a qemu-xhci controller. VM had to be force-stopped once (graceful shutdown timed out). HA up. Wi-Fi setup in HA pending (user)
+- PrismCast: YouTube TV logins done; lineup cleanup to user's Sports plan (+ forcing channels to the YouTube TV service; HGTV defaulted to the Food Network site) postponed by user
+
 ## 2026-11-10
 - **Live TV stack `livetv` (user: try PrismCast):** PrismCast v1.14.0 (`ghcr.io/hjdhjd/prismcast`), Chrome capture of YouTube TV served to Plex as an HDHomeRun tuner (`:5004`, 2 tuners, 213-channel built-in lineup). Web UI `:5589`, noVNC `:6080` (password in `stacks/livetv/livetv.env`, 600) for user's one-time YouTube TV login; raw VNC localhost only. 720p-high preset, max 2 streams, CPU capture (no GPU while Tdarr runs), 6 GB memory cap, data in `/opt/media/config/prismcast`. Plex DVR + Homepage tile + Kuma monitor after the test
 - Research: live TV / IPTV in Plex (`docs/IPTV-RESEARCH.md`): Dispatcharr (tuner emulator) + FastChannels (legal free-channel sources), HDHomeRun for locals, legal paid services with trials and their DRM limits. Nothing installed

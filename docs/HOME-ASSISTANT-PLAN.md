@@ -31,6 +31,8 @@ Plug it into a **USB 2/3 port away from the drive enclosures**, ideally on a sho
 - 👤 Next: user finishes onboarding (creates the owner account) soon, since until then anyone on the LAN could.
 - Tue: adapter → `lsusb` check → hostdev passthrough → Wi-Fi set in HAOS (password typed by user) → DHCP reservation → remove the temporary NIC (the qemu:commandline block) → Homepage tile + Kuma monitor + backups.
 
+- ✅ Nov 11: Netgear A8000 arrived and verified (USB 0846:9060, MediaTek, host bound `mt7921u`, firmware 20260224). Passed through to `haos` (managed USB hostdev by vendor/product + a `qemu-xhci` controller so it runs at USB 3 speed). Graceful VM shutdown timed out after 2 min (HAOS ignored ACPI), so the VM was force-stopped once; HA came back fine. Adapter MAC 02:00:00:00:00:05 (for the DHCP reservation). Next: user sets Wi-Fi in HA → reservation → remove temp NIC.
+
 ## Notes
 - When the box reboots, automations pause; keep life-safety things (locks, smoke) not dependent on HA.
 - Zigbee/Z-Wave/Thread need a separate USB radio stick, also passed through to the VM; decide once devices are known.
