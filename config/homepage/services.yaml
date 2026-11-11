@@ -28,6 +28,29 @@
               label: Health
             - field: updated
               label: Updated
+    - New drives self-test:
+        icon: mdi-harddisk
+        description: "SMART long test, 5× WD 8 TB (second enclosure)"
+        widget:
+          type: customapi
+          url: http://status/selftest.json
+          refreshInterval: 60000
+          display: list
+          mappings:
+            - field: now
+              label: Status
+            - field: bay1
+              label: Bay 1
+            - field: bay2
+              label: Bay 2
+            - field: bay3
+              label: Bay 3
+            - field: bay4
+              label: Bay 4
+            - field: bay5
+              label: Bay 5
+            - field: updated
+              label: Updated
 - Conversions:
     - Tdarr conversions (live):
         href: "http://192.0.2.242:8265"

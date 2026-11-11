@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **SMART long self-tests started on the 5 WDs (user: yes):** inactive DDF arrays md126/md127 stopped (no disk writes) and `AUTO -all` added to `/etc/mdadm/mdadm.conf` so foreign RAID metadata is never auto-assembled again. New `/usr/local/sbin/selftest-status` + `selftest-status.timer` (every 2 min; also keeps the USB bridge awake) → Homepage tile "New drives self-test" in Migration. Drive estimates: done between Thu 00:03 and 05:21
 - **Second enclosure plugged in (read-only check):** 5× WD80EMAZ all SMART PASSED, 0 bad sectors, helium 100, 20–42k power-on hours; LSI DDF RAID metadata on all five (mdadm auto-assembled inactive md126/md127); both JMicron bridges share one USB serial, so `usb-*` by-id links are unreliable (use `ata-`/`wwn-`). Details: `docs/ENCLOSURE2-CHECK.md`
 - **Home Assistant on its own Wi-Fi:** 192.0.2.150 (UniFi reservation for the adapter). Temporary QEMU user NIC and host :8123 forward removed; VM definition now has only the passed-through adapter. Homepage tile + Kuma monitor added
 - **HAOS Wi-Fi adapter passed through:** Netgear A8000 (MT7921AU, 0846:9060) verified on the host, then attached to VM `haos` as a USB hostdev with a qemu-xhci controller. VM had to be force-stopped once (graceful shutdown timed out). HA up. Wi-Fi setup in HA pending (user)
