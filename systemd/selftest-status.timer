@@ -1,0 +1,8 @@
+[Unit]
+Description=SMART self-test progress every 2 minutes (also keeps the USB bridge awake during tests)
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=2min
+AccuracySec=10s
+[Install]
+WantedBy=timers.target

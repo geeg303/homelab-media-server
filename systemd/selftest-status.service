@@ -1,0 +1,7 @@
+[Unit]
+Description=SMART long self-test progress for Homepage (second enclosure)
+[Service]
+Type=oneshot
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/local/sbin/selftest-status

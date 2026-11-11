@@ -20,7 +20,7 @@ done
 cp_if /opt/media/dockge/compose.yaml dockge/compose.yaml
 
 # --- host scripts (text only) ---
-for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-report tdarr-swap mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly; do
+for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-report tdarr-swap selftest-status mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly; do
   [ -f /usr/local/sbin/$f ] || continue
   ext=.sh; head -1 /usr/local/sbin/$f | grep -q python && ext=.py
   cp_if /usr/local/sbin/$f scripts-reference/$f$ext
@@ -28,7 +28,7 @@ done
 
 # --- systemd units ---
 for u in media-config-backup.service media-config-backup.timer migration-status.service migration-status.timer \
-         tdarr-status.service tdarr-status.timer tdarr-swap.service tdarr-swap.timer \
+         tdarr-status.service tdarr-status.timer tdarr-swap.service tdarr-swap.timer selftest-status.service selftest-status.timer \
          mount-push.service mount-push.timer usb-watchdog.service wifi-powersave-off.service \
          snapraid-nightly.service snapraid-nightly.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
 for f in /etc/systemd/system/docker.service.d/*.conf; do cp_if "$f" "systemd/docker.service.d/$(basename "$f")"; done
