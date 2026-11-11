@@ -1,0 +1,7 @@
+[Unit]
+Description=Host health checks pushed to Uptime Kuma (disk space, SMART, drives present, Tailscale, GPU hangs, Tdarr swap)
+[Service]
+Type=oneshot
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/local/sbin/host-health-push

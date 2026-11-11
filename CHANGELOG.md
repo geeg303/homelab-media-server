@@ -3,6 +3,9 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **Uptime Kuma: recommended health checks added (user)** — 11 new monitors, all up on first check:
+  - Pull: PrismCast web UI (`:5589/health`) and Plex tuner (`:5004/discover.json` keyword), Dashboard status feed (`status` container), Router ping 192.0.2.1, Internet DNS lookup (one.one.one.one via 1.1.1.1) — router vs internet tells a Wi-Fi drop from an ISP outage
+  - New group **Host health** (push, every 5 min from `/usr/local/sbin/host-health-push` + timer; tokens in `/etc/media-server/host-health-push.conf`, 600): Disk space (/ and /scratch < 90 %, data disks < 97 %), Drive health (SMART PASSED + 0 pending/uncorrectable on all 10 disks, every 30 min), All 10 drives connected (by serial), Tailscale running, Quick Sync GPU (no `GPU HANG` in 10 min), Tdarr swap job not failed. Each failure pushes `down` with the reason → ntfy
 - **SMART long self-tests started on the 5 WDs (user: yes):** inactive DDF arrays md126/md127 stopped (no disk writes) and `AUTO -all` added to `/etc/mdadm/mdadm.conf` so foreign RAID metadata is never auto-assembled again. New `/usr/local/sbin/selftest-status` + `selftest-status.timer` (every 2 min; also keeps the USB bridge awake) → Homepage tile "New drives self-test" in Migration. Drive estimates: done between Thu 00:03 and 05:21
 - **Second enclosure plugged in (read-only check):** 5× WD80EMAZ all SMART PASSED, 0 bad sectors, helium 100, 20–42k power-on hours; LSI DDF RAID metadata on all five (mdadm auto-assembled inactive md126/md127); both JMicron bridges share one USB serial, so `usb-*` by-id links are unreliable (use `ata-`/`wwn-`). Details: `docs/ENCLOSURE2-CHECK.md`
 - **Home Assistant on its own Wi-Fi:** 192.0.2.150 (UniFi reservation for the adapter). Temporary QEMU user NIC and host :8123 forward removed; VM definition now has only the passed-through adapter. Homepage tile + Kuma monitor added
