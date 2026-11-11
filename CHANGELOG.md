@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-10
+- Research: live TV / IPTV in Plex (`docs/IPTV-RESEARCH.md`): Dispatcharr (tuner emulator) + FastChannels (legal free-channel sources), HDHomeRun for locals, legal paid services with trials and their DRM limits. Nothing installed
 - Show 36: 78 episodes replaced overnight (203.3 → 97.5 GB, 52 % smaller), ~7/h, 500 left (~3 days). 2 HDTV episodes (S13E11, S13E18) stopped by the frame check; investigation scheduled after the enclosure setup
 
 ## 2026-11-09
