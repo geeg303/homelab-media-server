@@ -3,6 +3,16 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **Round 3 queued to start automatically after the WD format.** user, 22:00: "You have my explicit permission to format the 5 drives once they finish the health check. Once the format is complete proceed with round 3".
+  - After `wd-format-batch` succeeds, `round3-start` runs:
+    1. Pauses Tdarr (`tdarr-workers set 0 0`).
+    2. Waits up to 90 min for the running encodes to finish, then runs `tdarr-swap` once.
+    3. Writes the round 3 entry for the Migration tile (baseline, sources, dest).
+    4. Starts `migrate-round3` in tmux session `round3`.
+  - `migrate-round3` copies sdd → disk3 `media/tv`: `TV Shows` (37), `_from_sdc/TV Shows` (15 staged), Show 55, Show 49; 7.21 TB.
+    - Guards: SMART gate by serial; checks the source is SERIAL-SDD and mounted ro, and the destination is SERIAL-WD1 and writable; no other rsync running.
+    - Copy-only rsync, then a per-folder `rsync -rc` verify (expected differences=0; no duplicate show names on sdd or vs disk1).
+  - sdd's own format stays gated on user's OK. sdd's phone-backup folders (Music, DCIM, etc.) are out of scope per the plan and aren't copied.
 - **Plan: Tdarr pauses during rounds 3–5** (user). Workers go to 0 before round 3, running encodes finish and get swapped first, and it resumes after round 5. Show 36 had 232 episodes queued at 21:29 (≈31 h at 7.4/h). SWITCHOVER-PLAN step 5
 - **WD drives: pre-approved auto-format (user 21:15: "I want to give permission now for you to format them all once they pass the test")**:
   - `wd-format-when-passed.timer` runs every 10 min and waits for all 5 SMART long tests. If every one passed, it runs the guarded `wd-format-batch`:
