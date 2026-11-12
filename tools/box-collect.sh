@@ -9,7 +9,7 @@ umask 077
 cp_if(){ [ -e "$1" ] && { mkdir -p "$S/$(dirname "$2")"; cp -a "$1" "$S/$2"; } || true; }
 
 # --- compose stacks (+ env as key-only examples) ---
-for st in core plex tdarr ops livetv; do
+for st in core plex tdarr ops livetv glances; do
   for f in compose.yaml compose.nodata.yaml; do cp_if /opt/media/stacks/$st/$f stacks/$st/$f; done
   for envf in /opt/media/stacks/$st/.env /opt/media/stacks/$st/*.env; do
     [ -f "$envf" ] || continue

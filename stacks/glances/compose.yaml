@@ -1,0 +1,22 @@
+# Glances: CPU / memory / load / containers of the box itself, for Home Assistant (glances integration) and Homepage.
+# Web UI + REST API v4 on :61208 (LAN). pid: host so it sees every host process. Docker stats come through the
+# read-only socket-proxy (no socket mount). No /data, /mnt/mig/* or host-root mount: the fs plugin only sees the
+# container's own mounts, so the NTFS migration disks stay out of it. No state, so nothing to back up.
+services:
+  glances:
+    image: nicolargo/glances:4.5.9-full
+    container_name: glances
+    restart: unless-stopped
+    pid: host
+    networks: [media]
+    ports: ["61208:61208"]
+    environment:
+      TZ: Region/City
+      GLANCES_OPT: "-w"
+      DOCKER_HOST: tcp://socket-proxy:2375
+    volumes:
+      - /etc/os-release:/etc/os-release:ro
+
+networks:
+  media:
+    external: true

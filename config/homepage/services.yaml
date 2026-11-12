@@ -271,3 +271,14 @@
         description: "serves the Migration / Conversions / self-test tile JSON"
         server: box
         container: status
+    - Glances:
+        href: "http://192.0.2.242:61208"
+        icon: glances.png
+        description: "box CPU / memory / load / containers (feeds Home Assistant)"
+        server: box
+        container: glances
+        widget:
+          type: glances
+          url: http://192.0.2.242:61208
+          version: 4
+          metric: info
