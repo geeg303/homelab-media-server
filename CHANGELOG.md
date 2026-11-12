@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **usb-watchdog covers both enclosures (user: yes):** reset/disconnect pattern widened from `usb 2-4` to `usb 2-[34]` (second JMicron bridge is on 2-3; 2-8 = HA Wi-Fi adapter stays excluded so VM restarts don't pause copies). Pattern tested against sample lines; service restarted, active
 - **Audit follow-ups 1, 2, 5 (user: do them):**
   - Kuma Host health gained **Status tiles up to date** (tdarr/migration/selftest status JSON < 10 min old and their services not failed; only for enabled timers) and **USB watchdog** (usb-watchdog.service active). Both via `host-health-push`; status page `box` refreshed (40 checks, all up)
   - `systemd-networkd-wait-online` no longer shows failed: drop-in `20-media-server.conf` waits only for Wi-Fi `wlp0s20f3` routable (60 s cap) instead of netplan's `--dns` probe that timed out at the Nov 5 boot. `systemctl --failed`: 0
