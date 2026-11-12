@@ -20,7 +20,7 @@ done
 cp_if /opt/media/dockge/compose.yaml dockge/compose.yaml
 
 # --- host scripts (text only) ---
-for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly; do
+for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws; do
   [ -f /usr/local/sbin/$f ] || continue
   ext=.sh; head -1 /usr/local/sbin/$f | grep -q python && ext=.py
   cp_if /usr/local/sbin/$f scripts-reference/$f$ext
@@ -38,6 +38,7 @@ cp_if /etc/fstab host/fstab
 cp_if /etc/snapraid.conf host/snapraid.conf
 cp_if /etc/media-server/migration-rounds.json host/migration-rounds.json
 cp_if /etc/mdadm/mdadm.conf host/mdadm.conf
+cp_if /etc/docker/daemon.json host/docker-daemon.json
 for f in /etc/sysctl.d/99-*.conf; do cp_if "$f" "host/sysctl.d/$(basename "$f")"; done
 if command -v virsh >/dev/null && virsh -c qemu:///system dominfo haos >/dev/null 2>&1; then mkdir -p "$S/host/libvirt"; virsh -c qemu:///system dumpxml --inactive --security-info haos | sed -E "/<uuid>|<nvram|<source file=.*nvram/d" > "$S/host/libvirt/haos.xml"; fi
 if command -v tailscale >/dev/null; then mkdir -p "$S/host"; tailscale debug prefs 2>/dev/null | python3 -c 'import json,sys; p=json.load(sys.stdin); print(json.dumps({k: p.get(k) for k in ("AdvertiseRoutes","RouteAll","ExitNodeID","AdvertiseTags","RunSSH","ShieldsUp","Hostname","CorpDNS")}, indent=1, sort_keys=True))' > "$S/host/tailscale-prefs.json" || true; fi
@@ -48,6 +49,8 @@ fi
 # --- app config files that are plain text and secret-free (or redacted) ---
 for f in services.yaml settings.yaml widgets.yaml docker.yaml bookmarks.yaml custom.css custom.js; do cp_if /opt/media/config/homepage/$f config/homepage/$f; done
 cp_if /opt/media/config/filebrowser/config.yaml config/filebrowser/config.yaml
+# PrismCast: channel/provider settings only (no logins; Chrome profile + health.json stay on the box)
+for f in config.json provider-lineups.json; do cp_if /opt/media/config/prismcast/$f config/prismcast/$f; done
 for f in /opt/media/config/recyclarr/configs/*.yml; do cp_if "$f" "config/recyclarr/configs/$(basename "$f")"; done
 cp_if /opt/media/config/recyclarr/settings.yml config/recyclarr/settings.yml
 for k in config.yml config.yml.pending; do

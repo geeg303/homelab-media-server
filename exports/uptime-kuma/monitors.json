@@ -4270,7 +4270,7 @@
       "database_connection_string": null,
       "database_query": null,
       "description": "Resolves one.one.one.one via 1.1.1.1; down with Router up = ISP/WAN outage",
-      "dns_last_result": "Records: 1.1.1.1 | 1.0.0.1",
+      "dns_last_result": "Records: 1.0.0.1 | 1.1.1.1",
       "dns_resolve_server": "1.1.1.1",
       "dns_resolve_type": "A",
       "docker_container": "",
@@ -4999,6 +4999,252 @@
       "auth_domain": null,
       "auth_method": null,
       "auth_workstation": null,
+      "basic_auth_pass": "",
+      "basic_auth_user": "",
+      "bearer_token": "",
+      "body": null,
+      "cache_bust": 0,
+      "conditions": [],
+      "database_connection_string": null,
+      "database_query": null,
+      "description": "noVNC page of PrismCast's Chrome (streaming logins). Open: http://192.0.2.242:6080/vnc.html?autoconnect=1&resize=scale",
+      "dns_last_result": null,
+      "dns_resolve_server": "1.1.1.1",
+      "dns_resolve_type": "A",
+      "docker_container": "",
+      "docker_host": null,
+      "domain_expiry_notification": 0,
+      "expected_tls_alert": null,
+      "expected_value": null,
+      "expiry_notification": 0,
+      "game": null,
+      "gamedig_given_port_only": 1,
+      "gamedig_token": "",
+      "grpc_body": null,
+      "grpc_enable_tls": 0,
+      "grpc_metadata": null,
+      "grpc_method": null,
+      "grpc_protobuf": null,
+      "grpc_service_name": null,
+      "grpc_url": null,
+      "headers": null,
+      "hostname": null,
+      "http_body_encoding": "json",
+      "id": 42,
+      "ignore_tls": 0,
+      "interval": 60,
+      "invert_keyword": 0,
+      "ip_family": null,
+      "json_path": null,
+      "json_path_operator": null,
+      "kafka_producer_allow_auto_topic_creation": 0,
+      "kafka_producer_brokers": [],
+      "kafka_producer_message": null,
+      "kafka_producer_sasl_options": {
+        "mechanism": "None"
+      },
+      "kafka_producer_ssl": 0,
+      "kafka_producer_topic": null,
+      "keyword": "noVNC",
+      "location": "world",
+      "manual_status": null,
+      "maxredirects": 10,
+      "maxretries": 2,
+      "method": "GET",
+      "mqtt_check_type": "keyword",
+      "mqtt_password": "",
+      "mqtt_success_message": "",
+      "mqtt_topic": "",
+      "mqtt_username": "",
+      "mqtt_websocket_path": "",
+      "name": "PrismCast browser (noVNC)",
+      "ntp_root_dispersion_threshold": 500,
+      "ntp_stratum_threshold": 5,
+      "ntp_time_offset_threshold": 1000,
+      "oauth_audience": null,
+      "oauth_auth_method": "client_secret_basic",
+      "oauth_client_id": null,
+      "oauth_client_secret": null,
+      "oauth_scopes": null,
+      "oauth_token_url": null,
+      "parent": 1,
+      "ping_numeric": 1,
+      "ping_per_request_timeout": 2,
+      "port": null,
+      "protocol": null,
+      "proxy_id": null,
+      "push_token": null,
+      "rabbitmq_nodes": [],
+      "rabbitmq_password": "",
+      "rabbitmq_username": "",
+      "radius_called_station_id": null,
+      "radius_calling_station_id": null,
+      "radius_password": null,
+      "radius_secret": null,
+      "radius_username": null,
+      "remote_browser": null,
+      "resend_interval": 0,
+      "response_max_length": 1024,
+      "retry_interval": 60,
+      "retry_only_on_status_code_failure": 0,
+      "save_error_response": 1,
+      "save_response": 0,
+      "screenshot_delay": 0,
+      "sftp_path": null,
+      "smtp_security": null,
+      "snmp_oid": null,
+      "snmp_v3_username": null,
+      "snmp_version": "2c",
+      "ssh_auth_method": "password",
+      "ssh_passphrase": null,
+      "ssh_password": null,
+      "ssh_private_key": null,
+      "ssh_username": null,
+      "subtype": null,
+      "system_service_name": "",
+      "timeout": 48.0,
+      "tls_ca": null,
+      "tls_cert": null,
+      "tls_key": null,
+      "type": "keyword",
+      "upside_down": 0,
+      "url": "http://192.0.2.242:6080/vnc.html",
+      "user_id": 1,
+      "weight": 2000,
+      "ws_ignore_sec_websocket_accept_header": 0,
+      "ws_subprotocol": ""
+    },
+    {
+      "accepted_statuscodes_json": [
+        "200-299"
+      ],
+      "active": 1,
+      "auth_domain": null,
+      "auth_method": null,
+      "auth_workstation": null,
+      "basic_auth_pass": "",
+      "basic_auth_user": "",
+      "bearer_token": "",
+      "body": null,
+      "cache_bust": 0,
+      "conditions": [],
+      "database_connection_string": null,
+      "database_query": null,
+      "description": "sshd on the box (admin + Hermes access)",
+      "dns_last_result": null,
+      "dns_resolve_server": "1.1.1.1",
+      "dns_resolve_type": "A",
+      "docker_container": "",
+      "docker_host": null,
+      "domain_expiry_notification": 0,
+      "expected_tls_alert": null,
+      "expected_value": null,
+      "expiry_notification": 0,
+      "game": null,
+      "gamedig_given_port_only": 1,
+      "gamedig_token": "",
+      "grpc_body": null,
+      "grpc_enable_tls": 0,
+      "grpc_metadata": null,
+      "grpc_method": null,
+      "grpc_protobuf": null,
+      "grpc_service_name": null,
+      "grpc_url": null,
+      "headers": null,
+      "hostname": "192.0.2.242",
+      "http_body_encoding": "json",
+      "id": 43,
+      "ignore_tls": 0,
+      "interval": 60,
+      "invert_keyword": 0,
+      "ip_family": null,
+      "json_path": null,
+      "json_path_operator": null,
+      "kafka_producer_allow_auto_topic_creation": 0,
+      "kafka_producer_brokers": [],
+      "kafka_producer_message": null,
+      "kafka_producer_sasl_options": {
+        "mechanism": "None"
+      },
+      "kafka_producer_ssl": 0,
+      "kafka_producer_topic": null,
+      "keyword": null,
+      "location": "world",
+      "manual_status": null,
+      "maxredirects": 10,
+      "maxretries": 2,
+      "method": "GET",
+      "mqtt_check_type": "keyword",
+      "mqtt_password": "",
+      "mqtt_success_message": "",
+      "mqtt_topic": "",
+      "mqtt_username": "",
+      "mqtt_websocket_path": "",
+      "name": "Box SSH (port 22)",
+      "ntp_root_dispersion_threshold": 500,
+      "ntp_stratum_threshold": 5,
+      "ntp_time_offset_threshold": 1000,
+      "oauth_audience": null,
+      "oauth_auth_method": "client_secret_basic",
+      "oauth_client_id": null,
+      "oauth_client_secret": null,
+      "oauth_scopes": null,
+      "oauth_token_url": null,
+      "parent": 18,
+      "ping_numeric": 1,
+      "ping_per_request_timeout": 2,
+      "port": 22,
+      "protocol": null,
+      "proxy_id": null,
+      "push_token": null,
+      "rabbitmq_nodes": [],
+      "rabbitmq_password": "",
+      "rabbitmq_username": "",
+      "radius_called_station_id": null,
+      "radius_calling_station_id": null,
+      "radius_password": null,
+      "radius_secret": null,
+      "radius_username": null,
+      "remote_browser": null,
+      "resend_interval": 0,
+      "response_max_length": 1024,
+      "retry_interval": 60,
+      "retry_only_on_status_code_failure": 0,
+      "save_error_response": 1,
+      "save_response": 0,
+      "screenshot_delay": 0,
+      "sftp_path": null,
+      "smtp_security": null,
+      "snmp_oid": null,
+      "snmp_v3_username": null,
+      "snmp_version": "2c",
+      "ssh_auth_method": "password",
+      "ssh_passphrase": null,
+      "ssh_password": null,
+      "ssh_private_key": null,
+      "ssh_username": null,
+      "subtype": null,
+      "system_service_name": "",
+      "timeout": 48.0,
+      "tls_ca": null,
+      "tls_cert": null,
+      "tls_key": null,
+      "type": "port",
+      "upside_down": 0,
+      "url": "",
+      "user_id": 1,
+      "weight": 2000,
+      "ws_ignore_sec_websocket_accept_header": 0,
+      "ws_subprotocol": ""
+    },
+    {
+      "accepted_statuscodes_json": [
+        "200-299"
+      ],
+      "active": 1,
+      "auth_domain": null,
+      "auth_method": null,
+      "auth_workstation": null,
       "basic_auth_pass": null,
       "basic_auth_user": null,
       "bearer_token": null,
@@ -5119,7 +5365,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 1,
+      "id": 37,
       "monitor_id": 2,
       "send_url": 0,
       "weight": 1
@@ -5127,39 +5373,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 10,
-      "monitor_id": 11,
-      "send_url": 0,
-      "weight": 10
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 11,
-      "monitor_id": 12,
-      "send_url": 0,
-      "weight": 11
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 12,
-      "monitor_id": 31,
-      "send_url": 0,
-      "weight": 12
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 13,
-      "monitor_id": 32,
-      "send_url": 0,
-      "weight": 13
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 2,
+      "id": 38,
       "monitor_id": 3,
       "send_url": 0,
       "weight": 2
@@ -5167,7 +5381,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 3,
+      "id": 39,
       "monitor_id": 4,
       "send_url": 0,
       "weight": 3
@@ -5175,7 +5389,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 4,
+      "id": 40,
       "monitor_id": 5,
       "send_url": 0,
       "weight": 4
@@ -5183,7 +5397,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 5,
+      "id": 41,
       "monitor_id": 6,
       "send_url": 0,
       "weight": 5
@@ -5191,7 +5405,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 6,
+      "id": 42,
       "monitor_id": 7,
       "send_url": 0,
       "weight": 6
@@ -5199,7 +5413,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 7,
+      "id": 43,
       "monitor_id": 8,
       "send_url": 0,
       "weight": 7
@@ -5207,7 +5421,7 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 8,
+      "id": 44,
       "monitor_id": 9,
       "send_url": 0,
       "weight": 8
@@ -5215,15 +5429,55 @@
     {
       "custom_url": null,
       "group_id": 1,
-      "id": 9,
+      "id": 45,
       "monitor_id": 10,
       "send_url": 0,
       "weight": 9
     },
     {
       "custom_url": null,
+      "group_id": 1,
+      "id": 46,
+      "monitor_id": 11,
+      "send_url": 0,
+      "weight": 10
+    },
+    {
+      "custom_url": null,
+      "group_id": 1,
+      "id": 47,
+      "monitor_id": 12,
+      "send_url": 0,
+      "weight": 11
+    },
+    {
+      "custom_url": null,
+      "group_id": 1,
+      "id": 48,
+      "monitor_id": 31,
+      "send_url": 0,
+      "weight": 12
+    },
+    {
+      "custom_url": null,
+      "group_id": 1,
+      "id": 49,
+      "monitor_id": 32,
+      "send_url": 0,
+      "weight": 13
+    },
+    {
+      "custom_url": null,
+      "group_id": 1,
+      "id": 50,
+      "monitor_id": 42,
+      "send_url": 0,
+      "weight": 14
+    },
+    {
+      "custom_url": null,
       "group_id": 2,
-      "id": 14,
+      "id": 51,
       "monitor_id": 14,
       "send_url": 0,
       "weight": 1
@@ -5231,7 +5485,7 @@
     {
       "custom_url": null,
       "group_id": 2,
-      "id": 15,
+      "id": 52,
       "monitor_id": 15,
       "send_url": 0,
       "weight": 2
@@ -5239,7 +5493,7 @@
     {
       "custom_url": null,
       "group_id": 2,
-      "id": 16,
+      "id": 53,
       "monitor_id": 16,
       "send_url": 0,
       "weight": 3
@@ -5247,7 +5501,7 @@
     {
       "custom_url": null,
       "group_id": 2,
-      "id": 17,
+      "id": 54,
       "monitor_id": 17,
       "send_url": 0,
       "weight": 4
@@ -5255,7 +5509,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 18,
+      "id": 55,
       "monitor_id": 19,
       "send_url": 0,
       "weight": 1
@@ -5263,7 +5517,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 19,
+      "id": 56,
       "monitor_id": 20,
       "send_url": 0,
       "weight": 2
@@ -5271,7 +5525,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 20,
+      "id": 57,
       "monitor_id": 21,
       "send_url": 0,
       "weight": 3
@@ -5279,7 +5533,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 21,
+      "id": 58,
       "monitor_id": 26,
       "send_url": 0,
       "weight": 4
@@ -5287,7 +5541,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 22,
+      "id": 59,
       "monitor_id": 27,
       "send_url": 0,
       "weight": 5
@@ -5295,7 +5549,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 23,
+      "id": 60,
       "monitor_id": 29,
       "send_url": 0,
       "weight": 6
@@ -5303,7 +5557,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 24,
+      "id": 61,
       "monitor_id": 33,
       "send_url": 0,
       "weight": 7
@@ -5311,7 +5565,7 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 25,
+      "id": 62,
       "monitor_id": 34,
       "send_url": 0,
       "weight": 8
@@ -5319,15 +5573,23 @@
     {
       "custom_url": null,
       "group_id": 3,
-      "id": 26,
+      "id": 63,
       "monitor_id": 35,
       "send_url": 0,
       "weight": 9
     },
     {
       "custom_url": null,
+      "group_id": 3,
+      "id": 64,
+      "monitor_id": 43,
+      "send_url": 0,
+      "weight": 10
+    },
+    {
+      "custom_url": null,
       "group_id": 4,
-      "id": 27,
+      "id": 65,
       "monitor_id": 36,
       "send_url": 0,
       "weight": 1
@@ -5335,7 +5597,7 @@
     {
       "custom_url": null,
       "group_id": 4,
-      "id": 28,
+      "id": 66,
       "monitor_id": 37,
       "send_url": 0,
       "weight": 2
@@ -5343,7 +5605,7 @@
     {
       "custom_url": null,
       "group_id": 4,
-      "id": 29,
+      "id": 67,
       "monitor_id": 38,
       "send_url": 0,
       "weight": 3
@@ -5351,7 +5613,7 @@
     {
       "custom_url": null,
       "group_id": 4,
-      "id": 30,
+      "id": 68,
       "monitor_id": 39,
       "send_url": 0,
       "weight": 4
@@ -5359,7 +5621,7 @@
     {
       "custom_url": null,
       "group_id": 4,
-      "id": 31,
+      "id": 69,
       "monitor_id": 40,
       "send_url": 0,
       "weight": 5
@@ -5367,7 +5629,7 @@
     {
       "custom_url": null,
       "group_id": 4,
-      "id": 32,
+      "id": 70,
       "monitor_id": 41,
       "send_url": 0,
       "weight": 6
@@ -5375,7 +5637,7 @@
     {
       "custom_url": null,
       "group_id": 5,
-      "id": 33,
+      "id": 71,
       "monitor_id": 23,
       "send_url": 0,
       "weight": 1
@@ -5383,7 +5645,7 @@
     {
       "custom_url": null,
       "group_id": 5,
-      "id": 34,
+      "id": 72,
       "monitor_id": 24,
       "send_url": 0,
       "weight": 2
@@ -5391,7 +5653,7 @@
     {
       "custom_url": null,
       "group_id": 5,
-      "id": 35,
+      "id": 73,
       "monitor_id": 25,
       "send_url": 0,
       "weight": 3
@@ -5399,7 +5661,7 @@
     {
       "custom_url": null,
       "group_id": 5,
-      "id": 36,
+      "id": 74,
       "monitor_id": 28,
       "send_url": 0,
       "weight": 4
@@ -5407,139 +5669,144 @@
   ],
   "monitor_maintenance": [
     {
-      "id": 112,
+      "id": 139,
       "maintenance_id": 1,
       "monitor_id": 1
     },
     {
-      "id": 113,
+      "id": 140,
       "maintenance_id": 1,
       "monitor_id": 2
     },
     {
-      "id": 114,
+      "id": 141,
       "maintenance_id": 1,
       "monitor_id": 3
     },
     {
-      "id": 115,
+      "id": 142,
       "maintenance_id": 1,
       "monitor_id": 4
     },
     {
-      "id": 116,
+      "id": 143,
       "maintenance_id": 1,
       "monitor_id": 5
     },
     {
-      "id": 117,
+      "id": 144,
       "maintenance_id": 1,
       "monitor_id": 6
     },
     {
-      "id": 118,
+      "id": 145,
       "maintenance_id": 1,
       "monitor_id": 7
     },
     {
-      "id": 119,
+      "id": 146,
       "maintenance_id": 1,
       "monitor_id": 8
     },
     {
-      "id": 120,
+      "id": 147,
       "maintenance_id": 1,
       "monitor_id": 9
     },
     {
-      "id": 121,
+      "id": 148,
       "maintenance_id": 1,
       "monitor_id": 10
     },
     {
-      "id": 122,
+      "id": 149,
       "maintenance_id": 1,
       "monitor_id": 11
     },
     {
-      "id": 123,
+      "id": 150,
       "maintenance_id": 1,
       "monitor_id": 12
     },
     {
-      "id": 124,
+      "id": 151,
       "maintenance_id": 1,
       "monitor_id": 13
     },
     {
-      "id": 125,
+      "id": 152,
       "maintenance_id": 1,
       "monitor_id": 14
     },
     {
-      "id": 126,
+      "id": 153,
       "maintenance_id": 1,
       "monitor_id": 15
     },
     {
-      "id": 127,
+      "id": 154,
       "maintenance_id": 1,
       "monitor_id": 16
     },
     {
-      "id": 128,
+      "id": 155,
       "maintenance_id": 1,
       "monitor_id": 17
     },
     {
-      "id": 129,
+      "id": 156,
       "maintenance_id": 1,
       "monitor_id": 18
     },
     {
-      "id": 130,
+      "id": 157,
       "maintenance_id": 1,
       "monitor_id": 19
     },
     {
-      "id": 131,
+      "id": 158,
       "maintenance_id": 1,
       "monitor_id": 20
     },
     {
-      "id": 132,
+      "id": 159,
       "maintenance_id": 1,
       "monitor_id": 21
     },
     {
-      "id": 133,
+      "id": 160,
       "maintenance_id": 1,
       "monitor_id": 26
     },
     {
-      "id": 134,
+      "id": 161,
       "maintenance_id": 1,
       "monitor_id": 27
     },
     {
-      "id": 135,
+      "id": 162,
       "maintenance_id": 1,
       "monitor_id": 29
     },
     {
-      "id": 136,
+      "id": 163,
       "maintenance_id": 1,
       "monitor_id": 31
     },
     {
-      "id": 137,
+      "id": 164,
       "maintenance_id": 1,
       "monitor_id": 32
     },
     {
-      "id": 138,
+      "id": 165,
       "maintenance_id": 1,
       "monitor_id": 33
+    },
+    {
+      "id": 166,
+      "maintenance_id": 1,
+      "monitor_id": 42
     }
   ],
   "monitor_notification": [
@@ -5721,6 +5988,16 @@
     {
       "id": 41,
       "monitor_id": 41,
+      "notification_id": 1
+    },
+    {
+      "id": 42,
+      "monitor_id": 42,
+      "notification_id": 1
+    },
+    {
+      "id": 43,
+      "monitor_id": 43,
       "notification_id": 1
     },
     {

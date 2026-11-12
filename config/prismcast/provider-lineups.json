@@ -1,0 +1,118 @@
+{
+  "providers": {
+    "hbomax": [
+      {
+        "channelSelector": "HBO",
+        "name": "HBO",
+        "watchUrl": "https://play.hbomax.com/channel/watch/4ed10fc9-da52-286B-057D-ce3d0f6379fe/b381b784-50e6-474b-8956-49660728d0fd"
+      },
+      {
+        "channelSelector": "HBO Hits",
+        "name": "HBO Hits",
+        "watchUrl": "https://play.hbomax.com/channel/watch/41fdd011-23a0-4061-882c-54fcdca546e4/293e8f6f-d9db-BBBA-CB90-7a6ce5523f59"
+      },
+      {
+        "channelSelector": "HBO Comedy",
+        "name": "HBO Comedy",
+        "watchUrl": "https://play.hbomax.com/channel/watch/524220cc-80e2-4d9b-8f94-8d2d673bb5c5/4be2c99a-b12b-46b0-88cd-2a8a1fbd4580"
+      },
+      {
+        "channelSelector": "HBO Movies",
+        "name": "HBO Movies",
+        "watchUrl": "https://play.hbomax.com/channel/watch/921245fb-20c5-43ee-80c5-baedfea6afe8/6a9d5a7c-e8bf-4d92-8e4f-8fd1560e03ae"
+      },
+      {
+        "channelSelector": "HBO Drama",
+        "name": "HBO Drama",
+        "watchUrl": "https://play.hbomax.com/channel/watch/c67a1822-7702-4bc8-8da9-da4697478508/1b1c01c2-540b-4150-823b-b704eef52cae"
+      }
+    ],
+    "hulu": [
+      {
+        "channelSelector": "abc news live",
+        "name": "abc news live"
+      },
+      {
+        "channelSelector": "HBO (East)",
+        "name": "HBO (East)"
+      },
+      {
+        "channelSelector": "HBO (West)",
+        "name": "HBO (West)"
+      },
+      {
+        "channelSelector": "HBO Comedy (East)",
+        "name": "HBO Comedy (East)"
+      },
+      {
+        "channelSelector": "HBO Comedy (West)",
+        "name": "HBO Comedy (West)"
+      },
+      {
+        "channelSelector": "HBO Drama (East)",
+        "name": "HBO Drama (East)"
+      },
+      {
+        "channelSelector": "HBO Drama (West)",
+        "name": "HBO Drama (West)"
+      },
+      {
+        "channelSelector": "HBO Hits (East)",
+        "name": "HBO Hits (East)"
+      },
+      {
+        "channelSelector": "HBO Hits (West)",
+        "name": "HBO Hits (West)"
+      },
+      {
+        "channelSelector": "HBO Latino (East)",
+        "name": "HBO Latino (East)"
+      },
+      {
+        "channelSelector": "HBO Latino (West)",
+        "name": "HBO Latino (West)"
+      },
+      {
+        "channelSelector": "HBO Movies (East)",
+        "name": "HBO Movies (East)"
+      },
+      {
+        "channelSelector": "HBO Movies (West)",
+        "name": "HBO Movies (West)"
+      }
+    ],
+    "yttv": [
+      {
+        "channelSelector": "9 News",
+        "name": "9 News",
+        "watchUrl": "https://tv.youtube.com/watch/MBDlg01jg_Q?vp=0gEEEgIwAQ%3D%3D"
+      },
+      {
+        "channelSelector": "ACC Network",
+        "name": "ACC Network",
+        "watchUrl": "https://tv.youtube.com/watch/VasWEa--oME?vp=0gEEEgIwAQ%3D%3D"
+      },
+      {
+        "channelSelector": "beIN Sports",
+        "name": "beIN Sports",
+        "watchUrl": "https://tv.youtube.com/watch/7KlN03ztoY0?vp=0gEEEgIwAQ%3D%3D"
+      },
+      {
+        "channelSelector": "beIN SPORTS XTRA",
+        "name": "beIN SPORTS XTRA",
+        "watchUrl": "https://tv.youtube.com/watch/-sePeMtknoc?vp=0gEEEgIwAQ%3D%3D"
+      },
+      {
+        "channelSelector": "Billiard TV",
+        "name": "Billiard TV",
+        "watchUrl": "https://tv.youtube.com/watch/tDeeFm9AsxE?vp=0gEEEgIwAQ%3D%3D"
+      },
+      {
+        "channelSelector": "BTN",
+        "name": "BTN",
+        "watchUrl": "https://tv.youtube.com/watch/tUwIbNAQ6yU?vp=0gEEEgIwAQ%3D%3D"
+      }
+    ]
+  },
+  "schemaVersion": 1
+}

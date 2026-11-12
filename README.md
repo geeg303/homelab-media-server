@@ -54,7 +54,8 @@ All containers; linuxserver.io images where they exist, official elsewhere. PUID
 | socket-proxy | lscr.io/linuxserver/socket-proxy | — | read-only Docker API for Homepage/DIUN (`POST=0`) |
 | FileBrowser Quantum | gtstef/filebrowser:stable | 8099 | web file manager; **disk1 read-only** during the migration, the `/data` pool read-write after it |
 | What's Up Docker (WUD) | getwud/wud:9 | 3002 | image-update tracker for the Homepage "Updates" tile; read-only socket-proxy, no triggers (**never updates anything**), checks every 6 h. Login required (v9), admin password generated on the box in `ops/wud.env` |
-| status | busybox:stable | — (media network only) | serves the migration progress JSON to the Homepage tile |
+| status | busybox:stable | — (media network only) | serves the Migration / Conversions / self-test tile JSON (`/opt/media/status/*.json`) to Homepage |
+| PrismCast (`livetv` stack) | ghcr.io/hjdhjd/prismcast | 5589 web UI, 5004 HDHomeRun tuner, 6080 noVNC (raw VNC 5900 on localhost only) | streaming-service live TV → Plex tuner; logins done by hand in its Chrome via noVNC (`/vnc.html?autoconnect=1&resize=scale`, password in `livetv/livetv.env`) |
 
 ## Network / access
 

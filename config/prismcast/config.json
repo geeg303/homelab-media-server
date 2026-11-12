@@ -1,0 +1,13 @@
+{
+  "channels": {
+    "enabledServices": [
+      "hulu",
+      "yttv"
+    ],
+    "setupCompleted": true
+  },
+  "hdhr": {
+    "deviceId": "383bb004"
+  },
+  "schemaVersion": 3
+}
