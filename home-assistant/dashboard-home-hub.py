@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # "Home" dashboard v2 (Nov 11): Mushroom on the main page, Bubble Card pop-ups per room + media server.
-# Needs Marketplace installs: piitaya/lovelace-mushroom, Clooos/Bubble-Card. Run on the box as root (uses /usr/local/sbin/ha-ws). Idempotent.
+# Needs Marketplace installs: piitaya/lovelace-mushroom, Clooos/Bubble-Card, alexsto1an/ha-ani-weather-card. Run on the box as root (uses /usr/local/sbin/ha-ws). Idempotent.
 import json, subprocess
 def ws(*cmds):
     out = subprocess.run(["/usr/local/sbin/ha-ws", *[json.dumps(c) for c in cmds]], capture_output=True, text=True)
@@ -115,7 +115,6 @@ greeting = {"type": "custom:mushroom-title-card",
             "title": "{% set h = now().hour %}Good {{ 'morning' if h < 12 else 'afternoon' if h < 18 else 'evening' }}, user",
             "subtitle": "{{ now().strftime('%A, %B ') ~ now().day }}", "grid_options": {"columns": "full"}}
 chips = {"type": "custom:mushroom-chips-card", "alignment": "start", "grid_options": {"columns": "full"}, "chips": [
-    {"type": "weather", "entity": "weather.home", "show_conditions": True, "show_temperature": True},
     {"type": "template", "icon": "mdi:play-circle", "icon_color": "{{ 'amber' if p | count else 'disabled' }}",
      "content": playing_tpl + "{{ (p | count) ~ ' playing' if p | count else 'Nothing playing' }}"},
     {"type": "template", "icon": "mdi:plex", "icon_color": "{{ 'orange' if states('sensor.tautulli_watching') | int(0) else 'disabled' }}",
@@ -132,7 +131,9 @@ server_card = {"type": "custom:mushroom-template-card", "primary": "Media server
 home = {
   "title": "Home", "path": "home", "icon": "mdi:home", "type": "sections", "max_columns": 3, "dense_section_placement": True,
   "sections": [
-    {"type": "grid", "column_span": 3, "cards": [greeting, chips]},
+    {"type": "grid", "column_span": 3, "cards": [greeting, chips,
+        # alexsto1an/ha-ani-weather-card (Marketplace, user's pick Nov 11): animated sky that follows the sun
+        {"type": "custom:animated-weather-card", "entity": "weather.home", "sun_entity": "sun.sun", "grid_options": {"columns": "full", "rows": 4}}]},
     {"type": "grid", "cards": [{"type": "heading", "heading": "Rooms", "heading_style": "subtitle"}] +
         [room_card(h, n, i, devs) for h, n, i, devs in ROOMS if any(have(e) for e, _, _ in devs)]},
     {"type": "grid", "cards": [{"type": "heading", "heading": "Now playing", "heading_style": "subtitle"},

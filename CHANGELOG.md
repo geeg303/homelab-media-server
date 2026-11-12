@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **Animated Weather Card (user's pick):** `alexsto1an/ha-ani-weather-card` v1.2.0 from the HA Marketplace (MIT, 90★, in the HACS default list; main bundle checked: no network calls, no eval/cookies). Full-width card under the greeting chips on `/home-hub` (`weather.home` + `sun.sun`); the weather chip it replaces was removed. AI note and planes left off
 - **Home Assistant dashboard v2 — Mushroom + Bubble Card (user: v1 "too boxy and plain")**:
   - Installed from HA's built-in **Marketplace** (HACS is replaced by it on 2026.11; the Get HACS app refused to run and was removed again, store repo too): `piitaya/lovelace-mushroom` v5.2.3, `Clooos/Bubble-Card` v3.4.3. Full HA backup "Before HACS (Nov 11)" taken first
   - `/home-hub` is now one Mushroom page: greeting + chips (weather, what's playing, Plex streams, server OK / N down), room cards (amber when something's on, tap → Bubble pop-up with that room's players/light), Now playing (media cards appear only while playing), Media server card (all Kuma checks, red when any is down → pop-up with health, apps, downloads + Pause/Resume, Plex streams, calendar), shopping list → pop-up
