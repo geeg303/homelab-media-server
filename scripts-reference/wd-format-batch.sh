@@ -6,7 +6,7 @@
 set -euo pipefail
 [ "${DRYRUN:-0}" = 1 ] || exec > >(tee -a /var/log/migrate/format-wd.log) 2>&1
 echo "=== $(date -Is) wd-format-batch start"
-MAP="SERIAL-WD1:disk3 7SJ8JDXW:disk4 7HJY59ZF:disk5 7HJY82BF:disk6 7HK2YR2H:parity2"
+MAP="${MAP_OVERRIDE:-SERIAL-WD1:disk3 7SJ8JDXW:disk4 7HJY59ZF:disk5 7HJY82BF:disk6 7HK2YR2H:parity2}"
 NTFY_TOPIC=$(grep -m1 '^NTFY_TOPIC=' /opt/media/stacks/ops/.env | cut -d= -f2)
 ntfy(){ curl -fsS -m 10 -H "Title: box: $1" -H "Priority: ${3:-default}" -d "$2" "https://ntfy.sh/$NTFY_TOPIC" >/dev/null || true; }
 fail(){ echo "ABORT: $*"; [ "${DRYRUN:-0}" = 1 ] && exit 2; ntfy "WD format ABORTED" "$* — nothing further formatted. Log: /var/log/migrate/format-wd.log" high; exit 1; }
@@ -58,7 +58,7 @@ for pair in $MAP; do
   chattr +i "$mp"
   echo "UUID=$uuid  $mp  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2" >> /etc/fstab
   systemctl daemon-reload
-  findmnt --verify --tab-file /etc/fstab 2>&1 | grep -v swap.img | grep -iE "error" && fail "fstab verify error after $lab" || true
+  if findmnt --verify --tab-file /etc/fstab 2>&1 | grep -qE "^\s*\[E\]"; then fail "fstab verify error after $lab"; fi
   mount "$mp"; if ! mountpoint -q "$mp"; then fail "$mp did not mount"; fi
   touch "$mp/.rw-test" && rm "$mp/.rw-test" || fail "$mp not writable"
   if [ "$lab" != parity2 ]; then mkdir -p "$mp/media/tv" "$mp/media/movies"; fi

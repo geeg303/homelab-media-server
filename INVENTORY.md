@@ -41,9 +41,14 @@ mount-push.timer
 ```
 /mnt/disk1 ext4 rw
 /mnt/disk2 ext4 rw
+/mnt/disk3 ext4 rw
+/mnt/disk4 ext4 rw
+/mnt/disk5 ext4 rw
+/mnt/disk6 ext4 rw
 /mnt/mig/sdb ntfs3 ro
 /mnt/mig/sdd ntfs3 ro
 /mnt/mig/sde ntfs3 ro
+/mnt/parity2 ext4 rw
 /scratch ext4 rw
 ```
 

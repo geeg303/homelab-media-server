@@ -2,6 +2,15 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-12
+- **All 5 WD long tests PASSED** (finished ~04:20, later than the progress-based estimate; the last 10% took the longest). Attrs unchanged (5/197/198 = 0; 7HJY59ZF CRC still 3).
+- **WD format:**
+  - **04:23 false abort after disk3 (my bug):** the batch's fstab check grepped `error` and matched findmnt's summary line "0 parse errors, 0 errors, 1 warning". disk3 was already wiped, partitioned, mkfs'd and in fstab, just not mounted. The other 4 weren't touched.
+  - **05:22 fixed and resumed:** the check now only fails on `[E]` lines, and `MAP_OVERRIDE` resumes a partial batch. disk3 was finished by hand-verified steps (serial, label, fstab UUID match, mount, rw test), then the batch formatted disk4, disk5, disk6 and parity2.
+  - DDF metadata erased on all 5. Each is 7.3 TiB (8.0 TB) ext4 with 0 reserved, mounted with `nofail`.
+  - Kuma: "Mount /mnt/disk3..6, /mnt/parity2" push monitors added (mount tokens rotated again). The selftest-status timer is off.
+- **Round 3 started automatically:** Tdarr workers went to 0 at 05:25; once the last 2 encodes finish and get swapped, `migrate-round3` begins (sdd → disk3, 7.35 TB incl. review/sdd).
+
 ## 2026-11-11
 - **Round 3 also keeps sdd's non-media folders** (user: "I want them kept"): Music (137 GB) + 16 mostly empty phone-backup folders go to `/mnt/disk3/review/sdd/` and are checksum-verified like the shows. The total is now 7.35 TB (fits: disk3 ≈ 8.0 TB). `$RECYCLE.BIN` (216 GB) isn't copied. Same rule for rounds 4–5
 - **Round 3 queued to start automatically after the WD format.** user, 22:00: "You have my explicit permission to format the 5 drives once they finish the health check. Once the format is complete proceed with round 3".

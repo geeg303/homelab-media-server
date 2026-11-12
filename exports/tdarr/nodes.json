@@ -6,7 +6,7 @@
       "healthcheckcpu": 0,
       "healthcheckgpu": 0,
       "transcodecpu": 0,
-      "transcodegpu": 2
+      "transcodegpu": 0
     }
   }
 ]
