@@ -227,3 +227,5 @@ Then, app by app (each one verified before the next):
 - **Quick Sync low-power encoding for more Tdarr throughput.** With 2 jobs the GPU render engine is 99% busy while the video engines sit at ~18%, so a 3rd worker adds nothing. Test `hevc_qsv` `low_power=1` (VDENC) on scratch copies of a few Show 36 episodes: size, speed and PSNR vs the current q22. Keep 2 workers and current settings until user decides.
 
 - **Homepage Plex widget:** after the Plex libraries are added, un-comment the parked `widget:` block on the Plex tile in `/opt/media/config/homepage/services.yaml` (parked Nov 11 because the widget throws every 5 s on an empty library list).
+
+- **Non-media folders are kept for review (user, Nov 11):** each round also copies the source disk's other folders (phone backups, Music, etc.; not `$RECYCLE.BIN`/`System Volume Information`) to `/mnt/diskN/review/<source>/` and verifies them too. user reviews them by hand after the migration. Round 3: sdd's Music (137 GB) plus 16 mostly empty phone folders. Apply the same to rounds 4–5.

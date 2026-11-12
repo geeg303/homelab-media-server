@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **Round 3 also keeps sdd's non-media folders** (user: "I want them kept"): Music (137 GB) + 16 mostly empty phone-backup folders go to `/mnt/disk3/review/sdd/` and are checksum-verified like the shows. The total is now 7.35 TB (fits: disk3 ≈ 8.0 TB). `$RECYCLE.BIN` (216 GB) isn't copied. Same rule for rounds 4–5
 - **Round 3 queued to start automatically after the WD format.** user, 22:00: "You have my explicit permission to format the 5 drives once they finish the health check. Once the format is complete proceed with round 3".
   - After `wd-format-batch` succeeds, `round3-start` runs:
     1. Pauses Tdarr (`tdarr-workers set 0 0`).

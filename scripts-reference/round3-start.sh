@@ -17,7 +17,7 @@ python3 - <<'PY'
 import json, subprocess
 p = "/etc/media-server/migration-rounds.json"; c = json.load(open(p))
 used = sum(int(x) for x in subprocess.run("df -B1 --output=used /mnt/disk[0-9]* | tail -n +2", shell=True, capture_output=True, text=True).stdout.split())
-c["3"] = {"label": "sdd → disk3 (WD SERIAL-WD1)", "total": 7.212e12, "format": "sdd → disk7", "baseline": used,
+c["3"] = {"label": "sdd → disk3 (WD SERIAL-WD1)", "total": 7.349e12, "format": "sdd → disk7", "baseline": used,
           "sources": ["/mnt/mig/sdd/TV Shows", "/mnt/mig/sdd/_from_sdc/TV Shows"], "dest_shows": "/mnt/disk3/media/tv"}
 c["2"]["next"] = "round 3 running"
 json.dump(c, open(p, "w"), ensure_ascii=False, indent=1)
