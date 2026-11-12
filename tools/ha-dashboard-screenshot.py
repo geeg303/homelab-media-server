@@ -2,7 +2,7 @@
 # count error cards. Usage: python ha_shot.py <path> <out.png> [width] [height]
 import base64, json, os, socket, struct, subprocess, sys, time, urllib.request, shutil
 SCR = r"C:\Users\user\AppData\Local\hermes\cache\scratch"
-path, out = sys.argv[1], sys.argv[2]; W = int(sys.argv[3]) if len(sys.argv) > 3 else 1400; H = int(sys.argv[4]) if len(sys.argv) > 4 else 1700
+path, out = sys.argv[1], sys.argv[2]; path, _, HASH = path.partition("#"); W = int(sys.argv[3]) if len(sys.argv) > 3 else 1400; H = int(sys.argv[4]) if len(sys.argv) > 4 else 1700
 prof = os.path.join(SCR, "edge-ha-prof")
 p = subprocess.Popen([r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", "--headless=new", "--remote-debugging-port=9333",
                       f"--user-data-dir={prof}", "--no-first-run", "--disable-gpu", f"--window-size={W},{H}", "about:blank"],
@@ -51,6 +51,9 @@ try:
         st_ = call("Runtime.evaluate", expression=probe, returnByValue=True)["result"].get("value")
         if st_ == "main": break
     print("app state:", st_); time.sleep(6)
+    if HASH:
+        call("Runtime.evaluate", expression=f"history.pushState(null, '', location.pathname + location.search + '#{HASH}'); window.dispatchEvent(new Event('location-changed')); window.dispatchEvent(new HashChangeEvent('hashchange'));")
+        time.sleep(3)
     js = r"""(() => { const out = []; const walk = (n) => { if (!n) return; if (n.tagName && /hui-error-card|hui-warning/i.test(n.tagName)) out.push((n.innerText||n.shadowRoot?.textContent||'').trim().slice(0,160));
       (n.shadowRoot ? [...n.shadowRoot.children] : []).concat([...(n.children||[])]).forEach(walk); }; walk(document.body); return JSON.stringify({title: document.title, errors: out}); })()"""
     print(call("Runtime.evaluate", expression=js, returnByValue=True)["result"].get("value"))
