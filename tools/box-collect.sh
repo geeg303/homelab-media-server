@@ -32,6 +32,7 @@ for u in media-config-backup.service media-config-backup.timer migration-status.
          mount-push.service mount-push.timer usb-watchdog.service wifi-powersave-off.service \
          snapraid-nightly.service snapraid-nightly.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
 for f in /etc/systemd/system/docker.service.d/*.conf; do cp_if "$f" "systemd/docker.service.d/$(basename "$f")"; done
+for f in /etc/systemd/system/systemd-networkd-wait-online.service.d/*.conf; do cp_if "$f" "systemd/systemd-networkd-wait-online.service.d/$(basename "$f")"; done
 
 # --- host config ---
 cp_if /etc/fstab host/fstab

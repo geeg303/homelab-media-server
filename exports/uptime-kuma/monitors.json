@@ -11,7 +11,15 @@
   "group": [
     {
       "active": 1,
-      "id": 1,
+      "id": 10,
+      "name": "Storage & jobs",
+      "public": 1,
+      "status_page_id": 1,
+      "weight": 5
+    },
+    {
+      "active": 1,
+      "id": 6,
       "name": "Media apps",
       "public": 1,
       "status_page_id": 1,
@@ -19,7 +27,7 @@
     },
     {
       "active": 1,
-      "id": 2,
+      "id": 7,
       "name": "Background containers",
       "public": 1,
       "status_page_id": 1,
@@ -27,7 +35,7 @@
     },
     {
       "active": 1,
-      "id": 3,
+      "id": 8,
       "name": "Infrastructure",
       "public": 1,
       "status_page_id": 1,
@@ -35,19 +43,11 @@
     },
     {
       "active": 1,
-      "id": 4,
+      "id": 9,
       "name": "Host health",
       "public": 1,
       "status_page_id": 1,
       "weight": 4
-    },
-    {
-      "active": 1,
-      "id": 5,
-      "name": "Storage & jobs",
-      "public": 1,
-      "status_page_id": 1,
-      "weight": 5
     }
   ],
   "maintenance": [
@@ -5245,6 +5245,252 @@
       "auth_domain": null,
       "auth_method": null,
       "auth_workstation": null,
+      "basic_auth_pass": "",
+      "basic_auth_user": "",
+      "bearer_token": "",
+      "body": null,
+      "cache_bust": 0,
+      "conditions": [],
+      "database_connection_string": null,
+      "database_query": null,
+      "description": "Dashboard progress tiles (Conversions, Migration, self-test) refreshed in the last 10 min and their jobs not failed",
+      "dns_last_result": null,
+      "dns_resolve_server": "1.1.1.1",
+      "dns_resolve_type": "A",
+      "docker_container": "",
+      "docker_host": null,
+      "domain_expiry_notification": 0,
+      "expected_tls_alert": null,
+      "expected_value": null,
+      "expiry_notification": 0,
+      "game": null,
+      "gamedig_given_port_only": 1,
+      "gamedig_token": "",
+      "grpc_body": null,
+      "grpc_enable_tls": 0,
+      "grpc_metadata": null,
+      "grpc_method": null,
+      "grpc_protobuf": null,
+      "grpc_service_name": null,
+      "grpc_url": null,
+      "headers": null,
+      "hostname": null,
+      "http_body_encoding": "json",
+      "id": 44,
+      "ignore_tls": 0,
+      "interval": 600,
+      "invert_keyword": 0,
+      "ip_family": null,
+      "json_path": null,
+      "json_path_operator": null,
+      "kafka_producer_allow_auto_topic_creation": 0,
+      "kafka_producer_brokers": [],
+      "kafka_producer_message": null,
+      "kafka_producer_sasl_options": {
+        "mechanism": "None"
+      },
+      "kafka_producer_ssl": 0,
+      "kafka_producer_topic": null,
+      "keyword": null,
+      "location": "world",
+      "manual_status": null,
+      "maxredirects": 10,
+      "maxretries": 1,
+      "method": "GET",
+      "mqtt_check_type": "keyword",
+      "mqtt_password": "",
+      "mqtt_success_message": "",
+      "mqtt_topic": "",
+      "mqtt_username": "",
+      "mqtt_websocket_path": "",
+      "name": "Status tiles up to date",
+      "ntp_root_dispersion_threshold": 500,
+      "ntp_stratum_threshold": 5,
+      "ntp_time_offset_threshold": 1000,
+      "oauth_audience": null,
+      "oauth_auth_method": "client_secret_basic",
+      "oauth_client_id": null,
+      "oauth_client_secret": null,
+      "oauth_scopes": null,
+      "oauth_token_url": null,
+      "parent": 30,
+      "ping_numeric": 1,
+      "ping_per_request_timeout": 2,
+      "port": null,
+      "protocol": null,
+      "proxy_id": null,
+      "push_token": "<REDACTED>",
+      "rabbitmq_nodes": [],
+      "rabbitmq_password": "",
+      "rabbitmq_username": "",
+      "radius_called_station_id": null,
+      "radius_calling_station_id": null,
+      "radius_password": null,
+      "radius_secret": null,
+      "radius_username": null,
+      "remote_browser": null,
+      "resend_interval": 0,
+      "response_max_length": 1024,
+      "retry_interval": 300,
+      "retry_only_on_status_code_failure": 0,
+      "save_error_response": 1,
+      "save_response": 0,
+      "screenshot_delay": 0,
+      "sftp_path": null,
+      "smtp_security": null,
+      "snmp_oid": null,
+      "snmp_v3_username": null,
+      "snmp_version": "2c",
+      "ssh_auth_method": "password",
+      "ssh_passphrase": null,
+      "ssh_password": null,
+      "ssh_private_key": null,
+      "ssh_username": null,
+      "subtype": null,
+      "system_service_name": "",
+      "timeout": 48.0,
+      "tls_ca": null,
+      "tls_cert": null,
+      "tls_key": null,
+      "type": "push",
+      "upside_down": 0,
+      "url": null,
+      "user_id": 1,
+      "weight": 2000,
+      "ws_ignore_sec_websocket_accept_header": 0,
+      "ws_subprotocol": ""
+    },
+    {
+      "accepted_statuscodes_json": [
+        "200-299"
+      ],
+      "active": 1,
+      "auth_domain": null,
+      "auth_method": null,
+      "auth_workstation": null,
+      "basic_auth_pass": "",
+      "basic_auth_user": "",
+      "bearer_token": "",
+      "body": null,
+      "cache_bust": 0,
+      "conditions": [],
+      "database_connection_string": null,
+      "database_query": null,
+      "description": "usb-watchdog.service running (alerts + pauses copies on USB resets / disk I/O errors)",
+      "dns_last_result": null,
+      "dns_resolve_server": "1.1.1.1",
+      "dns_resolve_type": "A",
+      "docker_container": "",
+      "docker_host": null,
+      "domain_expiry_notification": 0,
+      "expected_tls_alert": null,
+      "expected_value": null,
+      "expiry_notification": 0,
+      "game": null,
+      "gamedig_given_port_only": 1,
+      "gamedig_token": "",
+      "grpc_body": null,
+      "grpc_enable_tls": 0,
+      "grpc_metadata": null,
+      "grpc_method": null,
+      "grpc_protobuf": null,
+      "grpc_service_name": null,
+      "grpc_url": null,
+      "headers": null,
+      "hostname": null,
+      "http_body_encoding": "json",
+      "id": 45,
+      "ignore_tls": 0,
+      "interval": 600,
+      "invert_keyword": 0,
+      "ip_family": null,
+      "json_path": null,
+      "json_path_operator": null,
+      "kafka_producer_allow_auto_topic_creation": 0,
+      "kafka_producer_brokers": [],
+      "kafka_producer_message": null,
+      "kafka_producer_sasl_options": {
+        "mechanism": "None"
+      },
+      "kafka_producer_ssl": 0,
+      "kafka_producer_topic": null,
+      "keyword": null,
+      "location": "world",
+      "manual_status": null,
+      "maxredirects": 10,
+      "maxretries": 1,
+      "method": "GET",
+      "mqtt_check_type": "keyword",
+      "mqtt_password": "",
+      "mqtt_success_message": "",
+      "mqtt_topic": "",
+      "mqtt_username": "",
+      "mqtt_websocket_path": "",
+      "name": "USB watchdog",
+      "ntp_root_dispersion_threshold": 500,
+      "ntp_stratum_threshold": 5,
+      "ntp_time_offset_threshold": 1000,
+      "oauth_audience": null,
+      "oauth_auth_method": "client_secret_basic",
+      "oauth_client_id": null,
+      "oauth_client_secret": null,
+      "oauth_scopes": null,
+      "oauth_token_url": null,
+      "parent": 30,
+      "ping_numeric": 1,
+      "ping_per_request_timeout": 2,
+      "port": null,
+      "protocol": null,
+      "proxy_id": null,
+      "push_token": "<REDACTED>",
+      "rabbitmq_nodes": [],
+      "rabbitmq_password": "",
+      "rabbitmq_username": "",
+      "radius_called_station_id": null,
+      "radius_calling_station_id": null,
+      "radius_password": null,
+      "radius_secret": null,
+      "radius_username": null,
+      "remote_browser": null,
+      "resend_interval": 0,
+      "response_max_length": 1024,
+      "retry_interval": 300,
+      "retry_only_on_status_code_failure": 0,
+      "save_error_response": 1,
+      "save_response": 0,
+      "screenshot_delay": 0,
+      "sftp_path": null,
+      "smtp_security": null,
+      "snmp_oid": null,
+      "snmp_v3_username": null,
+      "snmp_version": "2c",
+      "ssh_auth_method": "password",
+      "ssh_passphrase": null,
+      "ssh_password": null,
+      "ssh_private_key": null,
+      "ssh_username": null,
+      "subtype": null,
+      "system_service_name": "",
+      "timeout": 48.0,
+      "tls_ca": null,
+      "tls_cert": null,
+      "tls_key": null,
+      "type": "push",
+      "upside_down": 0,
+      "url": null,
+      "user_id": 1,
+      "weight": 2000,
+      "ws_ignore_sec_websocket_accept_header": 0,
+      "ws_subprotocol": ""
+    },
+    {
+      "accepted_statuscodes_json": [
+        "200-299"
+      ],
+      "active": 1,
+      "auth_domain": null,
+      "auth_method": null,
+      "auth_workstation": null,
       "basic_auth_pass": null,
       "basic_auth_user": null,
       "bearer_token": null,
@@ -5364,307 +5610,323 @@
   "monitor_group": [
     {
       "custom_url": null,
-      "group_id": 1,
-      "id": 37,
-      "monitor_id": 2,
-      "send_url": 0,
-      "weight": 1
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 38,
-      "monitor_id": 3,
-      "send_url": 0,
-      "weight": 2
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 39,
-      "monitor_id": 4,
-      "send_url": 0,
-      "weight": 3
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 40,
-      "monitor_id": 5,
-      "send_url": 0,
-      "weight": 4
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 41,
-      "monitor_id": 6,
-      "send_url": 0,
-      "weight": 5
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 42,
-      "monitor_id": 7,
-      "send_url": 0,
-      "weight": 6
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 43,
-      "monitor_id": 8,
-      "send_url": 0,
-      "weight": 7
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 44,
-      "monitor_id": 9,
-      "send_url": 0,
-      "weight": 8
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 45,
-      "monitor_id": 10,
-      "send_url": 0,
-      "weight": 9
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 46,
-      "monitor_id": 11,
-      "send_url": 0,
-      "weight": 10
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 47,
-      "monitor_id": 12,
-      "send_url": 0,
-      "weight": 11
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 48,
-      "monitor_id": 31,
-      "send_url": 0,
-      "weight": 12
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 49,
-      "monitor_id": 32,
-      "send_url": 0,
-      "weight": 13
-    },
-    {
-      "custom_url": null,
-      "group_id": 1,
-      "id": 50,
-      "monitor_id": 42,
-      "send_url": 0,
-      "weight": 14
-    },
-    {
-      "custom_url": null,
-      "group_id": 2,
-      "id": 51,
-      "monitor_id": 14,
-      "send_url": 0,
-      "weight": 1
-    },
-    {
-      "custom_url": null,
-      "group_id": 2,
-      "id": 52,
-      "monitor_id": 15,
-      "send_url": 0,
-      "weight": 2
-    },
-    {
-      "custom_url": null,
-      "group_id": 2,
-      "id": 53,
-      "monitor_id": 16,
-      "send_url": 0,
-      "weight": 3
-    },
-    {
-      "custom_url": null,
-      "group_id": 2,
-      "id": 54,
-      "monitor_id": 17,
-      "send_url": 0,
-      "weight": 4
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 55,
-      "monitor_id": 19,
-      "send_url": 0,
-      "weight": 1
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 56,
-      "monitor_id": 20,
-      "send_url": 0,
-      "weight": 2
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 57,
-      "monitor_id": 21,
-      "send_url": 0,
-      "weight": 3
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 58,
-      "monitor_id": 26,
-      "send_url": 0,
-      "weight": 4
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 59,
-      "monitor_id": 27,
-      "send_url": 0,
-      "weight": 5
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 60,
-      "monitor_id": 29,
-      "send_url": 0,
-      "weight": 6
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 61,
-      "monitor_id": 33,
-      "send_url": 0,
-      "weight": 7
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 62,
-      "monitor_id": 34,
-      "send_url": 0,
-      "weight": 8
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 63,
-      "monitor_id": 35,
-      "send_url": 0,
-      "weight": 9
-    },
-    {
-      "custom_url": null,
-      "group_id": 3,
-      "id": 64,
-      "monitor_id": 43,
-      "send_url": 0,
-      "weight": 10
-    },
-    {
-      "custom_url": null,
-      "group_id": 4,
-      "id": 65,
-      "monitor_id": 36,
-      "send_url": 0,
-      "weight": 1
-    },
-    {
-      "custom_url": null,
-      "group_id": 4,
-      "id": 66,
-      "monitor_id": 37,
-      "send_url": 0,
-      "weight": 2
-    },
-    {
-      "custom_url": null,
-      "group_id": 4,
-      "id": 67,
-      "monitor_id": 38,
-      "send_url": 0,
-      "weight": 3
-    },
-    {
-      "custom_url": null,
-      "group_id": 4,
-      "id": 68,
-      "monitor_id": 39,
-      "send_url": 0,
-      "weight": 4
-    },
-    {
-      "custom_url": null,
-      "group_id": 4,
-      "id": 69,
-      "monitor_id": 40,
-      "send_url": 0,
-      "weight": 5
-    },
-    {
-      "custom_url": null,
-      "group_id": 4,
-      "id": 70,
-      "monitor_id": 41,
-      "send_url": 0,
-      "weight": 6
-    },
-    {
-      "custom_url": null,
-      "group_id": 5,
-      "id": 71,
+      "group_id": 10,
+      "id": 111,
       "monitor_id": 23,
       "send_url": 0,
       "weight": 1
     },
     {
       "custom_url": null,
-      "group_id": 5,
-      "id": 72,
+      "group_id": 10,
+      "id": 112,
       "monitor_id": 24,
       "send_url": 0,
       "weight": 2
     },
     {
       "custom_url": null,
-      "group_id": 5,
-      "id": 73,
+      "group_id": 10,
+      "id": 113,
       "monitor_id": 25,
       "send_url": 0,
       "weight": 3
     },
     {
       "custom_url": null,
-      "group_id": 5,
-      "id": 74,
+      "group_id": 10,
+      "id": 114,
       "monitor_id": 28,
       "send_url": 0,
       "weight": 4
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 75,
+      "monitor_id": 2,
+      "send_url": 0,
+      "weight": 1
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 76,
+      "monitor_id": 3,
+      "send_url": 0,
+      "weight": 2
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 77,
+      "monitor_id": 4,
+      "send_url": 0,
+      "weight": 3
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 78,
+      "monitor_id": 5,
+      "send_url": 0,
+      "weight": 4
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 79,
+      "monitor_id": 6,
+      "send_url": 0,
+      "weight": 5
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 80,
+      "monitor_id": 7,
+      "send_url": 0,
+      "weight": 6
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 81,
+      "monitor_id": 8,
+      "send_url": 0,
+      "weight": 7
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 82,
+      "monitor_id": 9,
+      "send_url": 0,
+      "weight": 8
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 83,
+      "monitor_id": 10,
+      "send_url": 0,
+      "weight": 9
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 84,
+      "monitor_id": 11,
+      "send_url": 0,
+      "weight": 10
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 85,
+      "monitor_id": 12,
+      "send_url": 0,
+      "weight": 11
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 86,
+      "monitor_id": 31,
+      "send_url": 0,
+      "weight": 12
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 87,
+      "monitor_id": 32,
+      "send_url": 0,
+      "weight": 13
+    },
+    {
+      "custom_url": null,
+      "group_id": 6,
+      "id": 88,
+      "monitor_id": 42,
+      "send_url": 0,
+      "weight": 14
+    },
+    {
+      "custom_url": null,
+      "group_id": 7,
+      "id": 89,
+      "monitor_id": 14,
+      "send_url": 0,
+      "weight": 1
+    },
+    {
+      "custom_url": null,
+      "group_id": 7,
+      "id": 90,
+      "monitor_id": 15,
+      "send_url": 0,
+      "weight": 2
+    },
+    {
+      "custom_url": null,
+      "group_id": 7,
+      "id": 91,
+      "monitor_id": 16,
+      "send_url": 0,
+      "weight": 3
+    },
+    {
+      "custom_url": null,
+      "group_id": 7,
+      "id": 92,
+      "monitor_id": 17,
+      "send_url": 0,
+      "weight": 4
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 100,
+      "monitor_id": 34,
+      "send_url": 0,
+      "weight": 8
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 101,
+      "monitor_id": 35,
+      "send_url": 0,
+      "weight": 9
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 102,
+      "monitor_id": 43,
+      "send_url": 0,
+      "weight": 10
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 93,
+      "monitor_id": 19,
+      "send_url": 0,
+      "weight": 1
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 94,
+      "monitor_id": 20,
+      "send_url": 0,
+      "weight": 2
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 95,
+      "monitor_id": 21,
+      "send_url": 0,
+      "weight": 3
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 96,
+      "monitor_id": 26,
+      "send_url": 0,
+      "weight": 4
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 97,
+      "monitor_id": 27,
+      "send_url": 0,
+      "weight": 5
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 98,
+      "monitor_id": 29,
+      "send_url": 0,
+      "weight": 6
+    },
+    {
+      "custom_url": null,
+      "group_id": 8,
+      "id": 99,
+      "monitor_id": 33,
+      "send_url": 0,
+      "weight": 7
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 103,
+      "monitor_id": 36,
+      "send_url": 0,
+      "weight": 1
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 104,
+      "monitor_id": 37,
+      "send_url": 0,
+      "weight": 2
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 105,
+      "monitor_id": 38,
+      "send_url": 0,
+      "weight": 3
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 106,
+      "monitor_id": 39,
+      "send_url": 0,
+      "weight": 4
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 107,
+      "monitor_id": 40,
+      "send_url": 0,
+      "weight": 5
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 108,
+      "monitor_id": 41,
+      "send_url": 0,
+      "weight": 6
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 109,
+      "monitor_id": 44,
+      "send_url": 0,
+      "weight": 7
+    },
+    {
+      "custom_url": null,
+      "group_id": 9,
+      "id": 110,
+      "monitor_id": 45,
+      "send_url": 0,
+      "weight": 8
     }
   ],
   "monitor_maintenance": [
@@ -5998,6 +6260,16 @@
     {
       "id": 43,
       "monitor_id": 43,
+      "notification_id": 1
+    },
+    {
+      "id": 44,
+      "monitor_id": 44,
+      "notification_id": 1
+    },
+    {
+      "id": 45,
+      "monitor_id": 45,
       "notification_id": 1
     },
     {

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# host-health-push: host-level checks pushed to Uptime Kuma every 5 min (Nov 11). Config: /etc/media-server/host-health-push.conf
+# host-health-push: host-level checks (Nov 11: + status tiles fresh, usb-watchdog) pushed to Uptime Kuma every 5 min (Nov 11). Config: /etc/media-server/host-health-push.conf
 # ("<monitor name>\t<push token>" per line, mode 600). Each check pushes status=up, or status=down with the reason; Kuma alerts via ntfy.
 set -u
 CONF=/etc/media-server/host-health-push.conf; [ -f "$CONF" ] || exit 0
@@ -36,6 +36,17 @@ h=$(journalctl -k --since "-10 min" --no-pager 2>/dev/null | grep -c "GPU HANG")
 [ "$h" = 0 ] && RES["Quick Sync GPU (no hangs)"]="up|no hangs" || RES["Quick Sync GPU (no hangs)"]="down|$h GPU HANG messages in 10 min"
 # --- Tdarr swap
 systemctl is-failed --quiet tdarr-swap.service && RES["Tdarr swap job"]="down|tdarr-swap.service failed" || RES["Tdarr swap job"]="up|ok"
+# --- dashboard status tiles fresh (only jobs whose timer is enabled)
+st=""
+for j in tdarr:tdarr migration:migration selftest:selftest; do u=${j%%:*}-status; f=/opt/media/status/${j#*:}.json
+  systemctl is-enabled --quiet "$u.timer" 2>/dev/null || continue
+  systemctl is-failed --quiet "$u.service" && { st="$st $u failed;"; continue; }
+  [ -f "$f" ] || { st="$st ${f##*/} missing;"; continue; }
+  age=$(( $(date +%s) - $(stat -c %Y "$f") )); [ "$age" -gt 600 ] && st="$st ${f##*/} $((age/60)) min old;"
+done
+RES["Status tiles up to date"]=${st:+down|$st}; RES["Status tiles up to date"]=${RES["Status tiles up to date"]:-up|all fresh}
+# --- usb watchdog
+systemctl is-active --quiet usb-watchdog.service && RES["USB watchdog"]="up|running" || RES["USB watchdog"]="down|usb-watchdog.service $(systemctl is-active usb-watchdog.service)"
 # --- push
 while IFS=$'\t' read -r name tok; do [ -n "$name" ] && [ -n "${RES[$name]+x}" ] || continue
   st=${RES[$name]%%|*}; msg=${RES[$name]#*|}
