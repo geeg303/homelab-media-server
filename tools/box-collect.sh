@@ -38,7 +38,8 @@ for f in /etc/systemd/system/systemd-networkd-wait-online.service.d/*.conf; do c
 # --- host config ---
 cp_if /etc/fstab host/fstab
 cp_if /etc/snapraid.conf host/snapraid.conf
-cp_if /etc/media-server/migration-rounds.json host/migration-rounds.json
+# baseline byte counts are volatile and can collide with numeric values on the secret-scan list: drop them
+python3 -c 'import json,sys; c=json.load(open(sys.argv[1])); [r.pop("baseline",None) for r in c.values() if isinstance(r,dict)]; print(json.dumps(c,ensure_ascii=False,indent=1))' /etc/media-server/migration-rounds.json > "$S/host/migration-rounds.json" 2>/dev/null || true
 cp_if /etc/mdadm/mdadm.conf host/mdadm.conf
 cp_if /etc/docker/daemon.json host/docker-daemon.json
 for f in /etc/sysctl.d/99-*.conf; do cp_if "$f" "host/sysctl.d/$(basename "$f")"; done
@@ -82,7 +83,7 @@ done
 for envf in /opt/media/stacks/*/.env /opt/media/stacks/*/*.env /opt/media/dockge/.env; do
   [ -f "$envf" ] && awk -F= '!/^#/ && NF>1 && $1!~/^(PUID|PGID|TZ|RENDER_GID|COMPOSE_FILE|UMASK|WUD_AUTH_ADMIN_USER|HOMEPAGE_VAR_WUD_USER)$/ {sub(/^[^=]*=/,""); print}' "$envf" >> /root/reposync.secrets
 done
-cat /etc/media-server/* 2>/dev/null | grep -oE '[A-Za-z0-9_-]{12,}' >> /root/reposync.secrets || true
+find /etc/media-server -maxdepth 1 -type f ! -name '*.json' -exec cat {} + 2>/dev/null | grep -oE '[A-Za-z0-9_-]{12,}' >> /root/reposync.secrets || true   # *.json = plain config (migration rounds), not secrets
 sed -n '2,3p' /etc/media-server/unifi-creds 2>/dev/null >> /root/reposync.secrets || true   # UniFi password + Network API key, whole lines (short passwords too)
 for x in sonarr radarr prowlarr; do grep -oP '(?<=<ApiKey>)[^<]+' /opt/media/config/$x/config.xml 2>/dev/null >> /root/reposync.secrets || true; done
 grep -E '^(api_key|nzb_key) *=' /opt/media/config/sabnzbd/sabnzbd.ini 2>/dev/null | sed -E 's/^[^=]*= *//' >> /root/reposync.secrets || true

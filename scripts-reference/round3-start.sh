@@ -8,7 +8,7 @@ T=$(grep -m1 '^NTFY_TOPIC=' /opt/media/stacks/ops/.env | cut -d= -f2)
 alert(){ curl -fsS -m 10 -H "Title: box migration R3" ${2:+-H "Priority: high"} -d "$1" "https://ntfy.sh/$T" >/dev/null || true; }
 [ -e /var/lib/media-server/wd-format.done ] || { echo "format not done"; alert "Round 3 NOT started: WD format not complete" high; exit 1; }
 mountpoint -q /mnt/disk3 || { alert "Round 3 NOT started: /mnt/disk3 not mounted" high; exit 1; }
-tmux has-session -t round3 2>/dev/null && { echo "already running"; exit 0; }
+systemctl is-active --quiet migrate-round3 && { echo "already running"; exit 0; }
 /usr/local/sbin/tdarr-workers set 0 0 || { alert "Round 3 NOT started: could not pause Tdarr" high; exit 1; }
 for i in $(seq 1 90); do a=$(/usr/local/sbin/tdarr-workers active 2>/dev/null || echo 9); [ "$a" = 0 ] && break; sleep 60; done
 echo "active transcodes now: ${a:-?} (after $i min)"
@@ -23,5 +23,6 @@ c["2"]["next"] = "round 3 running"
 json.dump(c, open(p, "w"), ensure_ascii=False, indent=1)
 print("migration-rounds.json: round 3 baseline", used)
 PY
-tmux new-session -d -s round3 /usr/local/sbin/migrate-round3
-sleep 5; tmux has-session -t round3 && echo "round3 started in tmux" || alert "Round 3 runner exited immediately — see /var/log/migrate/round3.log" high
+# own unit: a tmux started from a oneshot systemd-run unit is killed when that unit ends (Nov 12 bug)
+systemd-run --unit=migrate-round3 --collect -p Nice=5 /usr/local/sbin/migrate-round3
+sleep 5; systemctl is-active --quiet migrate-round3 && echo "round3 runner started (unit migrate-round3)" || alert "Round 3 runner exited immediately — see /var/log/migrate/round3.log" high

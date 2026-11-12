@@ -3,6 +3,9 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-12
+- **Round 3 restart (my second bug):** `round3-start` ran under `systemd-run` and launched the runner in tmux. When that oneshot unit finished at 05:36:57, systemd killed its cgroup, tmux and rsync included, ~5 s into the copy (32 KB written, no partial files left).
+  - Restarted at 05:44 as its own unit, `migrate-round3.service` (`systemd-run --unit=migrate-round3 -p Nice=5`); `round3-start` fixed the same way for future runs.
+  - Copy rate is ~110–115 MB/s, so the copy should be done ≈ Fri 00:00. The Migration tile shows round 3, the current show and the ETA.
 - **All 5 WD long tests PASSED** (finished ~04:20, later than the progress-based estimate; the last 10% took the longest). Attrs unchanged (5/197/198 = 0; 7HJY59ZF CRC still 3).
 - **WD format:**
   - **04:23 false abort after disk3 (my bug):** the batch's fstab check grepped `error` and matched findmnt's summary line "0 parse errors, 0 errors, 1 warning". disk3 was already wiped, partitioned, mkfs'd and in fstab, just not mounted. The other 4 weren't touched.
