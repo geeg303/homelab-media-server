@@ -238,6 +238,10 @@
         icon: uptime-kuma.png
         server: box
         container: uptime-kuma
+        widget:
+          type: uptimekuma
+          url: http://uptime-kuma:3001
+          slug: box
     - Tdarr node:
         icon: tdarr.png
         description: "Quick Sync node box-qsv"

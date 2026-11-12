@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **Uptime Kuma status page `box`** (http://192.0.2.242:3001/status/box, LAN/tailnet only): all 36 checks in 5 groups. Homepage Uptime Kuma tile now has the `uptimekuma` widget (up/down counts, uptime, incidents) via that page
 - **Homepage review:** added **Live TV (PrismCast)** tile in Media (container status + live streams/limit/viewers from `:5589/health`); parked the Plex widget (it threw `_attributes` errors every 5 s because Plex has no libraries yet; re-enable step added to SWITCHOVER-PLAN); Conversions tile text updated (no more pilot line). Homepage error log now clean
 - **Uptime Kuma: recommended health checks added (user)** — 11 new monitors, all up on first check:
   - Pull: PrismCast web UI (`:5589/health`) and Plex tuner (`:5004/discover.json` keyword), Dashboard status feed (`status` container), Router ping 192.0.2.1, Internet DNS lookup (one.one.one.one via 1.1.1.1) — router vs internet tells a Wi-Fi drop from an ISP outage
