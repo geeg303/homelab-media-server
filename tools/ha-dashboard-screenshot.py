@@ -60,4 +60,6 @@ try:
     img = call("Page.captureScreenshot", format="png")["data"]
     open(out, "wb").write(base64.b64decode(img)); print("saved", out)
 finally:
-    subprocess.run(["taskkill", "/T", "/F", "/PID", str(p.pid)], capture_output=True); time.sleep(2); shutil.rmtree(prof, ignore_errors=True)
+    # Edge relaunches detached children; kill every msedge whose command line names this profile
+    subprocess.run(["powershell.exe", "-NoProfile", "-Command", "Get-CimInstance Win32_Process -Filter \"Name='msedge.exe'\" | Where-Object { $_.CommandLine -like '*edge-ha-prof*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"], capture_output=True)
+    time.sleep(2); shutil.rmtree(prof, ignore_errors=True)
