@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-11
+- **Plan: Tdarr pauses during rounds 3–5** (user). Workers go to 0 before round 3, running encodes finish and get swapped first, and it resumes after round 5. Show 36 had 232 episodes queued at 21:29 (≈31 h at 7.4/h). SWITCHOVER-PLAN step 5
 - **WD drives: pre-approved auto-format (user 21:15: "I want to give permission now for you to format them all once they pass the test")**:
   - `wd-format-when-passed.timer` runs every 10 min and waits for all 5 SMART long tests. If every one passed, it runs the guarded `wd-format-batch`:
     - guards: serial check per disk, attrs 5/197/198 = 0, nothing mounted, no rsync running;
