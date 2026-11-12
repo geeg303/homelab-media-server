@@ -1,0 +1,7 @@
+[Unit]
+Description=Check every 10 min whether the WD long tests are done
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=10min
+[Install]
+WantedBy=timers.target

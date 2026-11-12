@@ -1,0 +1,6 @@
+[Unit]
+Description=Format the 5 WD drives once all SMART long tests passed (user approved Nov 11); disables itself after
+After=local-fs.target
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/wd-format-when-passed
