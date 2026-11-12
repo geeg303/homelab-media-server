@@ -40,7 +40,7 @@ send({"type": "auth", "access_token": TOKEN})
 r = recv(); assert r["type"] == "auth_ok", r.get("type")
 i = 0
 for arg in sys.argv[1:]:
-    i += 1; cmd = json.loads(arg); cmd["id"] = i; send(cmd)
+    i += 1; cmd = json.loads(open(arg[1:]).read() if arg.startswith("@") else arg); cmd["id"] = i; send(cmd)
     while True:
         r = recv()
         if r.get("id") == i and r.get("type") == "result": print(json.dumps(r.get("result") if r.get("success") else {"ERROR": r.get("error")})); break

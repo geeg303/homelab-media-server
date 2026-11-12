@@ -16,7 +16,8 @@
 # A thermostat's room = its area (or device name); a room that doesn't exist yet gets its own card and pop-up. None = skipped.
 #   Dry run (nothing written, config to /root/origami-dryrun.json, Jinja checked):  DRYRUN=1 FAKE_CLIMATE=1 python3 - < ...
 #   (with ssh: ssh box 'sudo -n env DRYRUN=1 FAKE_CLIMATE=1 python3 -' < dashboard-origami.py)
-# Skipped parts (no such devices): fan, vacuum.
+# Skipped parts (no such devices): fan, vacuum. Network pop-up (#popup_network): UniFi Network (read-only account) + the UniFi Kuma checks; skipped
+# while the UniFi entities are missing.
 import copy, json, os, re, subprocess, time, urllib.error, urllib.request
 import yaml
 
@@ -30,7 +31,18 @@ HA = "http://192.0.2.150"
 T = next(l.strip() for l in open("/etc/media-server/ha-token") if len(l.strip()) > 100)
 
 def ws(*cmds):
-    out = subprocess.run(["/usr/local/sbin/ha-ws", *[json.dumps(c) for c in cmds]], capture_output=True, text=True)
+    args = []
+    for i, c in enumerate(cmds):   # a single argv string is capped at 128 KB, so the big dashboard save goes as a file (ha-ws @file)
+        a = json.dumps(c, separators=(",", ":"))
+        if len(a) > 100000:
+            p = f"/root/.ha-ws-cmd-{os.getpid()}-{i}.json"
+            with open(os.open(p, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), "w") as f: f.write(a)
+            a = "@" + p
+        args.append(a)
+    try: out = subprocess.run(["/usr/local/sbin/ha-ws", *args], capture_output=True, text=True)
+    finally:
+        for a in args:
+            if a.startswith("@"): os.remove(a[1:])
     if out.returncode: raise SystemExit(out.stderr[-400:])
     return [json.loads(l) for l in out.stdout.splitlines()]
 def ws1(cmd, ok_errors=()):
@@ -588,6 +600,136 @@ fl[2]["sub_button"]["bottom"] = [
 fl[4]["sub_button"]["bottom"][0].update(entity="calendar.sonarr", name="TV calendar", origami_tiles={"state": "${attr.message || 'Nothing soon'}"})
 favl["cards"][0]["cards"] = fl
 
+# --- network pop-up: the UniFi gateway (UniFi Network on a read-only account) and the Uptime Kuma checks of the router and the
+# internet, as the server pop-up: a status card with chips, slim lists and 24 h graphs. Opened from a Network tile in favorites,
+# a row in the favorites list and the Network row of the server pop-up. No room in the navigation bar (it has its five keys).
+# Skipped (no pop-up, tile or rows) while the UniFi entities are missing.
+GW = "sensor.home_gateway_"
+NET = {k: GW + k for k in ("state", "uptime", "cpu_utilization", "memory_utilization", "cpu_temperature", "clients",
+                           "cloudflare_wan_latency", "google_wan_latency")}
+first = lambda *ids: next((e for e in ids if have(e)), ids[-1])
+# Kuma: the UniFi push checks (host-health-push reads the gateway's API) where they exist, else the DNS lookup and router ping
+NET_FW = "update.home_gateway_firmware"
+K_NET = first("sensor.unifi_internet_wan_status", "sensor.internet_dns_lookup_status")
+K_RTR = first("sensor.unifi_router_health_status", "sensor.router_192_168_1_1_status")
+K_WIFI = "sensor.unifi_wi_fi_status"
+WIFI = [(e, n) for e, n in (("sensor.example_ssid_clients", "5 GHz"), ("sensor.example_ssid_2g_clients", "2.4 GHz"),
+                            ("sensor.example_ssid_6g_clients", "6 GHz")) if have(e)]
+HAS_NET = all(have(NET[k]) for k in ("state", "uptime", "cpu_utilization", "memory_utilization"))
+CONSOLE = {"action": "url", "url_path": "https://192.0.2.1"}
+net = None
+if HAS_NET:
+    # what's down, in JavaScript (tiles, pop-up values) and Jinja (the status card's name), most urgent first
+    js_down = [f"states('{e}') !== 'up'" for e in (K_NET, K_RTR, K_WIFI) if have(e)] + [f"states('{NET['state']}') !== 'connected'"]
+    JS_NET_DOWN = "(" + " || ".join(js_down) + ")"
+    problems = ([(f"not is_state('{K_RTR}', 'up')", "Router problem")] if have(K_RTR) else []) + \
+               ([(f"not is_state('{K_NET}', 'up')", "Internet down")] if have(K_NET) else []) + \
+               ([(f"not is_state('{K_WIFI}', 'up')", "Wi-Fi problem")] if have(K_WIFI) else []) + \
+               [(f"not is_state('{NET['state']}', 'connected')", f"Gateway {{{{ states('{NET['state']}') }}}}"),
+                (f"states('{NET['memory_utilization']}') | float(0) > 90", "Memory high"),
+                (f"states('{NET['cpu_utilization']}') | float(0) > 90", "CPU high")] + \
+               ([(f"is_state('{NET_FW}', 'on')", "Firmware update")] if have(NET_FW) else [])
+    status_name = "".join(("{%- if " if i == 0 else "{%- elif ") + c + " -%}" + t for i, (c, t) in enumerate(problems)) + "{%- else -%}All good{%- endif -%}"
+    net = copy.deepcopy(srv)
+    net.update(hash="#popup_network", name="Network")
+    pv = [{"entity": K_NET if have(K_NET) else NET["state"], "name": "Internet", "show_name": True, "icon": "mdi:web",
+           "origami_popup": {"name": f"${{{JS_NET_DOWN} ? 'Offline' : 'Online'}}",
+                             "color": f"${{{JS_NET_DOWN} ? 'var(--error-color)' : 'var(--green-color)'}}",
+                             "name_color": f"${{{JS_NET_DOWN} ? 'var(--error-color)' : ''}}"}, "tap_action": {"action": "more-info"}}]
+    if have(NET_FW):   # the firmware badge, only while UniFi offers an update
+        pv.append({"entity": NET_FW, "name": "Update", "show_name": True, "icon": "mdi:package-up",
+                   "origami_popup": {"hidden": "${state !== 'on'}", "color": "var(--accent-color)", "name_color": "var(--accent-color)"},
+                   "tap_action": {"action": "more-info"}})
+    net["sub_button"] = {"main": pv, "bottom": []}
+    gw_top = copy.deepcopy(up_top)   # the most urgent problem as the name, the gateway's uptime below it, CPU / RAM / temperature
+    gw_top.update(entity=NET["uptime"], icon="mdi:router-wireless", name=status_name,
+                  state_content=up_top["state_content"].replace("sensor.system_monitor_uptime", NET["uptime"]))
+    gw_top["tap_action"] = CONSOLE; gw_top["button_action"] = {"tap_action": CONSOLE}
+    gw_top["sub_button"] = {"main": [chip(NET["cpu_utilization"], "CPU"), chip(NET["memory_utilization"], "RAM")]
+                            + ([chip(NET["cpu_temperature"], "Temp", "${num(state, 0)}°")] if have(NET["cpu_temperature"]) else [])}
+    def slim(rows): return {"type": "custom:bubble-card", "card_type": "sub-buttons", "modules": ["origami_base", "origami_tiles"],
+                            "origami_tiles": {"layout": "list", "slim": True, "dividers": True}, "sub_button": {"main": [], "bottom": rows}}
+    def kuma_row(e, n, i): return {"entity": e, "name": n, "icon": i, "tap_action": {"action": "more-info"},
+                                   "origami_tiles": {"state": "${state === 'up' ? 'Up' : word(state)}",
+                                                     "color": "${state === 'up' ? 'var(--green-color)' : 'var(--error-color)'}",
+                                                     "state_color": "${state === 'up' ? '' : 'var(--error-color)'}"}}
+    inet_rows = ([kuma_row(K_NET, "Internet", "mdi:web")] if have(K_NET) else []) + ([kuma_row(K_RTR, "Router", "mdi:router-network")] if have(K_RTR) else [])               + ([kuma_row(K_WIFI, "Wi-Fi", "mdi:wifi")] if have(K_WIFI) else [])
+    inet_rows.append({"entity": NET["state"], "name": "Gateway", "icon": "mdi:lan-connect", "tap_action": {"action": "more-info"},
+                      "origami_tiles": {"state": "${word(state)}", "color": "${state === 'connected' ? 'var(--green-color)' : 'var(--error-color)'}",
+                                        "state_color": "${state === 'connected' ? '' : 'var(--error-color)'}"}})
+    for k, n in (("cloudflare_wan_latency", "Cloudflare"), ("google_wan_latency", "Google")):
+        if have(NET[k]): inet_rows.append({"entity": NET[k], "name": n, "icon": "mdi:timer-outline", "tap_action": {"action": "more-info"},
+                                           "origami_tiles": {"state": f"${{format('{NET[k]}')}}"}})
+    if have(NET_FW):
+        inet_rows.append({"entity": NET_FW, "name": "Firmware", "icon": "mdi:package-up", "tap_action": {"action": "more-info"},
+                          "origami_tiles": {"state": "${state === 'on' ? 'Update available' : 'Up to date'}",
+                                            "state_color": "${state === 'on' ? 'var(--accent-color)' : ''}"}})
+    def net_graph(series, unit, chips, margin_r):
+        # the server pop-up's graph with other series: (entity, name, color var, fill, store var); a value chip for each store var
+        g = copy.deepcopy(graph_tpl)
+        g["color_setup"] = g["color_setup"].replace('vars.cBg =', 'vars.cLoad = read("--heat-color") || "#D9A066";\n    vars.cBg =')
+        mark = graph_tpl["entities"][2]
+        ents = []
+        for e, n, cv, fill, sv in series:
+            if not have(e): continue
+            ent = {"entity": e, "name": n, "line": {"color": f"$ex vars.{cv}"}, "hovertemplate": f"%{{y:.0f}}{unit}<extra>{n}</extra>",
+                   "filters": f'$ex [...get("smooth_filters"), {{ store_var: "{sv}" }}]'}
+            if unit == "": ent["yaxis"] = "y"   # unitless counts would get an axis of their own
+            if fill: ent.update(fill="tozeroy", fillgradient={"type": "vertical", "colorscale": f'$ex [[0, "rgba(0,0,0,0)"], [1, vars.{cv} + "52"]]'})
+            else: ent["line"].update(dash="dot", width=2)
+            ents.append(ent)
+            if sv in chips:   # the day's peak, as on the server graph
+                m = json.loads(json.dumps(mark).replace("vars.cCpu", f"vars.{cv}").replace("sensor.system_monitor_processor_use", e))
+                m["name"] = "max " + n; m["texttemplate"] = "<b>%{y:.0f}</b>"   # the number only, the chip beside it has the unit
+                if unit == "": m["yaxis"] = "y"
+                ents.append(m)
+        g["entities"] = ents
+        lay = g["layout"]
+        lay.pop("shapes", None)
+        lay["margin"] = dict(lay["margin"], r=margin_r, l=48 if unit else lay["margin"]["l"])   # room for '40 ms' 
+        lay["yaxis"] = {"rangemode": "tozero", "nticks": 3, "ticksuffix": unit}
+        cl = ", ".join(f'{{ label: "{chips[sv]}", v: last(vars.{sv}), color: vars.{cv} }}' for e, n, cv, f, sv in series if sv in chips and have(e))
+        lay["annotations"] = ("$fn ({ vars }) => {\n  const last = (s) => {\n    const ys = (s && s.ys) || [];\n"
+                              "    for (let i = ys.length - 1; i >= 0; i--) { if (ys[i] != null && isFinite(+ys[i])) return +ys[i]; }\n    return null;\n  };\n"
+                              f"  const c = [{cl}].filter((x) => x.v != null).sort((a, b) => b.v - a.v);\n"
+                              "  // two chips sit a chip's height apart, so they never overlap\n"
+                              "  return c.map((x, i) => ({\n    xref: \"paper\", x: 1, xanchor: \"left\", xshift: 8, yref: \"y\", y: x.v,\n"
+                              "    yshift: c.length > 1 ? (i === 0 ? 10 : -10) : 0, showarrow: false, borderpad: 4,\n"
+                              f"    text: \"<b>\" + x.label + \" \" + Math.round(x.v) + \"{unit}</b>\",\n"
+                              "    font: { size: 11, color: vars.cBg }, bgcolor: x.color,\n  }));\n}")
+        return g
+    def net_hdr(name, values=()):
+        return {"type": "custom:bubble-card", "card_type": "separator", "name": name, "modules": ["origami_base", "origami_header"],
+                "origami_header": {"weight": "medium", "icon_size": "var(--icon-size-s)"}, "sub_button": {"main": list(values)}}
+    ncards = [section_hdr("Home Gateway", "Console", CONSOLE), gw_top, net_hdr("Internet"), slim(inet_rows)]
+    if HAS_PLOTLY and (have(NET["google_wan_latency"]) or have(NET["cloudflare_wan_latency"])):
+        ncards.append(net_graph([(NET["google_wan_latency"], "Google", "cCpu", True, "s0"), (NET["cloudflare_wan_latency"], "Cloudflare", "cRam", True, "s1")],
+                                " ms", {"s0": "Google", "s1": "Cloudflare"}, 112))
+    if have(NET["clients"]) or WIFI:
+        total = [{"entity": NET["clients"], "name": "Clients", "show_name": True, "icon": "mdi:devices",
+                  "origami_header": {"name": "${num(state, 0)} total"}, "tap_action": {"action": "more-info"}}] if have(NET["clients"]) else []
+        ncards += [net_hdr("Clients", total),
+                   slim([{"entity": e, "name": f"{n} Wi-Fi",
+                          "icon": "mdi:wifi", "tap_action": {"action": "more-info"},
+                          "origami_tiles": {"state": "${num(state, 0)} ${Number(state) === 1 ? 'client' : 'clients'}"}} for e, n in WIFI])]
+        if HAS_PLOTLY and have(NET["clients"]):
+            ncards.append(net_graph([(NET["clients"], "Clients", "cRam", True, "s0")] + [(e, n, c, False, f"w{i}") for i, ((e, n), c) in enumerate(zip(WIFI, ("cCpu", "cLoad", "cErr")))],
+                                    "", {"s0": "Clients"}, 86))
+    net["cards"] = [{"type": "vertical-stack", "cards": ncards}]
+    # ways in: a tile in favorites (always there, first while something's down), a row in the favorites list, the server pop-up's Network row
+    fav_tiles["sub_button"]["bottom"].append(
+        {"name": "Network", "icon": "mdi:router-wireless",
+         "origami_tiles": {"state": f"${{{JS_NET_DOWN} ? 'Offline' : " + (f"num(states('{NET['clients']}'), 0) + ' clients'" if have(NET["clients"]) else "'Online'") + "}",
+                           "color": f"${{{JS_NET_DOWN} ? 'var(--error-color)' : 'var(--green-color)'}}",
+                           "order": f"${{{JS_NET_DOWN} ? -3 : 10}}"},
+         "tap_action": nav("#popup_network")})
+    fl[4]["sub_button"]["bottom"].append({"name": "Network", "icon": "mdi:router-wireless", "origami_tiles": {"state": "Home Gateway"},
+                                          "tap_action": nav("#popup_network")})
+    for r in box_list["sub_button"]["bottom"]:
+        if r.get("entity") == "sensor.infrastructure_status": r["tap_action"] = nav("#popup_network")
+else:
+    print("network: UniFi entities missing, Network pop-up skipped")
+
 # --- navigation bar (Navbar Card): music, TV, lights, favorites, and the server in the menu's place
 SPK_JS = "[" + ", ".join(f"'{s}'" for s in SPEAKERS) + "]"
 nb_txt = up("dashboard/navigation-bar/card.yaml").replace("['media_player.living_room', 'media_player.bedroom', 'media_player.office']", SPK_JS)
@@ -626,7 +768,7 @@ if ZONES:
     climate_table = ct
 
 # ---------------------------------------------------------------- 5. the view
-popups = [room_popup(h, n, devs) for h, n, _, devs in ROOMS] + [music, tv, tvf, lights, srv, favl]
+popups = [room_popup(h, n, devs) for h, n, _, devs in ROOMS] + [music, tv, tvf, lights, srv] + ([net] if net else []) + [favl]
 first = ([menu] if menu else []) + [greeting, weather, fav_header, fav_tiles]
 view = {"title": "Home", "path": "home", "icon": "mdi:home", "type": "sections", "max_columns": 2, "dense_section_placement": True,
         "sections": [

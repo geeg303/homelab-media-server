@@ -47,6 +47,38 @@ done
 RES["Status tiles up to date"]=${st:+down|$st}; RES["Status tiles up to date"]=${RES["Status tiles up to date"]:-up|all fresh}
 # --- usb watchdog
 systemctl is-active --quiet usb-watchdog.service && RES["USB watchdog"]="up|running" || RES["USB watchdog"]="down|usb-watchdog.service $(systemctl is-active usb-watchdog.service)"
+# --- UniFi (read-only Network API key, line 3 of /etc/media-server/unifi-creds)
+if [ -f /etc/media-server/unifi-creds ]; then
+  while IFS='|' read -r name st msg; do [ -n "$name" ] && RES["$name"]="$st|$msg"; done < <(python3 - <<'PY' 2>/dev/null || echo "UniFi internet (WAN)|down|health script failed"
+import json, ssl, urllib.request
+ctx = ssl.create_default_context(); ctx.check_hostname = False; ctx.verify_mode = ssl.CERT_NONE
+key = [l.strip() for l in open("/etc/media-server/unifi-creds") if l.strip()][2]
+def get(p):
+    r = urllib.request.Request("https://192.0.2.1/proxy/network/api/s/default" + p, headers={"X-API-KEY": key, "Accept": "application/json"})
+    return json.loads(urllib.request.urlopen(r, context=ctx, timeout=10).read())["data"]
+try:
+    h = {x["subsystem"]: x for x in get("/stat/health")}
+except Exception as e:
+    for n in ("UniFi internet (WAN)", "UniFi Wi-Fi", "UniFi router health"): print(f"{n}|down|UniFi API unreachable: {type(e).__name__}")
+    raise SystemExit
+w, www, wl = h.get("wan", {}), h.get("www", {}), h.get("wlan", {})
+lat = www.get("latency")
+ok = w.get("status") == "ok" and www.get("status") == "ok"
+print(f"UniFi internet (WAN)|{'up' if ok else 'down'}|wan {w.get('status')} · internet {www.get('status')}" + (f" · {lat} ms" if lat is not None else ""))
+print(f"UniFi Wi-Fi|{'up' if wl.get('status') == 'ok' else 'down'}|wifi {wl.get('status')} · {wl.get('num_user', '?')} clients · {wl.get('num_ap', '?')} AP")
+bad = []
+for dv in get("/stat/device"):
+    n = dv.get("name") or dv.get("model")
+    if dv.get("state") != 1: bad.append(f"{n} offline")
+    ss = dv.get("system-stats", {}); cpu, mem = float(ss.get("cpu", 0) or 0), float(ss.get("mem", 0) or 0)
+    if cpu >= 90: bad.append(f"{n} CPU {cpu:.0f}%")
+    if mem >= 90: bad.append(f"{n} memory {mem:.0f}%")
+    for t in dv.get("temperatures", []) or []:
+        if float(t.get("value", 0)) >= 85: bad.append(f"{n} {t.get('name')} {t.get('value')}°C")
+print(f"UniFi router health|{'down' if bad else 'up'}|" + ("; ".join(bad) if bad else "all UniFi devices healthy"))
+PY
+)
+fi
 # --- push
 while IFS=$'\t' read -r name tok; do [ -n "$name" ] && [ -n "${RES[$name]+x}" ] || continue
   st=${RES[$name]%%|*}; msg=${RES[$name]#*|}

@@ -82,6 +82,7 @@ for envf in /opt/media/stacks/*/.env /opt/media/stacks/*/*.env /opt/media/dockge
   [ -f "$envf" ] && awk -F= '!/^#/ && NF>1 && $1!~/^(PUID|PGID|TZ|RENDER_GID|COMPOSE_FILE|UMASK|WUD_AUTH_ADMIN_USER|HOMEPAGE_VAR_WUD_USER)$/ {sub(/^[^=]*=/,""); print}' "$envf" >> /root/reposync.secrets
 done
 cat /etc/media-server/* 2>/dev/null | grep -oE '[A-Za-z0-9_-]{12,}' >> /root/reposync.secrets || true
+sed -n '2,3p' /etc/media-server/unifi-creds 2>/dev/null >> /root/reposync.secrets || true   # UniFi password + Network API key, whole lines (short passwords too)
 for x in sonarr radarr prowlarr; do grep -oP '(?<=<ApiKey>)[^<]+' /opt/media/config/$x/config.xml 2>/dev/null >> /root/reposync.secrets || true; done
 grep -E '^(api_key|nzb_key) *=' /opt/media/config/sabnzbd/sabnzbd.ini 2>/dev/null | sed -E 's/^[^=]*= *//' >> /root/reposync.secrets || true
 grep -oE '(token|apikey|api_key): *[^ ]+' /opt/media/config/kometa/config.yml* 2>/dev/null | sed -E 's/^[^:]*:[^:]*: *//' >> /root/reposync.secrets || true

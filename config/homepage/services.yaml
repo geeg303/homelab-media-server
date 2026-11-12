@@ -242,6 +242,16 @@
         server: box
         container: dockge
         siteMonitor: "http://192.0.2.242:5001"
+    - UniFi:
+        href: https://192.0.2.1
+        icon: unifi.png
+        description: "Dream Router 7 · read-only"
+        widget:
+          type: unifi
+          url: https://192.0.2.1
+          site: Default
+          key: "{{HOMEPAGE_VAR_UNIFI_KEY}}"
+          fields: ["uptime", "wan", "wlan_users", "lan_users"]
     - Uptime Kuma:
         href: "http://192.0.2.242:3001"
         icon: uptime-kuma.png
