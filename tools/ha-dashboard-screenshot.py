@@ -57,4 +57,4 @@ try:
     img = call("Page.captureScreenshot", format="png")["data"]
     open(out, "wb").write(base64.b64decode(img)); print("saved", out)
 finally:
-    p.kill(); p.wait(); time.sleep(1); shutil.rmtree(prof, ignore_errors=True)
+    subprocess.run(["taskkill", "/T", "/F", "/PID", str(p.pid)], capture_output=True); time.sleep(2); shutil.rmtree(prof, ignore_errors=True)
