@@ -55,7 +55,7 @@
     - Tdarr conversions (live):
         href: "http://192.0.2.242:8265"
         icon: tdarr.png
-        description: "refreshes every 30 s · pilot output stays in /scratch/tdarr/output"
+        description: "refreshes every 30 s · verified encodes replace the originals on disk1"
         widget:
           type: customapi
           url: http://status/tdarr.json
@@ -74,8 +74,6 @@
               label: Saved
             - field: swap
               label: Library
-            - field: pilot
-              label: Pilot
             - field: workers
               label: Workers
             - field: updated
@@ -86,10 +84,34 @@
         icon: plex.png
         server: box
         container: plex
+        description: "no libraries until the switch-over (widget comes back then)"
+        # widget parked Nov 11: Homepage's plex widget throws on an empty library list. SWITCHOVER-PLAN re-enables it.
+        # widget:
+        #   type: plex
+        #   url: "http://192.0.2.242:32400"
+        #   key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+    - Live TV (PrismCast):
+        href: "http://192.0.2.242:5589"
+        icon: mdi-television-classic
+        description: "YouTube TV → Plex tuner · lineup cleanup pending"
+        server: box
+        container: prismcast
         widget:
-          type: plex
-          url: "http://192.0.2.242:32400"
-          key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+          type: customapi
+          url: http://192.0.2.242:5589/health
+          refreshInterval: 30000
+          mappings:
+            - field: status
+              label: Status
+            - field:
+                streams: active
+              label: Streams
+            - field:
+                streams: limit
+              label: Limit
+            - field:
+                clients: total
+              label: Viewers
     - Tautulli:
         href: "http://192.0.2.242:8181"
         icon: tautulli.png
