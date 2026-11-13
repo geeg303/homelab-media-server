@@ -1,27 +1,90 @@
 ---
-title: box media server
+# 90s redesign (Nov 13 2026). Tabs = pages. Look comes from custom.css / custom.js; GIFs in ./images (served at /images/).
+title: "user's Box ~ Welcome 2 My Homepage!!!"
+description: "user's home media server. Best viewed in Netscape Navigator 4.0 at 800x600."
 theme: dark
-color: slate
+color: purple
 headerStyle: boxed
+fullWidth: true
+statusStyle: dot
+target: _blank
+quicklaunch:
+  searchDescriptions: true
+  showSearchSuggestions: true
+pwa:
+  shortcuts:
+    - name: Home Page
+      url: "/#home-page"
+    - name: Jobs
+      url: "/#jobs"
+
 layout:
-  Migration:
-    style: row
-    columns: 1
-  Conversions:
-    style: row
-    columns: 1
-  Media:
+  # ---------- page 1: Home Page (summary) ----------
+  Today on the Box:
+    tab: Home Page
     style: row
     columns: 3
-  Automation:
+  # ---------- page 2: Media Mania ----------
+  Media Mania:
+    tab: Media Mania
     style: row
     columns: 4
-  Ops:
+  # ---------- page 3: Download-O-Rama ----------
+  Download-O-Rama:
+    tab: Download-O-Rama
+    style: row
+    columns: 3
+  Coming Soon 2 a TV Near U:
+    tab: Download-O-Rama
+    style: row
+    columns: 2
+  # ---------- page 4: Server Room ----------
+  Box Brain:
+    tab: Server Room
     style: row
     columns: 4
-# For configuration options and examples, please see:
-# https://gethomepage.dev/configs/settings/
-
-providers:
-  openweathermap: openweathermapapikey
-  weatherapi: weatherapiapikey
+  Hot Stuff (temps):
+    tab: Server Room
+    style: row
+    columns: 4
+  Drive Bay:
+    tab: Server Room
+    style: row
+    columns: 3
+  Disk I/O Blinkenlights:
+    tab: Server Room
+    style: row
+    columns: 5
+  Container Crew:
+    tab: Server Room
+    style: row
+    columns: 4
+  # ---------- page 5: Net & Home ----------
+  Net Surfin:
+    tab: Net & Home
+    style: row
+    columns: 3
+  Smart Home:
+    tab: Net & Home
+    style: row
+    columns: 4
+  # ---------- page 6: Jobs ----------
+  Jobs in Progress:
+    tab: Jobs
+    style: row
+    columns: 3
+  Update Patrol:
+    tab: Jobs
+    style: row
+    columns: 3
+  # ---------- page 7: Cool Links (bookmarks) ----------
+  "Cool Links: TV & Movies":
+    tab: Cool Links
+  "Cool Links: The Robots":
+    tab: Cool Links
+  "Cool Links: Server Cockpit":
+    tab: Cool Links
+  "Cool Links: Home & Network":
+    tab: Cool Links
+  "Cool Links: Source Code":
+    tab: Cool Links

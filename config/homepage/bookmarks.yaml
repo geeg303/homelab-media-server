@@ -1,18 +1,109 @@
 ---
-# For configuration options and examples, please see:
-# https://gethomepage.dev/configs/bookmarks
+# 'Cool Links' page for the 90s redesign. Every web UI on the box + network + code.
+# Put these group names in settings.yaml layout under the Cool Links tab.
 
-- Developer:
-    - Github:
-        - abbr: GH
-          href: https://github.com/
+- "Cool Links: TV & Movies":
+    - Plex Theater:
+        - icon: plex.png
+          href: http://192.0.2.242:32400/web
+          description: Watch stuff (:32400)
+    - PrismCast Live TV:
+        - icon: mdi-television-classic
+          href: http://192.0.2.242:5589
+          description: YouTube TV tuner (:5589)
+    - PrismCast Remote Desktop:
+        - icon: mdi-monitor-screenshot
+          href: http://192.0.2.242:6080/vnc.html
+          description: noVNC to the tuner's Chrome (:6080)
+    - Tautulli Stats-O-Rama:
+        - icon: tautulli.png
+          href: http://192.0.2.242:8181
+          description: Who watched what (:8181)
+    - Seerr Wish List:
+        - icon: overseerr.png
+          href: http://192.0.2.242:5055
+          description: Request a show (:5055)
+    - Maintainerr Janitor:
+        - icon: maintainerr.png
+          href: http://192.0.2.242:6246
+          description: Library cleanup rules (:6246)
 
-- Social:
-    - Reddit:
-        - abbr: RE
-          href: https://reddit.com/
+- "Cool Links: The Robots":
+    - Sonarr TV Robot:
+        - icon: sonarr.png
+          href: http://192.0.2.242:8989
+          description: TV shows (:8989)
+    - Radarr Movie Robot:
+        - icon: radarr.png
+          href: http://192.0.2.242:7878
+          description: Movies (:7878)
+    - SABnzbd Download Zone:
+        - icon: sabnzbd.png
+          href: http://192.0.2.242:8080
+          description: Downloads (:8080)
+    - Prowlarr Index Finder:
+        - icon: prowlarr.png
+          href: http://192.0.2.242:9696
+          description: Indexers (:9696)
+    - Bazarr Subtitle Shack:
+        - icon: bazarr.png
+          href: http://192.0.2.242:6767
+          description: Subtitles (:6767)
+    - Tdarr Shrink Ray:
+        - icon: tdarr.png
+          href: http://192.0.2.242:8265
+          description: Video conversions (:8265)
 
-- Entertainment:
-    - YouTube:
-        - abbr: YT
-          href: https://youtube.com/
+- "Cool Links: Server Cockpit":
+    - Dockge Control Room:
+        - icon: dockge.png
+          href: http://192.0.2.242:5001
+          description: Stacks, logs, updates (:5001)
+    - What's Up Docker?!:
+        - icon: whats-up-docker.png
+          href: http://192.0.2.242:3002
+          description: Image updates (:3002)
+    - Glances Mission Control:
+        - icon: glances.png
+          href: http://192.0.2.242:61208
+          description: Live CPU/RAM/temps (:61208)
+    - Uptime Kuma Watchtower:
+        - icon: uptime-kuma.png
+          href: http://192.0.2.242:3001
+          description: All the checks (:3001)
+    - Kuma Status Board:
+        - icon: mdi-list-status
+          href: http://192.0.2.242:3001/status/box
+          description: Public status page 'box'
+    - FileBrowser File Cabinet:
+        - icon: filebrowser.png
+          href: http://192.0.2.242:8099
+          description: Browse the disks (:8099)
+    - This Very Homepage:
+        - icon: homepage.png
+          href: http://192.0.2.242:3000
+          description: You are here (:3000)
+
+- "Cool Links: Home & Network":
+    - UniFi Network HQ:
+        - icon: unifi.png
+          href: https://192.0.2.1
+          description: Dream Router 7
+    - Home Assistant House Brain:
+        - icon: home-assistant.png
+          href: http://192.0.2.150
+          description: HAOS
+    - Origami Home Dashboard:
+        - icon: mdi-origami
+          href: http://192.0.2.150/origami-home
+          description: The HA wall panel
+
+- "Cool Links: Source Code":
+    - media-server (Secret Lair):
+        - icon: github.png
+          href: https://github.com/example-owner/media-server
+          description: Private repo
+    - homelab-media-server (Public Exhibit):
+        - icon: github.png
+          href: https://github.com/example-owner/homelab-media-server
+          description: Public repo

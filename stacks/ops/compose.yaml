@@ -37,6 +37,7 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: 192.0.2.242:3000,box:3000
     volumes:
       - /opt/media/config/homepage:/app/config
+      - /opt/media/config/homepage/images:/app/public/images:ro
 
   diun:
     image: crazymax/diun:latest

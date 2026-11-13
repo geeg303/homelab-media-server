@@ -1,0 +1,7 @@
+[Unit]
+Description=Homepage tiles: disks.json + host.json (read-only df/systemctl/docker)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/dash-status
+Nice=10

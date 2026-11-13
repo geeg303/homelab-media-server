@@ -1,294 +1,1494 @@
-# Live widgets. Secrets come from /opt/media/stacks/ops/homepage.env as {{HOMEPAGE_VAR_*}} (quoted for Homepage v2).
-# Widget URLs use container names on the 'media' network; Plex uses the host IP (host networking).
-- Migration:
-    - NTFS → ext4 migration:
-        icon: mdi-harddisk-plus
-        description: "live from the box, refreshes every minute"
-        widget:
-          type: customapi
-          url: http://status/migration.json
-          refreshInterval: 60000
-          display: list
-          mappings:
-            - field: round
-              label: Round
-            - field: stage
-              label: Now
-            - field: copy_bar
-              label: Copy
-            - field: verify_bar
-              label: Checksum check
-            - field: eta
-              label: ETA
-            - field: overall_bar
-              label: Overall
-            - field: rounds
-              label: Rounds
-            - field: health
-              label: Health
-            - field: updated
-              label: Updated
-    - New drives self-test:
-        icon: mdi-harddisk
-        description: "SMART long test, 5× WD 8 TB (second enclosure)"
-        widget:
-          type: customapi
-          url: http://status/selftest.json
-          refreshInterval: 60000
-          display: list
-          mappings:
-            - field: now
-              label: Status
-            - field: bay1
-              label: Bay 1
-            - field: bay2
-              label: Bay 2
-            - field: bay3
-              label: Bay 3
-            - field: bay4
-              label: Bay 4
-            - field: bay5
-              label: Bay 5
-            - field: updated
-              label: Updated
-- Conversions:
-    - Tdarr conversions (live):
-        href: "http://192.0.2.242:8265"
-        icon: tdarr.png
-        description: "refreshes every 30 s · verified encodes replace the originals on disk1"
-        widget:
-          type: customapi
-          url: http://status/tdarr.json
-          refreshInterval: 30000
-          display: list
-          mappings:
-            - field: now
-              label: Now
-            - field: job1
-              label: Job 1
-            - field: job2
-              label: Job 2
-            - field: totals
-              label: Totals
-            - field: saved
-              label: Saved
-            - field: swap
-              label: Library
-            - field: workers
-              label: Workers
-            - field: updated
-              label: Updated
-- Media:
-    - Plex:
-        href: "http://192.0.2.242:32400/web"
-        icon: plex.png
-        server: box
-        container: plex
-        description: "no libraries until the switch-over (widget comes back then)"
-        # widget parked Nov 11: Homepage's plex widget throws on an empty library list. SWITCHOVER-PLAN re-enables it.
-        # widget:
-        #   type: plex
-        #   url: "http://192.0.2.242:32400"
-        #   key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
-    - Live TV (PrismCast):
-        href: "http://192.0.2.242:5589"
-        icon: mdi-television-classic
-        description: "YouTube TV → Plex tuner · lineup cleanup pending"
-        server: box
-        container: prismcast
-        widget:
-          type: customapi
-          url: http://192.0.2.242:5589/health
-          refreshInterval: 30000
-          mappings:
-            - field: status
-              label: Status
-            - field:
-                streams: active
-              label: Streams
-            - field:
-                streams: limit
-              label: Limit
-            - field:
-                clients: total
-              label: Viewers
-    - PrismCast browser (VNC):
-        href: "http://192.0.2.242:6080/vnc.html?autoconnect=1&resize=scale"
-        icon: mdi-monitor-screenshot
-        description: "noVNC: PrismCast's Chrome for streaming logins (password in livetv.env)"
-        server: box
-        container: prismcast
-        siteMonitor: "http://192.0.2.242:6080/vnc.html"
-    - Tautulli:
-        href: "http://192.0.2.242:8181"
-        icon: tautulli.png
-        server: box
-        container: tautulli
-        widget:
-          type: tautulli
-          url: "http://tautulli:8181"
-          key: "{{HOMEPAGE_VAR_TAUTULLI_KEY}}"
-    - Seerr:
-        href: "http://192.0.2.242:5055"
-        icon: overseerr.png
-        server: box
-        container: seerr
-        widget:
-          type: seerr
-          url: "http://seerr:5055"
-          key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
-    - Maintainerr:
-        href: "http://192.0.2.242:6246"
-        icon: maintainerr.png
-        server: box
-        container: maintainerr
-        widget:
-          type: maintainerr
-          url: "http://maintainerr:6246"
-    - Kometa:
-        href: "http://192.0.2.242:5001"
-        icon: kometa.png
-        description: "collections + overlays, daily 05:00 (logs in Dockge)"
-        server: box
-        container: kometa
-- Automation:
-    - Sonarr:
-        href: "http://192.0.2.242:8989"
-        icon: sonarr.png
-        server: box
-        container: sonarr
-        widget:
-          type: sonarr
-          url: "http://sonarr:8989"
-          key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
-          enableQueue: true
-    - Radarr:
-        href: "http://192.0.2.242:7878"
-        icon: radarr.png
-        server: box
-        container: radarr
-        widget:
-          type: radarr
-          url: "http://radarr:7878"
-          key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
-          enableQueue: true
-    - SABnzbd:
-        href: "http://192.0.2.242:8080"
-        icon: sabnzbd.png
-        server: box
-        container: sabnzbd
-        widget:
-          type: sabnzbd
-          url: "http://sabnzbd:8080"
-          key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
-    - Prowlarr:
-        href: "http://192.0.2.242:9696"
-        icon: prowlarr.png
-        server: box
-        container: prowlarr
-        widget:
-          type: prowlarr
-          url: "http://prowlarr:9696"
-          key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
-    - Bazarr:
-        href: "http://192.0.2.242:6767"
-        icon: bazarr.png
-        server: box
-        container: bazarr
-        widget:
-          type: bazarr
-          url: "http://bazarr:6767"
-          key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
-    - Tdarr:
-        href: "http://192.0.2.242:8265"
-        icon: tdarr.png
-        server: box
-        container: tdarr
-        widget:
-          type: tdarr
-          url: "http://tdarr:8265"
-          key: "{{HOMEPAGE_VAR_TDARR_KEY}}"
-    - Recyclarr:
-        icon: recyclarr.png
-        description: "TRaSH profiles sync, daily 04:00"
-        server: box
-        container: recyclarr
-- Ops:
-    - Updates:
-        href: "http://192.0.2.242:3002"
-        icon: whats-up-docker.png
-        description: "image updates waiting (notify only, apply in Dockge)"
-        server: box
-        container: wud
-        widget:
-          type: whatsupdocker
-          url: http://wud:3000
-          username: "{{HOMEPAGE_VAR_WUD_USER}}"
-          password: "{{HOMEPAGE_VAR_WUD_PASSWORD}}"
-    - Home Assistant:
-        href: "http://192.0.2.150"
-        icon: home-assistant.png
-        description: "HAOS VM · own Wi-Fi adapter"
-        siteMonitor: "http://192.0.2.150"
-    - Files:
-        href: "http://192.0.2.242:8099"
-        icon: filebrowser.png
-        description: "FileBrowser · disk1 read-only during migration"
-        server: box
-        container: filebrowser
-    - Dockge:
-        href: "http://192.0.2.242:5001"
-        icon: dockge.png
-        server: box
-        container: dockge
-        siteMonitor: "http://192.0.2.242:5001"
-    - UniFi:
-        href: https://192.0.2.1
-        icon: unifi.png
-        description: "Dream Router 7 · read-only"
-        widget:
-          type: unifi
-          url: https://192.0.2.1
-          site: Default
-          key: "{{HOMEPAGE_VAR_UNIFI_KEY}}"
-          fields: ["uptime", "wan", "wlan_users", "lan_users"]
-    - Uptime Kuma:
-        href: "http://192.0.2.242:3001"
-        icon: uptime-kuma.png
-        server: box
-        container: uptime-kuma
-        widget:
-          type: uptimekuma
-          url: http://uptime-kuma:3001
-          slug: box
-    - Tdarr node:
-        icon: tdarr.png
-        description: "Quick Sync node box-qsv"
-        server: box
-        container: tdarr-node
-    - DIUN:
-        icon: diun.png
-        description: "image update notices via ntfy"
-        server: box
-        container: diun
-    - Docker socket proxy:
-        icon: mdi-docker
-        description: "read-only Docker API for Homepage, DIUN, WUD, Kuma"
-        server: box
-        container: socket-proxy
-    - Status feed:
-        icon: mdi-code-json
-        description: "serves the Migration / Conversions / self-test tile JSON"
-        server: box
-        container: status
-    - Glances:
-        href: "http://192.0.2.242:61208"
-        icon: glances.png
-        description: "box CPU / memory / load / containers (feeds Home Assistant)"
-        server: box
-        container: glances
-        widget:
-          type: glances
-          url: http://192.0.2.242:61208
-          version: 4
-          metric: info
+# Homepage services — 90s redesign (Nov 13 2026). Tabs/groups: see settings.yaml layout.
+# Secrets come from /opt/media/stacks/ops/homepage.env as {{HOMEPAGE_VAR_*}}.
+# Plex widget is PARKED on purpose (empty library list crashes it); SWITCHOVER-PLAN re-enables it:
+#   widget: {type: plex, url: "http://192.0.2.242:32400", key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}", fields: [streams, movies, tv, albums]}
+- Today on the Box:
+  - The Box (host):
+      href: "http://192.0.2.242:61208"
+      icon: mdi-server
+      description: "user's Ubuntu server: uptime, load, RAM, containers, Tailscale, nightly config backup"
+      widget:
+        type: customapi
+        url: "http://status/host.json"
+        refreshInterval: 60000
+        display: list
+        mappings:
+        - field: uptime
+          label: Uptime
+        - field: load
+          label: Load (1/5/15 min)
+        - field: memory
+          label: Memory
+        - field: containers
+          label: Containers
+        - field: failed_units
+          label: Failed services
+        - field: tailscale
+          label: Tailscale
+        - field: backup_last
+          label: Last config backup
+        - field: updated
+          label: Updated
+  - Disk migration:
+      href: /#jobs
+      target: _self
+      icon: mdi-harddisk-plus
+      description: NTFS → ext4 move of the media drives, one disk per round (full details on the Jobs page)
+      widget:
+        type: customapi
+        url: "http://status/migration.json"
+        refreshInterval: 60000
+        display: list
+        mappings:
+        - field: round
+          label: Round
+        - field: stage
+          label: Now
+        - field: overall_bar
+          label: Overall
+        - field: eta
+          label: ETA
+        - field: rounds
+          label: Rounds
+  - Uptime Kuma:
+      href: "http://192.0.2.242:3001/status/box"
+      icon: uptime-kuma.png
+      description: watches every app, disk and job; pings ntfy when something breaks
+      widget:
+        type: uptimekuma
+        url: "http://uptime-kuma:3001"
+        slug: box
+        fields:
+        - up
+        - down
+        - uptime
+        - incident
+  - Storage at a glance:
+      href: /#server-room
+      target: _self
+      icon: mdi-database
+      description: how full the new ext4 data disks are
+      widget:
+        type: customapi
+        url: "http://status/disks.json"
+        refreshInterval: 120000
+        display: list
+        mappings:
+        - field: array_total
+          label: Data disks
+        - field: disk1
+          label: disk1
+        - field: disk3
+          label: disk3
+        - field: scratch
+          label: scratch
+        - field: root
+          label: OS
+  - Tdarr conversions:
+      href: /#jobs
+      target: _self
+      icon: tdarr.png
+      description: shrinks videos to HEVC with the Intel GPU (paused during the migration)
+      widget:
+        type: customapi
+        url: "http://status/tdarr.json"
+        refreshInterval: 60000
+        display: list
+        mappings:
+        - field: now
+          label: Now
+        - field: totals
+          label: Totals
+        - field: saved
+          label: Saved
+        - field: swap
+          label: Library
+  - Container updates:
+      href: "http://192.0.2.242:3002"
+      icon: whats-up-docker.png
+      description: "What's Up Docker: new image versions waiting (applied by docker-update-all)"
+      widget:
+        type: whatsupdocker
+        url: "http://wud:3000"
+        username: "{{HOMEPAGE_VAR_WUD_USER}}"
+        password: "{{HOMEPAGE_VAR_WUD_PASSWORD}}"
+        fields:
+        - monitoring
+        - updates
+- Media Mania:
+  - Plex:
+      href: "http://192.0.2.242:32400/web"
+      icon: plex.png
+      description: The big kahuna of the home theater! Plex streams every movie & show on the box to any TV, phone or browser, like a video store that never closes and never charges late fees. Libraries
+        arrive at the switch-over; the stats widget wakes up then.
+      server: box
+      container: plex
+      showStats: true
+      siteMonitor: "http://192.0.2.242:32400/identity"
+  - Tautulli:
+      href: "http://192.0.2.242:8181"
+      icon: tautulli.png
+      description: Plex's nosy neighbor with a clipboard. Tautulli watches who's streaming what, logs every play, and keeps the box's viewing high-score table. Live streams show right here.
+      server: box
+      container: tautulli
+      showStats: true
+      siteMonitor: "http://192.0.2.242:8181"
+      widgets:
+      - type: tautulli
+        url: "http://tautulli:8181"
+        key: "{{HOMEPAGE_VAR_TAUTULLI_KEY}}"
+        enableUser: true
+        showEpisodeNumber: true
+        expandOneStreamToTwoRows: true
+      - type: customapi
+        url: "http://tautulli:8181/api/v2?cmd=get_server_info&apikey={{HOMEPAGE_VAR_TAUTULLI_KEY}}"
+        refreshInterval: 300000
+        display: list
+        mappings:
+        - field: response.data.pms_name
+          label: Plex server
+        - field: response.data.pms_version
+          label: Plex version
+        - field: response.data.pms_platform
+          label: Platform
+        - field: response.data.pms_plexpass
+          label: Plex Pass
+          remap:
+          - value: 1
+            to: ★ YES ★
+          - any: true
+            to: 'no'
+      - type: customapi
+        url: "http://tautulli:8181/api/v2?cmd=get_history&length=1&apikey={{HOMEPAGE_VAR_TAUTULLI_KEY}}"
+        refreshInterval: 300000
+        mappings:
+        - field: response.data.recordsTotal
+          label: Plays logged
+          format: number
+        - field: response.data.total_duration
+          label: Time watched
+  - Seerr:
+      href: "http://192.0.2.242:5055"
+      icon: overseerr.png
+      description: The request hotline! Friends & family browse, click "Request", and Seerr hands the order to Sonarr/Radarr. Like calling in to the radio station, but the DJ actually plays it.
+      server: box
+      container: seerr
+      showStats: true
+      siteMonitor: "http://192.0.2.242:5055"
+      widgets:
+      - type: seerr
+        url: "http://seerr:5055"
+        key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
+        fields:
+        - pending
+        - approved
+        - processing
+        - completed
+      - type: seerr
+        url: "http://seerr:5055"
+        key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
+        fields:
+        - available
+        - issues
+      - type: customapi
+        url: "http://seerr:5055/api/v1/status"
+        refreshInterval: 3600000
+        mappings:
+        - field: version
+          label: Version
+        - field: updateAvailable
+          label: Update?
+          remap:
+          - value: true
+            to: NEW!
+          - any: true
+            to: up to date
+        - field: commitsBehind
+          label: Behind
+          format: number
+  - Maintainerr:
+      href: "http://192.0.2.242:6246"
+      icon: maintainerr.png
+      description: The janitor of the media library. Maintainerr follows your rules ("nobody watched it in a year?") to gather stale stuff into leaving-soon collections, then sweeps it out to free disk.
+      server: box
+      container: maintainerr
+      showStats: true
+      siteMonitor: "http://192.0.2.242:6246"
+      widgets:
+      - type: maintainerr
+        url: "http://maintainerr:6246"
+        fields:
+        - itemsHandled
+        - moviesHandled
+        - showsHandled
+      - type: maintainerr
+        url: "http://maintainerr:6246"
+        fields:
+        - seasonsHandled
+        - episodesHandled
+        - totalCapacity
+      - type: maintainerr
+        url: "http://maintainerr:6246"
+        fields:
+        - reclaimable
+        - movieReclaimable
+        - showReclaimable
+      - type: customapi
+        url: "http://maintainerr:6246/api/app/status"
+        refreshInterval: 3600000
+        mappings:
+        - field: version
+          label: Version
+        - field: updateAvailable
+          label: Update?
+          remap:
+          - value: true
+            to: NEW!
+          - any: true
+            to: up to date
+  - Kometa:
+      href: "http://192.0.2.242:5001"
+      icon: kometa.png
+      description: "The poster artist. No web page of its own: every morning at 05:00 Kometa (ex Plex Meta Manager) builds collections (\"80s Action!\", \"Oscar Winners\") and paints rating badges on the\
+        \ posters. Logs live in Dockge (this link)."
+      server: box
+      container: kometa
+      showStats: true
+  - Live TV (PrismCast):
+      href: "http://192.0.2.242:5589"
+      icon: mdi-television-classic
+      description: Cable TV, Y2K-style! PrismCast drives a hidden Chrome that plays YouTube TV channels and pretends to be an HDHomeRun tuner, so Plex sees real live channels and a guide. 2 tuners = 2 channels
+        at once.
+      server: box
+      container: prismcast
+      showStats: true
+      widget:
+        type: customapi
+        url: "http://192.0.2.242:5589/health"
+        refreshInterval: 15000
+        display: list
+        mappings:
+        - field: status
+          label: Status
+          remap:
+          - value: healthy
+            to: ✔ healthy
+          - any: true
+            to: ✖ trouble
+        - field: streams.active
+          label: Streams on air
+          format: number
+          additionalField:
+            field: streams.limit
+            color: theme
+        - field: clients.total
+          label: Viewers
+          format: number
+        - field: browser.connected
+          label: Chrome
+          remap:
+          - value: true
+            to: connected
+          - any: true
+            to: DISCONNECTED
+          additionalField:
+            field: chrome
+            color: theme
+        - field: browser.captureImpaired
+          label: Capture
+          remap:
+          - value: false
+            to: OK
+          - any: true
+            to: impaired
+          additionalField:
+            field: captureMode
+            color: theme
+        - field: ffmpegAvailable
+          label: ffmpeg
+          remap:
+          - value: true
+            to: ready
+          - any: true
+            to: missing
+        - field: memory.rss
+          label: Memory
+          format: bytes
+        - field: uptime
+          label: Uptime
+          format: duration
+        - field: version
+          label: PrismCast
+  - HDHomeRun tuner (PrismCast):
+      href: "http://192.0.2.242:5004/discover.json"
+      icon: mdi-antenna
+      description: "The fake rabbit-ears. This is the HDHomeRun-compatible tuner PrismCast shows to Plex (Live TV & DVR > add device > 192.0.2.242:5004). Channel count comes from its lineup."
+      server: box
+      container: prismcast
+      showStats: false
+      widgets:
+      - type: customapi
+        url: "http://192.0.2.242:5004/discover.json"
+        refreshInterval: 300000
+        display: list
+        mappings:
+        - field: FriendlyName
+          label: Tuner
+        - field: TunerCount
+          label: Tuners
+          format: number
+        - field: ModelNumber
+          label: Model
+          additionalField:
+            field: FirmwareVersion
+            color: theme
+        - field: DeviceID
+          label: Device ID
+      - type: customapi
+        url: "http://192.0.2.242:5004/lineup.json"
+        refreshInterval: 900000
+        mappings:
+        - label: Channels
+          format: size
+  - PrismCast browser (VNC):
+      href: "http://192.0.2.242:6080/vnc.html?autoconnect=1&resize=scale"
+      icon: mdi-monitor-screenshot
+      description: "Peek behind the curtain: noVNC remote screen of PrismCast's Chrome, for logging in to the streaming accounts (password in livetv.env). Look, don't break!"
+      server: box
+      container: prismcast
+      siteMonitor: "http://192.0.2.242:6080/vnc.html"
+- Download-O-Rama:
+  - SABnzbd:
+      href: "http://192.0.2.242:8080"
+      icon: sabnzbd.png
+      description: The delivery truck. SABnzbd pulls files from Usenet (Eweka), checks and repairs them, unpacks them and hands them to Sonarr/Radarr. Download speed, queue and data use below.
+      server: box
+      container: sabnzbd
+      showStats: true
+      siteMonitor: "http://192.0.2.242:8080"
+      widgets:
+      - type: sabnzbd
+        url: "http://sabnzbd:8080"
+        key: "{{HOMEPAGE_VAR_SABNZBD_KEY}}"
+        fields:
+        - rate
+        - queue
+        - timeleft
+      - type: customapi
+        url: "http://sabnzbd:8080/api?mode=queue&limit=1&output=json&apikey={{HOMEPAGE_VAR_SABNZBD_KEY}}"
+        refreshInterval: 15000
+        display: list
+        mappings:
+        - field: queue.status
+          label: State
+        - field: queue.sizeleft
+          label: Left to fetch
+        - field: queue.diskspace1_norm
+          label: Disk free
+          additionalField:
+            field: queue.diskspacetotal1
+            color: theme
+            suffix: GB total
+        - field: queue.speedlimit
+          label: Speed limit (%)
+          remap:
+          - value: '0'
+            to: none, full speed
+          - value: ""
+            to: none, full speed
+        - field: queue.version
+          label: Version
+      - type: customapi
+        url: "http://sabnzbd:8080/api?mode=server_stats&output=json&apikey={{HOMEPAGE_VAR_SABNZBD_KEY}}"
+        refreshInterval: 300000
+        mappings:
+        - field: day
+          label: Today
+          format: bytes
+        - field: week
+          label: Week
+          format: bytes
+        - field: month
+          label: Month
+          format: bytes
+        - field: total
+          label: All time
+          format: bytes
+  - Sonarr:
+      href: "http://192.0.2.242:8989"
+      icon: sonarr.png
+      description: The TV butler. Sonarr keeps a list of your shows, spots new episodes the minute they air, orders them through Prowlarr + SABnzbd, then renames and files them neatly for Plex.
+      server: box
+      container: sonarr
+      showStats: true
+      siteMonitor: "http://192.0.2.242:8989"
+      widgets:
+      - type: sonarr
+        url: "http://sonarr:8989"
+        key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+        fields:
+        - wanted
+        - queued
+        - series
+        enableQueue: true
+      - type: customapi
+        url: "http://sonarr:8989/api/v3/diskspace"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+        refreshInterval: 300000
+        display: dynamic-list
+        mappings:
+          name: path
+          label: freeSpace
+          format: bytes
+          suffix: free
+          limit: 6
+      - type: customapi
+        url: "http://sonarr:8989/api/v3/health"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+        refreshInterval: 120000
+        display: dynamic-list
+        mappings:
+          name: source
+          label: type
+          limit: 5
+          target: "{wikiUrl}"
+      - type: customapi
+        url: "http://sonarr:8989/api/v3/system/status"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+        refreshInterval: 3600000
+        mappings:
+        - field: version
+          label: Version
+        - field: startTime
+          label: Up since
+          format: relativeDate
+          style: short
+          numeric: auto
+  - Radarr:
+      href: "http://192.0.2.242:7878"
+      icon: radarr.png
+      description: Sonarr's movie-buff twin. Radarr watches for films you want, grabs the best copy when it's out, upgrades it when a better one shows up, and shelves it for Plex. Be kind, rewind.
+      server: box
+      container: radarr
+      showStats: true
+      siteMonitor: "http://192.0.2.242:7878"
+      widgets:
+      - type: radarr
+        url: "http://radarr:7878"
+        key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+        fields:
+        - wanted
+        - missing
+        - queued
+        - movies
+        enableQueue: true
+      - type: customapi
+        url: "http://radarr:7878/api/v3/diskspace"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+        refreshInterval: 300000
+        display: dynamic-list
+        mappings:
+          name: path
+          label: freeSpace
+          format: bytes
+          suffix: free
+          limit: 6
+      - type: customapi
+        url: "http://radarr:7878/api/v3/health"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+        refreshInterval: 120000
+        display: dynamic-list
+        mappings:
+          name: source
+          label: type
+          limit: 5
+          target: "{wikiUrl}"
+      - type: customapi
+        url: "http://radarr:7878/api/v3/system/status"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+        refreshInterval: 3600000
+        mappings:
+        - field: version
+          label: Version
+        - field: startTime
+          label: Up since
+          format: relativeDate
+          style: short
+          numeric: auto
+  - Prowlarr:
+      href: "http://192.0.2.242:9696"
+      icon: prowlarr.png
+      description: The phone book of the Usenet world. Prowlarr keeps the indexer list (NZBgeek & friends) in one place and shares it with Sonarr and Radarr, then counts every search and grab.
+      server: box
+      container: prowlarr
+      showStats: true
+      siteMonitor: "http://192.0.2.242:9696"
+      widgets:
+      - type: prowlarr
+        url: "http://prowlarr:9696"
+        key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+        fields:
+        - numberOfGrabs
+        - numberOfQueries
+        - numberOfFailGrabs
+        - numberOfFailQueries
+      - type: customapi
+        url: "http://prowlarr:9696/api/v1/indexerstats"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+        refreshInterval: 300000
+        display: dynamic-list
+        mappings:
+          items: indexers
+          name: indexerName
+          label: averageResponseTime
+          format: number
+          suffix: ms
+          limit: 6
+      - type: customapi
+        url: "http://prowlarr:9696/api/v1/health"
+        headers:
+          X-Api-Key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+        refreshInterval: 120000
+        display: dynamic-list
+        mappings:
+          name: source
+          label: type
+          limit: 5
+          target: "{wikiUrl}"
+  - Bazarr:
+      href: "http://192.0.2.242:6767"
+      icon: bazarr.png
+      description: The closed-caption crew. Bazarr finds and syncs subtitles for every show and movie, so you can follow along even when the dialogue is mumbled. Shows what's still missing.
+      server: box
+      container: bazarr
+      showStats: true
+      siteMonitor: "http://192.0.2.242:6767"
+      widgets:
+      - type: bazarr
+        url: "http://bazarr:6767"
+        key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+        fields:
+        - missingEpisodes
+        - missingMovies
+      - type: customapi
+        url: "http://bazarr:6767/api/badges"
+        headers:
+          X-API-KEY: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+        refreshInterval: 120000
+        display: list
+        mappings:
+        - field: sonarr_signalr
+          label: Sonarr link
+        - field: radarr_signalr
+          label: Radarr link
+        - field: providers
+          label: Providers throttled
+          format: number
+        - field: status
+          label: Health issues
+          format: number
+        - field: announcements
+          label: Announcements
+          format: number
+      - type: customapi
+        url: "http://bazarr:6767/api/system/status"
+        headers:
+          X-API-KEY: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+        refreshInterval: 3600000
+        mappings:
+        - field: data.bazarr_version
+          label: Version
+        - field: data.start_time
+          label: Up since
+          scale: 1000
+          format: relativeDate
+          style: short
+          numeric: auto
+  - Recyclarr:
+      icon: recyclarr.png
+      description: "The quality-control robot. No web page: daily at 04:00 Recyclarr copies the TRaSH Guides recipes (which releases are good, which are junk) into Sonarr and Radarr automatically."
+      server: box
+      container: recyclarr
+      showStats: true
+- Coming Soon 2 a TV Near U:
+  - Coming Soon (calendar):
+      icon: mdi-calendar-star
+      description: "TV Guide magazine, but for your box: new episodes from Sonarr and movie releases from Radarr, by the month."
+      widget:
+        type: calendar
+        view: monthly
+        firstDayInWeek: sunday
+        maxEvents: 10
+        showTime: true
+        timezone: Region/City
+        integrations:
+        - type: sonarr
+          service_group: Download-O-Rama
+          service_name: Sonarr
+          color: teal
+          baseUrl: "http://192.0.2.242:8989"
+          params:
+            unmonitored: false
+        - type: radarr
+          service_group: Download-O-Rama
+          service_name: Radarr
+          color: amber
+          baseUrl: "http://192.0.2.242:7878"
+          params:
+            unmonitored: false
+  - Up Next (agenda):
+      icon: mdi-format-list-bulleted
+      description: "The same feed as a scrolling list: the last 3 days plus what's next."
+      widget:
+        type: calendar
+        view: agenda
+        maxEvents: 12
+        showTime: true
+        previousDays: 3
+        timezone: Region/City
+        integrations:
+        - type: sonarr
+          service_group: Download-O-Rama
+          service_name: Sonarr
+          color: teal
+          baseUrl: "http://192.0.2.242:8989"
+        - type: radarr
+          service_group: Download-O-Rama
+          service_name: Radarr
+          color: amber
+          baseUrl: "http://192.0.2.242:7878"
+- Box Brain:
+  - Box vitals:
+      icon: mdi-desktop-tower
+      description: i5-14500 · 14 cores / 20 threads · 32 GB · Ubuntu 26.04
+      href: "http://192.0.2.242:61208"
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: info
+        chart: false
+  - CPU-O-Meter:
+      icon: mdi-cpu-64-bit
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: cpu
+        chart: true
+        chartMin: 0
+        chartMax: 100
+        pointsLimit: 30
+        refreshInterval: 3000
+  - RAM Doubler:
+      icon: mdi-memory
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: memory
+        chart: true
+        pointsLimit: 30
+  - Load & uptime:
+      icon: mdi-gauge
+      description: Glances /api/4/load + quicklook (Homepage's glances widget has no load metric)
+      widget:
+        type: customapi
+        url: "http://192.0.2.242:61208/api/4/quicklook"
+        refreshInterval: 10000
+        display: list
+        mappings:
+        - field: cpu_name
+          label: Chip
+        - field: cpu_hz_current
+          label: Clock now
+          format: float
+          scale: 1.0e-09
+          suffix: GHz
+        - field: load
+          label: Load (of all cores)
+          format: percent
+        - field: cpu
+          label: CPU
+          format: percent
+        - field: mem
+          label: RAM
+          format: percent
+        - field: swap
+          label: Swap
+          format: percent
+  - Load average:
+      icon: mdi-chart-bell-curve-cumulative
+      widget:
+        type: customapi
+        url: "http://192.0.2.242:61208/api/4/load"
+        refreshInterval: 10000
+        mappings:
+        - field: min1
+          label: 1 min
+          format: float
+        - field: min5
+          label: 5 min
+          format: float
+        - field: min15
+          label: 15 min
+          format: float
+        - field: cpucore
+          label: Cores
+          format: number
+  - Processes:
+      icon: mdi-format-list-numbered
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: process
+        chart: false
+  - Process count:
+      icon: mdi-counter
+      widget:
+        type: customapi
+        url: "http://192.0.2.242:61208/api/4/processcount"
+        refreshInterval: 15000
+        mappings:
+        - field: total
+          label: Procs
+          format: number
+        - field: running
+          label: Running
+          format: number
+        - field: sleeping
+          label: Sleeping
+          format: number
+        - field: thread
+          label: Threads
+          format: number
+  - Quick Sync iGPU:
+      icon: mdi-expansion-card-variant
+      description: Intel GPU via Glances (mem/temp not reported; Tdarr encodes show as proc %)
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "gpu:intel0"
+        chart: true
+- Hot Stuff (temps):
+  - CPU package temp:
+      icon: mdi-thermometer
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "sensor:Package id 0"
+        chart: true
+        pointsLimit: 30
+  - Hottest core (Core 20):
+      icon: mdi-thermometer-high
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "sensor:Core 20"
+        chart: false
+  - Case ambient:
+      icon: mdi-home-thermometer
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "sensor:Ambient"
+        chart: false
+  - Scratch NVMe temp:
+      icon: mdi-expansion-card
+      description: Composite = nvme0 (/scratch) · Composite 1 = nvme1 (system), checked via hwmon
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "sensor:Composite"
+        chart: false
+  - System NVMe temp:
+      icon: mdi-expansion-card-variant
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "sensor:Composite 1"
+        chart: false
+  - Wi-Fi card temp:
+      icon: mdi-wifi-alert
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "sensor:iwlwifi_1 0"
+        chart: false
+  - CPU fan:
+      icon: mdi-fan
+      description: Dell SMM fan, RPM (unit shows as R)
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "sensor:CPU Fan"
+        chart: true
+- Drive Bay:
+  - Data disks (ext4):
+      icon: mdi-harddisk
+      description: how full each new ext4 media disk is · refreshed every 2 min by dash-status (df only)
+      widget:
+        type: customapi
+        url: "http://status/disks.json"
+        refreshInterval: 120000
+        display: list
+        mappings:
+        - field: array_total
+          label: All data disks
+        - field: disk1
+          label: disk1
+        - field: disk2
+          label: disk2
+        - field: disk3
+          label: disk3
+        - field: disk4
+          label: disk4
+        - field: disk5
+          label: disk5
+        - field: disk6
+          label: disk6
+        - field: parity2
+          label: parity2
+  - NVMe + migration sources:
+      icon: mdi-expansion-card
+      description: the two NVMe drives, plus the old NTFS disks still waiting to be moved
+      widget:
+        type: customapi
+        url: "http://status/disks.json"
+        refreshInterval: 120000
+        display: list
+        mappings:
+        - field: root
+          label: OS NVMe (/)
+        - field: scratch
+          label: scratch NVMe
+        - field: mig_sdb
+          label: NTFS sdb
+        - field: mig_sdd
+          label: NTFS sdd
+        - field: mig_sde
+          label: NTFS sde
+        - field: updated
+          label: Updated
+  - System disk (/):
+      icon: mdi-harddisk
+      description: root LV 300 GB — Glances sees it only as /etc/hostname (container bind-mount)
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "fs:/etc/hostname"
+        chart: false
+- Disk I/O Blinkenlights:
+  - System NVMe I/O (nvme1n1):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:nvme1n1"
+        chart: true
+  - Scratch NVMe I/O (nvme0n1):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:nvme0n1"
+        chart: true
+  - disk1 I/O (sdc):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sdc"
+        chart: false
+  - disk2 I/O (sda):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sda"
+        chart: false
+  - disk3 I/O (sdf):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sdf"
+        chart: false
+  - disk4 I/O (sdg):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sdg"
+        chart: false
+  - disk5 I/O (sdh):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sdh"
+        chart: false
+  - disk6 I/O (sdi):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sdi"
+        chart: false
+  - parity2 I/O (sdj):
+      icon: mdi-harddisk
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sdj"
+        chart: false
+  - Migration source I/O (sdd):
+      icon: mdi-harddisk-remove
+      description: "old NTFS drives being migrated: sdb, sdd, sde (round 3 reads sdd)"
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "disk:sdd"
+        chart: true
+- Container Crew:
+  - Containers (top 5):
+      icon: mdi-docker
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: containers
+        chart: true
+  - All 23 containers:
+      icon: mdi-ship-wheel
+      href: "http://192.0.2.242:5001"
+      widget:
+        type: customapi
+        url: "http://192.0.2.242:61208/api/4/containers"
+        refreshInterval: 30000
+        display: dynamic-list
+        mappings:
+          name: name
+          label: status
+          limit: 30
+  - Dockge:
+      href: "http://192.0.2.242:5001"
+      icon: dockge.png
+      description: "stacks: start / stop / update / logs (no Homepage widget exists)"
+      server: box
+      container: dockge
+      siteMonitor: "http://192.0.2.242:5001"
+  - Files (FileBrowser):
+      href: "http://192.0.2.242:8099"
+      icon: filebrowser.png
+      description: disk1 read-only during migration
+      server: box
+      container: filebrowser
+      siteMonitor: "http://192.0.2.242:8099"
+  - Status feed:
+      icon: mdi-code-json
+      description: serves migration / tdarr / selftest JSON for the tiles above
+      server: box
+      container: status
+  - Docker socket proxy:
+      icon: mdi-docker
+      description: read-only Docker API that Homepage, WUD, DIUN and Kuma use (no write access)
+      server: box
+      container: socket-proxy
+      showStats: true
+  - Glances:
+      href: "http://192.0.2.242:61208"
+      icon: glances.png
+      description: the system monitor feeding the Server Room page and Home Assistant
+      server: box
+      container: glances
+      showStats: true
+  - Glances socket proxy:
+      icon: mdi-docker
+      description: "Glances' own read-only Docker API, loopback only (127.0.0.1:2376)"
+      server: box
+      container: glances-socket-proxy
+      showStats: true
+  - Homepage (this page!):
+      href: "http://192.0.2.242:3000"
+      icon: homepage.png
+      description: you are here · config in /opt/media/config/homepage
+      server: box
+      container: homepage
+      showStats: true
+- Net Surfin:
+  - UniFi Dream Router 7:
+      href: "https://192.0.2.1"
+      icon: unifi.png
+      description: Home Gateway · Google Fiber · read-only API key
+      widget:
+        type: unifi
+        url: "https://192.0.2.1"
+        site: Default
+        key: "{{HOMEPAGE_VAR_UNIFI_KEY}}"
+        fields:
+        - uptime
+        - wan
+        - wlan_users
+        - lan_users
+  - Internet pipe:
+      href: "https://192.0.2.1"
+      icon: mdi-web
+      widget:
+        type: customapi
+        url: "https://192.0.2.1/proxy/network/api/stat/sites"
+        headers:
+          X-API-KEY: "{{HOMEPAGE_VAR_UNIFI_KEY}}"
+          Accept: application/json
+        refreshInterval: 15000
+        display: list
+        mappings:
+        - field: data.0.health.1.isp_name
+          label: ISP
+        - field: data.0.health.1.rx_bytes-r
+          label: Download now
+          format: bitrate
+          scale: 8
+        - field: data.0.health.1.tx_bytes-r
+          label: Upload now
+          format: bitrate
+          scale: 8
+        - field: data.0.health.2.latency
+          label: Latency
+          suffix: ms
+        - field: data.0.health.2.xput_down
+          label: Speedtest down
+          format: float
+          suffix: Mbps
+        - field: data.0.health.2.xput_up
+          label: Speedtest up
+          format: float
+          suffix: Mbps
+        - field: data.0.health.2.speedtest_lastrun
+          label: Speedtest ran
+          format: relativeDate
+          scale: 1000
+        - field: data.0.health.2.drops
+          label: WAN drops
+          format: number
+  - Router guts:
+      href: "https://192.0.2.1"
+      icon: mdi-router-network
+      widget:
+        type: customapi
+        url: "https://192.0.2.1/proxy/network/api/stat/sites"
+        headers:
+          X-API-KEY: "{{HOMEPAGE_VAR_UNIFI_KEY}}"
+          Accept: application/json
+        refreshInterval: 30000
+        mappings:
+        - field: data.0.health.1.gw_system-stats.cpu
+          label: CPU
+          suffix: "%"
+        - field: data.0.health.1.gw_system-stats.mem
+          label: RAM
+          suffix: "%"
+        - field: data.0.health.0.num_user
+          label: Wi-Fi clients
+          format: number
+        - field: data.0.health.1.gw_version
+          label: Firmware
+  - Uptime Kuma:
+      href: "http://192.0.2.242:3001/status/box"
+      icon: uptime-kuma.png
+      description: 48 checks on status page 'box'
+      server: box
+      container: uptime-kuma
+      widget:
+        type: uptimekuma
+        url: "http://uptime-kuma:3001"
+        slug: box
+        fields:
+        - up
+        - down
+        - uptime
+        - incident
+  - Health checks (24 h):
+      href: "http://192.0.2.242:3001/status/box"
+      icon: mdi-heart-pulse
+      description: Kuma 24 h uptime per key check (1.0 = 100%)
+      widget:
+        type: customapi
+        url: "http://uptime-kuma:3001/api/status-page/heartbeat/box"
+        refreshInterval: 60000
+        display: list
+        mappings:
+        - field: uptimeList.48_24
+          label: Internet (WAN)
+          format: percent
+          scale: 100
+        - field: uptimeList.49_24
+          label: UniFi Wi-Fi
+          format: percent
+          scale: 100
+        - field: uptimeList.50_24
+          label: Router health
+          format: percent
+          scale: 100
+        - field: uptimeList.35_24
+          label: DNS lookup
+          format: percent
+          scale: 100
+        - field: uptimeList.39_24
+          label: Tailscale
+          format: percent
+          scale: 100
+        - field: uptimeList.29_24
+          label: Home Assistant
+          format: percent
+          scale: 100
+        - field: uptimeList.43_24
+          label: Box SSH
+          format: percent
+          scale: 100
+  - Network Glances:
+      icon: glances.png
+      href: "http://192.0.2.242:61208"
+      description: "Glances runs on host networking (since Nov 13), so it sees the real Wi-Fi + Tailscale links"
+      widget:
+        type: customapi
+        url: "http://192.0.2.242:61208/api/4/system"
+        refreshInterval: 300000
+        mappings:
+        - field: hr_name
+          label: OS
+  - Wi-Fi traffic (wlp0s20f3):
+      icon: mdi-wifi-arrow-up-down
+      description: the box's only network link (Wi-Fi 7 to the Dream Router)
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "network:wlp0s20f3"
+  - Tailscale traffic (tailscale0):
+      icon: mdi-vpn
+      description: remote-access tunnel traffic
+      widget:
+        type: glances
+        url: "http://192.0.2.242:61208"
+        version: 4
+        metric: "network:tailscale0"
+  - Tailscale:
+      href: "https://login.tailscale.com/admin/machines"
+      icon: tailscale.png
+      description: remote access to the box from anywhere (state read on the box every 2 min)
+      widget:
+        type: customapi
+        url: "http://status/host.json"
+        refreshInterval: 120000
+        display: list
+        mappings:
+        - field: tailscale
+          label: State
+        - field: tailscale_ip
+          label: Tailnet IP
+  - Wi-Fi & WAN (via HA):
+      href: "https://192.0.2.1"
+      icon: mdi-wifi
+      description: per-SSID clients and internet latency from Home Assistant's UniFi integration
+      widget:
+        type: homeassistant
+        url: "http://192.0.2.150"
+        key: "{{HOMEPAGE_VAR_HA_TOKEN}}"
+        custom:
+        - state: sensor.example_ssid_clients
+          label: example_ssid clients
+        - state: sensor.example_ssid_2g_clients
+          label: example-ssid-2g clients
+        - state: sensor.home_gateway_google_wan_latency
+          label: Ping Google
+        - state: sensor.home_gateway_cloudflare_wan_latency
+          label: Ping Cloudflare
+- Smart Home:
+  - Home Assistant:
+      href: "http://192.0.2.150"
+      icon: home-assistant.png
+      description: HAOS VM · weather + house
+      siteMonitor: "http://192.0.2.150"
+      widget:
+        type: homeassistant
+        url: "http://192.0.2.150"
+        key: "{{HOMEPAGE_VAR_HA_TOKEN}}"
+        custom:
+        - state: weather.home
+          label: Outside
+          value: "{state} · {attributes.temperature} {attributes.temperature_unit}"
+        - state: weather.home
+          label: Humidity / wind
+          value: "{attributes.humidity}% · {attributes.wind_speed} {attributes.wind_speed_unit}"
+        - template: "{{ states.light | selectattr('state','eq','on') | list | count }}"
+          label: Lights on
+        - template: "{{ states.update | selectattr('state','eq','on') | list | count }}"
+          label: HA updates
+  - Now playing (HA):
+      href: "http://192.0.2.150/origami-home"
+      icon: mdi-television-play
+      widget:
+        type: homeassistant
+        url: "http://192.0.2.150"
+        key: "{{HOMEPAGE_VAR_HA_TOKEN}}"
+        custom:
+        - state: media_player.living_room_living_room
+          label: Living room
+          value: "{state} {attributes.media_title}"
+        - state: media_player.family_room_tv
+          label: Family room TV
+          value: "{state} {attributes.media_title}"
+        - template: "{{ states.media_player | selectattr('state','eq','playing') | list | count }}"
+          label: Players playing
+        - state: light.ring_light
+          label: Ring light
+          value: "{state}"
+  - Router & box (HA):
+      href: "http://192.0.2.150"
+      icon: mdi-chart-line
+      widget:
+        type: homeassistant
+        url: "http://192.0.2.150"
+        key: "{{HOMEPAGE_VAR_HA_TOKEN}}"
+        custom:
+        - state: sensor.home_gateway_cpu_utilization
+          label: Router CPU
+        - state: sensor.home_gateway_memory_utilization
+          label: Router RAM
+        - state: sensor.home_gateway_clients
+          label: Router clients
+        - state: sensor.media_server_cpu_usage
+          label: Box CPU (via Glances)
+  - House stats (HA):
+      href: "http://192.0.2.150/origami-home"
+      icon: mdi-home-analytics
+      description: what Home Assistant knows about the house
+      widget:
+        type: homeassistant
+        url: "http://192.0.2.150"
+        key: "{{HOMEPAGE_VAR_HA_TOKEN}}"
+        custom:
+        - template: "{{ states | count }}"
+          label: Entities
+        - template: "{{ states.media_player | rejectattr('state','in',['off','unavailable','standby']) | list | count }}"
+          label: Players awake
+        - template: "{{ states.switch | selectattr('state','eq','on') | list | count }}"
+          label: Switches on
+        - state: sensor.home_gateway_cpu_temperature
+          label: Router CPU temp
+- Jobs in Progress:
+  - NTFS → ext4 migration:
+      icon: mdi-harddisk-plus
+      description: live from the box, refreshes every minute
+      widget:
+        type: customapi
+        url: "http://status/migration.json"
+        refreshInterval: 60000
+        display: list
+        mappings:
+        - field: round
+          label: Round
+        - field: stage
+          label: Now doing
+        - field: copy_bar
+          label: Copy
+        - field: verify_bar
+          label: Checksum
+        - field: eta
+          label: ETA
+        - field: overall_bar
+          label: Whole job
+        - field: rounds
+          label: Scoreboard
+        - field: health
+          label: Health
+        - field: updated
+          label: Last update
+  - New drives self-test:
+      icon: mdi-harddisk
+      description: SMART long test, 5× WD 8 TB (second enclosure)
+      widget:
+        type: customapi
+        url: "http://status/selftest.json"
+        refreshInterval: 300000
+        display: list
+        mappings:
+        - field: now
+          label: Verdict
+        - field: bay1
+          label: Bay 1
+        - field: bay2
+          label: Bay 2
+        - field: bay3
+          label: Bay 3
+        - field: bay4
+          label: Bay 4
+        - field: bay5
+          label: Bay 5
+        - field: updated
+          label: Checked
+  - Tdarr conversions (live):
+      href: "http://192.0.2.242:8265"
+      icon: tdarr.png
+      description: refreshes every 30 s · verified encodes replace the originals on disk1
+      widget:
+        type: customapi
+        url: "http://status/tdarr.json"
+        refreshInterval: 30000
+        display: list
+        mappings:
+        - field: now
+          label: Now
+        - field: job1
+          label: Job 1
+        - field: job2
+          label: Job 2
+        - field: workers
+          label: Workers
+        - field: pilot
+          label: Pilot
+        - field: totals
+          label: Totals
+        - field: saved
+          label: Saved
+        - field: swap
+          label: Library swap
+        - field: updated
+          label: Updated
+  - Tdarr:
+      href: "http://192.0.2.242:8265"
+      icon: tdarr.png
+      server: box
+      container: tdarr
+      widget:
+        type: tdarr
+        url: "http://tdarr:8265"
+        key: "{{HOMEPAGE_VAR_TDARR_KEY}}"
+        fields:
+        - queue
+        - processed
+        - errored
+        - saved
+  - Tdarr node (box-qsv):
+      icon: tdarr.png
+      description: Quick Sync encoder node
+      server: box
+      container: tdarr-node
+- Update Patrol:
+  - Image updates (WUD):
+      href: "http://192.0.2.242:3002"
+      icon: whats-up-docker.png
+      description: notify only · apply in Dockge
+      server: box
+      container: wud
+      widget:
+        type: whatsupdocker
+        url: "http://wud:3000"
+        username: "{{HOMEPAGE_VAR_WUD_USER}}"
+        password: "{{HOMEPAGE_VAR_WUD_PASSWORD}}"
+        fields:
+        - monitoring
+        - updates
+  - DIUN:
+      icon: diun.png
+      description: image update notices → ntfy (no Homepage widget exists)
+      server: box
+      container: diun
+  - Nightly config backup:
+      href: "http://192.0.2.242:3001/dashboard/25"
+      icon: mdi-backup-restore
+      description: "Kuma push monitor #25 · badge: http://192.0.2.242:3001/api/badge/25/status"
+      widget:
+        type: customapi
+        url: "http://uptime-kuma:3001/api/status-page/heartbeat/box"
+        refreshInterval: 300000
+        mappings:
+        - field: uptimeList.25_24
+          label: Pushed OK (24 h)
+          format: percent
+          scale: 100
+        - field: heartbeatList.25
+          label: Pushes on record
+          format: size
+  - Job watchdogs (24 h):
+      href: "http://192.0.2.242:3001/status/box"
+      icon: mdi-dog-service
+      widget:
+        type: customapi
+        url: "http://uptime-kuma:3001/api/status-page/heartbeat/box"
+        refreshInterval: 60000
+        display: list
+        mappings:
+        - field: uptimeList.41_24
+          label: Tdarr swap job
+          format: percent
+          scale: 100
+        - field: uptimeList.44_24
+          label: Status tiles fresh
+          format: percent
+          scale: 100
+        - field: uptimeList.45_24
+          label: USB watchdog
+          format: percent
+          scale: 100
+        - field: uptimeList.40_24
+          label: Quick Sync (no hangs)
+          format: percent
+          scale: 100
+        - field: uptimeList.38_24
+          label: All 10 drives connected
+          format: percent
+          scale: 100
+        - field: uptimeList.37_24
+          label: Drive health (SMART)
+          format: percent
+          scale: 100
+        - field: uptimeList.36_24
+          label: Disk space
+          format: percent
+          scale: 100
+  - Config backup (systemd):
+      icon: mdi-backup-restore
+      description: "media-config-backup: nightly 04:30 tarball of every app config"
+      widget:
+        type: customapi
+        url: "http://status/host.json"
+        refreshInterval: 120000
+        display: list
+        mappings:
+        - field: backup_last
+          label: Last run
+        - field: backup_next
+          label: Next run
+        - field: failed_units
+          label: Failed services
+        - field: timers
+          label: Timers

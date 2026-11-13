@@ -20,7 +20,7 @@ done
 cp_if /opt/media/dockge/compose.yaml dockge/compose.yaml
 
 # --- host scripts (text only) ---
-for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers docker-update-all; do
+for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers docker-update-all dash-status; do
   [ -f /usr/local/sbin/$f ] || continue
   ext=.sh; head -1 /usr/local/sbin/$f | grep -q python && ext=.py
   cp_if /usr/local/sbin/$f scripts-reference/$f$ext
@@ -30,7 +30,7 @@ done
 for u in media-config-backup.service media-config-backup.timer migration-status.service migration-status.timer \
          tdarr-status.service tdarr-status.timer tdarr-swap.service tdarr-swap.timer selftest-status.service selftest-status.timer host-health-push.service host-health-push.timer \
          mount-push.service mount-push.timer usb-watchdog.service wifi-powersave-off.service \
-         snapraid-nightly.service snapraid-nightly.timer wd-format-when-passed.service wd-format-when-passed.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
+         snapraid-nightly.service snapraid-nightly.timer wd-format-when-passed.service wd-format-when-passed.timer \n         dash-status.service dash-status.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
 for f in /usr/local/share/media-server/*.js; do cp_if "$f" "scripts-reference/share/$(basename "$f")"; done
 for f in /etc/systemd/system/docker.service.d/*.conf; do cp_if "$f" "systemd/docker.service.d/$(basename "$f")"; done
 for f in /etc/systemd/system/systemd-networkd-wait-online.service.d/*.conf; do cp_if "$f" "systemd/systemd-networkd-wait-online.service.d/$(basename "$f")"; done
@@ -51,6 +51,9 @@ fi
 
 # --- app config files that are plain text and secret-free (or redacted) ---
 for f in services.yaml settings.yaml widgets.yaml docker.yaml bookmarks.yaml custom.css custom.js; do cp_if /opt/media/config/homepage/$f config/homepage/$f; done
+# Homepage 90s theme images (small GIFs from GifCities): listed with size + sha256, not copied (binary)
+if [ -d /opt/media/config/homepage/images ]; then mkdir -p "$S/config/homepage"; ( cd /opt/media/config/homepage/images && for g in *; do [ -f "$g" ] && printf '%s  %s bytes  sha256 %s
+' "$g" "$(stat -c %s "$g")" "$(sha256sum "$g" | cut -c1-16)"; done ) > "$S/config/homepage/images.txt"; fi
 cp_if /opt/media/config/filebrowser/config.yaml config/filebrowser/config.yaml
 # PrismCast: channel/provider settings only (no logins; Chrome profile + health.json stay on the box)
 for f in config.json provider-lineups.json; do cp_if /opt/media/config/prismcast/$f config/prismcast/$f; done
@@ -83,8 +86,9 @@ done
 for envf in /opt/media/stacks/*/.env /opt/media/stacks/*/*.env /opt/media/dockge/.env; do
   [ -f "$envf" ] && awk -F= '!/^#/ && NF>1 && $1!~/^(PUID|PGID|TZ|RENDER_GID|COMPOSE_FILE|UMASK|WUD_AUTH_ADMIN_USER|HOMEPAGE_VAR_WUD_USER)$/ {sub(/^[^=]*=/,""); print}' "$envf" >> /root/reposync.secrets
 done
-find /etc/media-server -maxdepth 1 -type f ! -name '*.json' -exec cat {} + 2>/dev/null | grep -oE '[A-Za-z0-9_-]{12,}' >> /root/reposync.secrets || true   # *.json = plain config (migration rounds), not secrets
+find /etc/media-server -maxdepth 1 -type f ! -name '*.json' ! -name unifi-creds -exec cat {} + 2>/dev/null | grep -oE '[A-Za-z0-9_-]{12,}' >> /root/reposync.secrets || true   # *.json = plain config (migration rounds), not secrets
 sed -n '2,3p' /etc/media-server/unifi-creds 2>/dev/null >> /root/reposync.secrets || true   # UniFi password + Network API key, whole lines (short passwords too)
+# (unifi-creds is skipped by the word scan above: its line 1 is the local username 'homeassistant', which is also a Homepage widget type)
 for x in sonarr radarr prowlarr; do grep -oP '(?<=<ApiKey>)[^<]+' /opt/media/config/$x/config.xml 2>/dev/null >> /root/reposync.secrets || true; done
 grep -E '^(api_key|nzb_key) *=' /opt/media/config/sabnzbd/sabnzbd.ini 2>/dev/null | sed -E 's/^[^=]*= *//' >> /root/reposync.secrets || true
 grep -oE '(token|apikey|api_key): *[^ ]+' /opt/media/config/kometa/config.yml* 2>/dev/null | sed -E 's/^[^:]*:[^:]*: *//' >> /root/reposync.secrets || true

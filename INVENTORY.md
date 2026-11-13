@@ -3,29 +3,30 @@
 ## Containers
 
 ```
-bazarr        lscr.io/linuxserver/bazarr:latest        running
-diun          crazymax/diun:latest                     running
-dockge        louislam/dockge:1                        running
-filebrowser   gtstef/filebrowser:stable                running
-glances       nicolargo/glances:4.5.9-full             running
-homepage      ghcr.io/gethomepage/homepage:latest      running
-kometa        lscr.io/linuxserver/kometa:latest        running
-maintainerr   ghcr.io/maintainerr/maintainerr:latest   running
-plex          lscr.io/linuxserver/plex:latest          running
-prismcast     ghcr.io/hjdhjd/prismcast:latest          running
-prowlarr      lscr.io/linuxserver/prowlarr:latest      running
-radarr        lscr.io/linuxserver/radarr:latest        running
-recyclarr     ghcr.io/recyclarr/recyclarr:8            running
-sabnzbd       lscr.io/linuxserver/sabnzbd:latest       running
-seerr         ghcr.io/seerr-team/seerr:latest          running
-socket-proxy  lscr.io/linuxserver/socket-proxy:latest  running
-sonarr        lscr.io/linuxserver/sonarr:latest        running
-status        busybox:stable                           running
-tautulli      lscr.io/linuxserver/tautulli:latest      running
-tdarr         ghcr.io/haveagitgat/tdarr:latest         running
-tdarr-node    ghcr.io/haveagitgat/tdarr_node:latest    running
-uptime-kuma   louislam/uptime-kuma:2                   running
-wud           getwud/wud:9                             running
+bazarr                lscr.io/linuxserver/bazarr:latest        running
+diun                  crazymax/diun:latest                     running
+dockge                louislam/dockge:1                        running
+filebrowser           gtstef/filebrowser:stable                running
+glances               nicolargo/glances:4.5.9-full             running
+glances-socket-proxy  lscr.io/linuxserver/socket-proxy:latest  running
+homepage              ghcr.io/gethomepage/homepage:latest      running
+kometa                lscr.io/linuxserver/kometa:latest        running
+maintainerr           ghcr.io/maintainerr/maintainerr:latest   running
+plex                  lscr.io/linuxserver/plex:latest          running
+prismcast             ghcr.io/hjdhjd/prismcast:latest          running
+prowlarr              lscr.io/linuxserver/prowlarr:latest      running
+radarr                lscr.io/linuxserver/radarr:latest        running
+recyclarr             ghcr.io/recyclarr/recyclarr:8            running
+sabnzbd               lscr.io/linuxserver/sabnzbd:latest       running
+seerr                 ghcr.io/seerr-team/seerr:latest          running
+socket-proxy          lscr.io/linuxserver/socket-proxy:latest  running
+sonarr                lscr.io/linuxserver/sonarr:latest        running
+status                busybox:stable                           running
+tautulli              lscr.io/linuxserver/tautulli:latest      running
+tdarr                 ghcr.io/haveagitgat/tdarr:latest         running
+tdarr-node            ghcr.io/haveagitgat/tdarr_node:latest    running
+uptime-kuma           louislam/uptime-kuma:2                   running
+wud                   getwud/wud:9                             running
 ```
 
 ## Timers

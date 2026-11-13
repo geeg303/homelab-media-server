@@ -56,7 +56,7 @@ All containers; linuxserver.io images where they exist, official elsewhere. PUID
 | What's Up Docker (WUD) | getwud/wud:9 | 3002 | image-update tracker for the Homepage "Updates" tile; read-only socket-proxy, no triggers (**never updates anything**), checks every 6 h. Login required (v9), admin password generated on the box in `ops/wud.env` |
 | status | busybox:stable | — (media network only) | serves the Migration / Conversions / self-test tile JSON (`/opt/media/status/*.json`) to Homepage |
 | PrismCast (`livetv` stack) | ghcr.io/hjdhjd/prismcast | 5589 web UI, 5004 HDHomeRun tuner, 6080 noVNC (raw VNC 5900 on localhost only) | streaming-service live TV → Plex tuner; logins done by hand in its Chrome via noVNC (`/vnc.html?autoconnect=1&resize=scale`, password in `livetv/livetv.env`) |
-| Glances (`glances` stack) | nicolargo/glances:4.5.9-full | 61208 | box CPU / memory / load / containers for Home Assistant (glances integration → Origami server pop-up "Media server" graph) and the Homepage tile; `pid: host`, Docker stats via socket-proxy, no data or migration mounts, no state |
+| Glances (`glances` stack) | nicolargo/glances:4.5.9-full | 61208 | box CPU / memory / load / temps / disk I/O / network / containers for Home Assistant (glances integration → Origami server pop-up "Media server" graph) and Homepage's Server Room page; `pid: host` + `network_mode: host` (sees wlp0s20f3 / tailscale0), Docker stats via its own loopback-only read-only proxy `glances-socket-proxy` (127.0.0.1:2376, `POST=0`), no data or migration mounts, no state |
 
 ## Network / access
 

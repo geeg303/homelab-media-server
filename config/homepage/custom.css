@@ -1,0 +1,439 @@
+/* ==========================================================================
+   ~*~ user'S HOMEPAGE ~*~  peak-1990s GeoCities / Angelfire theme
+   Drop into Homepage's config dir as custom.css (served at /api/config/custom.css).
+   Images are expected at /images/<file> (Homepage public/images mount).
+   No external fonts or URLs. Animations stop under prefers-reduced-motion.
+   ========================================================================== */
+
+:root {
+  --y2k-navy: #000080;
+  --y2k-navy2: #1084d0;
+  --y2k-silver: #c0c0c0;
+  --y2k-hi: #ffffff;
+  --y2k-lo: #808080;
+  --y2k-dark: #000000;
+  --y2k-link: #0000ee;
+  --y2k-visited: #551a8b;
+  --y2k-face: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", cursive;
+  --y2k-serif: "Times New Roman", Times, serif;
+  --y2k-mono: "Courier New", Courier, monospace;
+  --y2k-ui: Tahoma, "MS Sans Serif", Verdana, Geneva, sans-serif;
+  --y2k-rainbow: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
+  /* Win95 bevels */
+  --y2k-out: inset -1px -1px #000, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #fff;
+  --y2k-in: inset -1px -1px #fff, inset 1px 1px #000, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+}
+
+/* ---------- 1. Starfield background ---------------------------------------- */
+html, body {
+  background-color: #000010 !important;
+  background-image: url("/images/stars-tile.svg"), url("/images/starfield.gif") !important;
+  background-repeat: repeat, repeat !important;
+  background-size: 200px 200px, auto !important;
+  background-attachment: fixed, fixed;
+  color: #ffffff;
+  font-family: var(--y2k-serif) !important;
+}
+#page_wrapper, #inner_wrapper { background: transparent !important; }
+/* If a background image is configured in settings.yaml, keep stars visible on top of it */
+#background { opacity: 0.35; }
+::selection { background: #ff00ff; color: #ffff00; }
+
+/* ---------- 2. Links: classic blue / visited purple ------------------------ */
+a:link { color: inherit; }
+.y2k-link, #y2k-footer a, .bookmark-name, #footer a {
+  color: #66b3ff; text-decoration: underline;
+}
+/* On light (silver/white) surfaces, use the real Netscape colours */
+.y2k-light a:link, #y2k-footer .y2k-panel a:link { color: var(--y2k-link) !important; text-decoration: underline; }
+.y2k-light a:visited, #y2k-footer .y2k-panel a:visited { color: var(--y2k-visited) !important; }
+#y2k-footer a:visited { color: #d9a3ff; }
+
+/* ---------- 3. Info widgets row = Win95 taskbar/panel ---------------------- */
+#information-widgets {
+  background: var(--y2k-silver) !important;
+  box-shadow: var(--y2k-out) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  margin: 10px 12px 6px !important;
+  padding: 6px 10px !important;
+  color: #000 !important;
+  font-family: var(--y2k-ui);
+}
+#information-widgets *:not(svg):not(path):not(circle):not(g):not(rect):not(line):not(polyline):not(polygon) {
+  color: #000 !important;
+  text-shadow: none !important;
+}
+#information-widgets svg { color: #000080 !important; }
+#information-widgets .widget-container { font-family: var(--y2k-ui); }
+#information-widgets .resource-usage { background: #fff !important; box-shadow: var(--y2k-in); border-radius: 0 !important; height: 6px !important; }
+#information-widgets .resource-usage > div { background: #000080 !important; border-radius: 0 !important; }
+#information-widgets input,
+#information-widgets .information-widget-search input {
+  background: #fff !important; color: #000 !important;
+  border: 0 !important; border-radius: 0 !important;
+  box-shadow: var(--y2k-in) !important;
+  font-family: var(--y2k-mono);
+}
+#information-widgets input::placeholder { color: #555 !important; }
+#information-widgets button { border-radius: 0 !important; }
+
+/* ---------- 4. Tabs = chunky 3D outset buttons ----------------------------- */
+#tabs { margin-top: 8px !important; }
+#myTab {
+  background: transparent !important;
+  gap: 6px; flex-wrap: wrap;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+}
+#myTab > li { height: auto !important; border-radius: 0 !important; }
+#myTab button[role="tab"] {
+  margin: 2px !important;
+  padding: 6px 12px;
+  border-radius: 0 !important;
+  background: var(--y2k-silver) !important;
+  color: #000 !important;
+  font-family: var(--y2k-face);
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: var(--y2k-out) !important;
+  border: 0 !important;
+  cursor: pointer;
+}
+#myTab button[role="tab"]:hover { background: #d4d0c8 !important; color: #000080 !important; text-decoration: underline; }
+#myTab button[role="tab"]:active,
+#myTab button[aria-selected="true"] {
+  box-shadow: var(--y2k-in) !important;
+  background: #ffff99 !important;
+  color: #c00000 !important;
+  padding: 7px 11px 5px 13px;
+}
+#myTab button[role="tab"]:focus-visible { outline: 1px dotted #000; outline-offset: -5px; }
+
+/* ---------- 5. Group headings: neon rainbow Comic Sans --------------------- */
+.service-group-name, .bookmark-group-name {
+  font-family: var(--y2k-face) !important;
+  font-weight: bold !important;
+  font-size: 1.35rem !important;
+  letter-spacing: 1px;
+  color: #ffff00 !important;                 /* fallback */
+  background: var(--y2k-rainbow);
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,.55)) drop-shadow(1px 1px 0 #000);
+  animation: y2k-rainbow-slide 6s linear infinite;
+}
+.service-group-name::before, .bookmark-group-name::before { content: "\2605"; margin-right: .35em; -webkit-text-fill-color: #ffff00; }
+.service-group-name::after,  .bookmark-group-name::after  { content: "\2605"; margin-left: .35em; -webkit-text-fill-color: #ffff00; }
+.services-group button.group svg, .bookmark-group button.group svg { color: #ffff00 !important; opacity: 1 !important; }
+.service-group-icon, .bookmark-group-icon { filter: drop-shadow(0 0 3px #0ff); }
+
+/* ---------- 6. Rainbow <hr> divider between groups ------------------------- */
+.services-group:not(.subgroup)::before,
+.bookmark-group::before {
+  content: "";
+  display: block;
+  height: 6px;
+  margin: 6px 2px 10px;
+  background: var(--y2k-rainbow);
+  background-size: 200% 100%;
+  border-top: 1px solid #fff; border-bottom: 1px solid #444;
+  animation: y2k-rainbow-slide 4s linear infinite;
+}
+#services, #bookmarks, #layout-groups { row-gap: 8px; }
+#bookmarks { margin-top: 18px !important; }
+#bookmarks::before {
+  content: ""; flex-basis: 100%; height: 40px; margin: 0 4px 6px;
+  background: url("/images/flames.gif") repeat-x center / auto 40px;
+}
+.y2k-hr, hr.y2k {
+  border: 0; height: 6px; margin: 14px 0;
+  background: var(--y2k-rainbow); background-size: 200% 100%;
+  animation: y2k-rainbow-slide 4s linear infinite;
+}
+.y2k-flames { height: 40px; background: url("/images/flames.gif") repeat-x center / auto 40px; }
+
+/* ---------- 7. Service cards = Win95 windows ------------------------------- */
+li.service {
+  position: relative;
+  margin-bottom: 12px;
+  background: var(--y2k-silver);
+  box-shadow: var(--y2k-out), 4px 4px 0 rgba(0,0,0,.6);
+  padding: 22px 3px 3px;      /* top padding = title bar */
+}
+/* navy title bar with the service name */
+li.service::before {
+  content: attr(data-name);
+  position: absolute; left: 3px; right: 3px; top: 3px; height: 18px;
+  padding: 0 58px 0 6px;
+  background: linear-gradient(90deg, var(--y2k-navy), var(--y2k-navy2));
+  color: #fff;
+  font: bold 12px/18px var(--y2k-ui);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: none;
+}
+/* fake  _  □  ×  window buttons */
+li.service::after {
+  content: "_" "\2009\2009\2009" "\25A1" "\2009\2009\2009" "\00D7";
+  position: absolute; right: 6px; top: 5px; height: 14px;
+  padding: 0 0 0 0;
+  width: 50px;
+  font: bold 11px/14px var(--y2k-ui);
+  color: #000; text-align: center; letter-spacing: 1px;
+  background:
+    linear-gradient(var(--y2k-silver), var(--y2k-silver)) 0 0 / 15px 14px no-repeat,
+    linear-gradient(var(--y2k-silver), var(--y2k-silver)) 17px 0 / 15px 14px no-repeat,
+    linear-gradient(var(--y2k-silver), var(--y2k-silver)) 34px 0 / 16px 14px no-repeat;
+  /* bevel per button via drop shadows of the gradients is not possible; use outline-ish shadow */
+  filter: drop-shadow(1px 1px 0 #000) drop-shadow(-0.5px -0.5px 0 #fff);
+  pointer-events: none;
+}
+.service-card {
+  background: var(--y2k-silver) !important;
+  color: #000 !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  font-family: var(--y2k-serif);
+}
+.service-card:hover { background: #d4d0c8 !important; }
+.service-card:hover .service-name { color: #000080 !important; }
+.service-title-text, .service-icon { border-radius: 0 !important; }
+.service-name {
+  color: #000 !important;
+  font-family: var(--y2k-serif);
+  font-size: 15px !important;
+  font-weight: bold;
+}
+.service-card a .service-name { text-decoration: underline; text-decoration-color: #0000ee; }
+.service-description {
+  color: #202020 !important;
+  font-family: var(--y2k-mono) !important;
+  font-size: 11px !important;
+  font-weight: normal !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  display: inline-block; width: 100%;   /* stops the parent link underline propagating */
+}
+.service-icon img { image-rendering: auto; }
+.service-tag { color: #000 !important; }
+.service-tag > div { border-radius: 0 !important; font-family: var(--y2k-mono); }
+/* widget data blocks = sunken LCD fields */
+.service-container { gap: 0; }
+.service-block {
+  background: #fff !important;
+  color: #000 !important;
+  border-radius: 0 !important;
+  box-shadow: var(--y2k-in);
+  margin: 3px !important;
+}
+.service-block-value { font-family: var(--y2k-mono) !important; font-weight: bold !important; color: #000080 !important; }
+.service-block-label { font-family: var(--y2k-ui) !important; color: #000 !important; opacity: 1 !important; font-size: 10px !important; }
+.service-block[data-highlight-level="danger"] .service-block-value { color: #c00000 !important; }
+.service-block[data-highlight-level="warn"] .service-block-value { color: #a05a00 !important; }
+.service-block[data-highlight-level="good"] .service-block-value { color: #006400 !important; }
+.service-stats { background: #fff; box-shadow: var(--y2k-in); color: #000 !important; }
+.service-stats * { color: #000 !important; }
+
+/* ---------- 8. Bookmarks = classic hyperlink list -------------------------- */
+li.bookmark > a {
+  background: rgba(0,0,40,.75) !important;
+  border: 1px dashed #00ffff !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+}
+li.bookmark > a:hover { background: #000080 !important; border-style: solid !important; }
+.bookmark-icon { background: transparent !important; color: #ffff00 !important; border-radius: 0 !important; }
+.bookmark-name {
+  color: #66b3ff !important;
+  text-decoration: underline;
+  font-family: var(--y2k-serif);
+  font-size: 14px !important;
+}
+li.bookmark > a:visited .bookmark-name { color: #d9a3ff !important; }
+li.bookmark > a:hover .bookmark-name { color: #ffff00 !important; }
+.bookmark-description { color: #cfcfcf !important; font-family: var(--y2k-mono); }
+
+/* ---------- 9. Homepage footer + quick-launch dialog ----------------------- */
+#footer { color: #ccc !important; font-family: var(--y2k-mono); }
+#footer *, #version * { color: #ccc !important; }
+#footer button { background: var(--y2k-silver) !important; box-shadow: var(--y2k-out); border-radius: 0 !important; }
+#footer button svg { color: #000 !important; }
+/* QuickLaunch search dialog */
+.fixed.inset-0 .rounded-md.shadow-md,
+[class*="z-40"] .rounded-md.shadow-md {
+  background: var(--y2k-silver) !important;
+  color: #000 !important;
+  border-radius: 0 !important;
+  box-shadow: var(--y2k-out), 6px 6px 0 rgba(0,0,0,.5) !important;
+}
+[class*="z-40"] input { background: #fff !important; color: #000 !important; border-radius: 0 !important; box-shadow: var(--y2k-in); font-family: var(--y2k-mono); }
+
+/* ---------- 10. Injected elements (custom.js) ------------------------------ */
+/* #y2k-marquee: <div id="y2k-marquee"><span class="y2k-marquee-track">...</span></div>
+   (a native <marquee> inside it is also styled) */
+#y2k-marquee {
+  position: sticky; top: 0; z-index: 30;
+  overflow: hidden; white-space: nowrap;
+  background: #000080;
+  border-top: 2px solid #ffff00; border-bottom: 2px solid #ffff00;
+  color: #ffff00;
+  font: bold 15px/26px var(--y2k-mono);
+  height: 30px;
+  text-shadow: 1px 1px 0 #000;
+}
+#y2k-marquee .y2k-marquee-track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: y2k-marquee 28s linear infinite;
+  animation-delay: -9s;   /* start with text already on screen */
+}
+#y2k-marquee:hover .y2k-marquee-track { animation-play-state: paused; }
+#y2k-marquee marquee { display: block; line-height: 26px; }
+#y2k-marquee a { color: #00ffff !important; text-decoration: underline; }
+#y2k-marquee .y2k-sep { color: #ff00ff; padding: 0 1em; }
+
+/* #y2k-counter: <div id="y2k-counter"><span class="y2k-counter-label">You are visitor #</span>
+                  <span class="y2k-digit">0</span>...</div>   (plain text digits also work) */
+#y2k-counter {
+  display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;
+  font: bold 14px var(--y2k-serif); color: #fff;
+}
+#y2k-counter .y2k-counter-label { font-family: var(--y2k-face); color: #ffff00; }
+#y2k-counter .y2k-digits {
+  display: inline-flex; padding: 2px; background: #000; box-shadow: var(--y2k-in);
+}
+#y2k-counter .y2k-digit {
+  display: inline-block; width: 16px; height: 24px; margin: 0 1px;
+  background: linear-gradient(#333 0, #000 45%, #111 50%, #000 55%, #333 100%);
+  color: #39ff14;
+  font: bold 18px/24px var(--y2k-mono); text-align: center;
+  text-shadow: 0 0 4px #39ff14;
+  border: 1px solid #555;
+}
+#y2k-counter .y2k-digit:last-child { color: #ff3030; text-shadow: 0 0 4px #ff3030; }
+
+/* #y2k-footer: webring + "best viewed" + guestbook */
+#y2k-footer {
+  margin: 24px auto 12px; padding: 14px 12px;
+  max-width: 760px; text-align: center;
+  font: 13px/1.5 var(--y2k-serif); color: #fff;
+}
+#y2k-footer .y2k-webring {
+  display: inline-block; margin: 8px auto; padding: 8px 14px;
+  background: var(--y2k-silver); color: #000; box-shadow: var(--y2k-out);
+  font-family: var(--y2k-ui);
+}
+#y2k-footer .y2k-webring a:link { color: var(--y2k-link) !important; }
+#y2k-footer .y2k-webring a:visited { color: var(--y2k-visited) !important; }
+#y2k-footer .y2k-webring b, #y2k-footer .y2k-webring strong { color: #800000; }
+#y2k-footer .y2k-bestviewed {
+  font-family: var(--y2k-mono); font-size: 12px; color: #c0c0c0; margin: 6px 0;
+}
+#y2k-footer .y2k-guestbook {
+  display: inline-block; margin: 6px; padding: 4px 12px;
+  background: var(--y2k-silver); box-shadow: var(--y2k-out);
+  color: #000 !important; text-decoration: none !important; font-family: var(--y2k-face); font-weight: bold;
+}
+#y2k-footer .y2k-guestbook:hover { box-shadow: var(--y2k-in); }
+#y2k-footer .y2k-guestbook::before {
+  content: ""; display: inline-block; width: 30px; height: 18px; vertical-align: middle; margin-right: 6px;
+  background: url("/images/email.gif") center / contain no-repeat;
+}
+#y2k-footer .y2k-badges { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+#y2k-footer .y2k-badges img { image-rendering: pixelated; }
+.y2k-netscape-badge { display: inline-block; width: 90px; height: 30px; background: url("/images/netscape-now.gif") center / contain no-repeat; }
+.y2k-globe { display: inline-block; width: 48px; height: 48px; background: url("/images/globe.gif") center / contain no-repeat; vertical-align: middle; }
+
+/* .y2k-construction: striped "Under Construction" banner */
+.y2k-construction {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin: 10px 12px; padding: 8px;
+  background: repeating-linear-gradient(-45deg, #ffcc00 0 16px, #000 16px 32px);
+  border: 2px solid #000;
+  animation: y2k-stripes 1.2s linear infinite;
+  background-size: 45.25px 45.25px;
+}
+.y2k-construction > * , .y2k-construction .y2k-construction-text {
+  background: #ffcc00; color: #000 !important;
+  font: bold 16px var(--y2k-face);
+  padding: 4px 10px; border: 2px solid #000;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.y2k-construction img { background: transparent; border: 0; padding: 0; max-height: 60px; }
+.y2k-construction::before {
+  content: ""; width: 48px; height: 54px; flex: none;
+  background: url("/images/construction-worker.gif") center / contain no-repeat;
+}
+
+/* .y2k-new / .blink: blinking NEW! badge */
+.y2k-new {
+  display: inline-block; margin-left: 6px; padding: 0 4px;
+  background: #ff0000; color: #ffff00 !important;
+  font: bold italic 11px/16px var(--y2k-face);
+  border: 1px solid #ffff00; transform: rotate(-6deg);
+  vertical-align: middle;
+  animation: y2k-blink 1s steps(1, end) infinite;
+}
+.y2k-new-img { display: inline-block; width: 32px; height: 21px; background: url("/images/new.gif") center / contain no-repeat; vertical-align: middle; }
+.blink { animation: y2k-blink 1s steps(1, end) infinite; }
+.y2k-rainbow-text {
+  background: var(--y2k-rainbow); background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: y2k-rainbow-slide 6s linear infinite; font-family: var(--y2k-face); font-weight: bold;
+}
+.y2k-neon { color: #0ff; text-shadow: 0 0 4px #0ff, 0 0 10px #f0f; font-family: var(--y2k-face); }
+.y2k-panel { background: var(--y2k-silver); color: #000; box-shadow: var(--y2k-out); padding: 8px; }
+
+/* ---------- 11. Keyframes -------------------------------------------------- */
+@keyframes y2k-blink { 0% { visibility: visible; } 50% { visibility: hidden; } }
+@keyframes y2k-rainbow-slide { from { background-position: 0 0; } to { background-position: 200% 0; } }
+@keyframes y2k-marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@keyframes y2k-stripes { from { background-position: 0 0; } to { background-position: 45.25px 0; } }
+
+/* ---------- 12. Phone width (412px) ---------------------------------------- */
+@media (max-width: 640px) {
+  #information-widgets { margin: 6px 6px 4px !important; padding: 4px 6px !important; }
+  #tabs { margin: 8px 8px 0 !important; }
+  #myTab { display: flex !important; }
+  #myTab > li { width: auto !important; flex: 1 1 45%; }
+  #myTab button[role="tab"] { font-size: 13px; padding: 5px 6px; }
+  .service-group-name, .bookmark-group-name { font-size: 1.1rem !important; }
+  li.service::before { font-size: 11px; }
+  #y2k-marquee { font-size: 13px; }
+  .y2k-construction > *, .y2k-construction .y2k-construction-text { font-size: 13px; padding: 3px 6px; }
+  .y2k-construction::before { width: 34px; height: 38px; }
+  #bookmarks::before { height: 28px; background-size: auto 28px; }
+  #y2k-footer { font-size: 12px; }
+}
+
+/* ---------- 13. Reduced motion: everything stops --------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .blink, .y2k-new { visibility: visible !important; }
+  #y2k-marquee { white-space: normal; height: auto; }
+  #y2k-marquee .y2k-marquee-track { padding-left: 8px; transform: none !important; }
+  /* animated GIFs: swap to static stripes / hide decorative motion */
+  #bookmarks::before, .y2k-flames { background: var(--y2k-rainbow) !important; height: 6px !important; }
+  .y2k-construction::before, .y2k-globe { display: none !important; }
+  .y2k-reduced-hide { display: none !important; }
+}
+
+/* ---------- Lead merge fixes (Nov 13) -------------------------------------- */
+/* Homepage paints the theme colour on #__next; let the starfield on body show through */
+#__next { background: transparent !important; }
+/* Tabs: one wrapping row of chunky buttons (Homepage gives each li w-full) */
+#myTab { display: flex !important; flex-wrap: wrap !important; justify-content: center; }
+#myTab > li { width: auto !important; flex: 1 1 auto; }
+/* Guestbook button is silver: use real link blue so it stays readable */
+#y2k-footer .y2k-guestbook a, #y2k-footer .y2k-guestbook a:visited { color: #0000ee !important; text-shadow: none !important; font-weight: bold; }
+/* Built-in widgets (glances charts, lists, calendar) use pale theme text: force dark ink on the silver cards */
+li.service .service-card [class*="text-theme-"],
+li.service .service-card [class*="dark:text-theme-"] { color: #10104a !important; }
+li.service .service-card [class*="opacity-"] { opacity: 1 !important; }

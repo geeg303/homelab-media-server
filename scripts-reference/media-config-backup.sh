@@ -30,5 +30,6 @@ find "$ROOT/daily"  -name 'config-*.tar.zst' -mtime +13 -delete
 find "$ROOT/weekly" -name 'config-*.tar.zst' -mtime +55 -delete
 if mountpoint -q /data; then mkdir -p "$POOL"; rsync -a --delete "$ROOT/" "$POOL/"; fi
 PUSH=$(cat /etc/media-server/kuma-push-backup 2>/dev/null || true)
-[ -n "$PUSH" ] && curl -fsS -m 10 "$PUSH?status=up&msg=$(basename "$OUT")" >/dev/null || true
+# Kuma is in the ops stack this script just restarted: wait for it (up to ~3 min) before pushing (Nov 13 fix; pushes had failed since Nov 8)
+if [ -n "$PUSH" ]; then for i in $(seq 1 18); do curl -fsS -m 10 "$PUSH?status=up&msg=$(basename "$OUT")" >/dev/null 2>&1 && break; sleep 10; done; fi
 echo "backup ok: $OUT ($(du -h "$OUT" | cut -f1))"

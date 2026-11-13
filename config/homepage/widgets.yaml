@@ -1,12 +1,51 @@
 ---
-# For configuration options and examples, please see:
-# https://gethomepage.dev/configs/info-widgets/
+# Info row (shown on every tab). Docs: https://gethomepage.dev/widgets/info/
+- greeting:
+    text_size: xl
+    text: "Welcome 2 user's Box!!!"
 
-- resources:
+- glances:
+    label: box
+    url: http://192.0.2.242:61208
+    version: 4
     cpu: true
-    memory: true
-    disk: /
+    mem: true
+    cputemp: true
+    cpuSensorLabel: Package id
+    unit: imperial
+    uptime: true
+    disk: /etc/hostname   # Glances runs in a container; this bind mount sits on the OS root LV
+    expanded: true
+
+- openmeteo:
+    label: Hometown
+    latitude: 0.0
+    longitude: 0.0
+    timezone: Region/City
+    units: imperial
+    cache: 5
+    format:
+      maximumFractionDigits: 0
+
+- unifi_console:
+    url: https://192.0.2.1
+    site: Default
+    key: "{{HOMEPAGE_VAR_UNIFI_KEY}}"
+
+- datetime:
+    text_size: md
+    locale: en-US
+    format:
+      weekday: short
+      month: short
+      day: numeric
+      year: numeric
+      hour: numeric
+      minute: 2-digit
+      hour12: true
 
 - search:
-    provider: duckduckgo
+    provider: [duckduckgo, google, bing]
+    focus: false
+    showSearchSuggestions: true
     target: _blank
