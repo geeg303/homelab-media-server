@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-13
+- Kuma: new docker monitor "Glances socket proxy" (Background containers, on the `box` status page); `host-health-push`'s "Status tiles up to date" check now also covers `dash-status` (disks.json/host.json). 51 checks, all up.
 - **Homepage 90s redesign, multi-page (user: "peak 90s web design … as much information from all my hosted applications as you can").** Backup first: `/opt/media/config/homepage-backup-20261113-1119.tar.gz` + `ops/compose.yaml.bak-20261113-1119` + `ops/homepage.env.bak-20261113-1119`.
   - 7 tabs (pages): Home Page (summary: host, migration, Kuma, storage, Tdarr, updates), Media Mania, Download-O-Rama (+ monthly calendar and agenda for Sonarr/Radarr), Server Room (Glances CPU/RAM/load/processes/iGPU, 7 temperature sensors, disk usage, per-disk I/O, containers), Net & Home (UniFi, internet pipe, router, Kuma + 24 h health checks, Wi-Fi/Tailscale traffic, Home Assistant ×4), Jobs (migration, self-test, Tdarr, WUD, DIUN, backups, watchdogs), Cool Links (bookmarks to every web UI).
   - Every app widget uses all its allowed fields (several widgets per tile where v2.8.0 caps at 4), plus customapi tiles for health, versions, disk space, Tautulli server info, SAB stats, Seerr/Maintainerr versions, HDHomeRun lineup (200 channels), Kuma per-check uptime. Container stats (`showStats`) on every app tile. Plex widget stays parked (empty library list).
