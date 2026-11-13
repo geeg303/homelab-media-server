@@ -3,6 +3,12 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-12
+- **All Docker containers updated (user: "update all docker containers while the copy job runs")**, 20:15–20:23:
+  - Before: a rollback record (`/var/lib/media-server/image-rollback-<ts>.txt`: container, image ref, old image id, digest) and a fresh `media-config-backup`.
+  - 11 images updated: homepage, tdarr, tdarr-node, plex (1.43.5.11079), kometa, tautulli, seerr, uptime-kuma (2.x), sabnzbd, bazarr, prowlarr.
+  - Already current or pinned at the latest: radarr, sonarr, recyclarr 8 (v8.8.1), dockge 1 (1.5.0), wud 9 (9.8.0), glances 4.5.9, prismcast, filebrowser, diun, socket-proxy, status.
+  - Tdarr re-paused (workers 0) after its update. Round 3 was unaffected (no container mounts the round's disks): 51/52 shows copied at 20:25, 103 MB/s.
+  - Kuma showed Prowlarr/Radarr/Seerr/Maintainerr down (ECONNREFUSED to the old container IPs, because Kuma caches DNS); restarting Kuma fixed it. Now `/usr/local/sbin/docker-update-all` restarts Kuma last.
 - **Round 3 restart (my second bug):** `round3-start` ran under `systemd-run` and launched the runner in tmux. When that oneshot unit finished at 05:36:57, systemd killed its cgroup, tmux and rsync included, ~5 s into the copy (32 KB written, no partial files left).
   - Restarted at 05:44 as its own unit, `migrate-round3.service` (`systemd-run --unit=migrate-round3 -p Nice=5`); `round3-start` fixed the same way for future runs.
   - Copy rate is ~110–115 MB/s, so the copy should be done ≈ Fri 00:00. The Migration tile shows round 3, the current show and the ETA.

@@ -1,10 +1,11 @@
 {
   "Advanced": {
     "allow_mounted_folders": "0",
+    "allow_public_no_password": "<REDACTED>",
     "cache_sizemb": "32",
     "check_docker_mount": "1",
     "check_github_cache_seconds": "3600",
-    "config_version": "22",
+    "config_version": "23",
     "export_threads": "8",
     "https_min_tls_version": "TLSv1.2",
     "journal_mode": "WAL",
@@ -33,6 +34,7 @@
   },
   "General": {
     "allow_guest_access": "0",
+    "allow_tautulli_login": "1",
     "anon_redirect": "\"\"",
     "anon_redirect_dynamic": "0",
     "api_enabled": "1",
@@ -69,6 +71,7 @@
     "http_base_url": "\"\"",
     "http_basic_auth": "0",
     "http_environment": "production",
+    "http_generated_password": "<REDACTED>",
     "http_hash_password": "<REDACTED>",
     "http_hashed_password": "<REDACTED>",
     "http_host": "0.0.0.0",
@@ -94,6 +97,7 @@
     "log_blacklist": "0",
     "log_blacklist_usernames": "<REDACTED>",
     "log_dir": "/config/logs",
+    "log_login_ip": "0",
     "musicbrainz_lookup": "0",
     "plexpy_auto_update": "0",
     "show_advanced_settings": "0",
@@ -103,10 +107,11 @@
     "time_format": "HH:mm",
     "tvmaze_lookup": "0",
     "update_db_interval": "24",
-    "update_show_changelog": "0",
+    "update_show_changelog": "1",
     "week_start_monday": "0"
   },
   "Monitoring": {
+    "auto_unarchive_users": "1",
     "buffer_threshold": "10",
     "buffer_wait": "900",
     "imgur_client_id": "\"\"",

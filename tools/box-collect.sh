@@ -20,7 +20,7 @@ done
 cp_if /opt/media/dockge/compose.yaml dockge/compose.yaml
 
 # --- host scripts (text only) ---
-for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers; do
+for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers docker-update-all; do
   [ -f /usr/local/sbin/$f ] || continue
   ext=.sh; head -1 /usr/local/sbin/$f | grep -q python && ext=.py
   cp_if /usr/local/sbin/$f scripts-reference/$f$ext
