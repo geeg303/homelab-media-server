@@ -222,19 +222,87 @@
   },
   "plex": {
     "ip": "<REDACTED>",
-    "libraries": [],
+    "libraries": [
+      {
+        "enabled": true,
+        "id": "2",
+        "name": "Movies",
+        "type": "movie"
+      },
+      {
+        "enabled": true,
+        "id": "1",
+        "name": "TV Shows",
+        "type": "show"
+      }
+    ],
     "machineId": "<REDACTED>",
     "name": "box",
     "port": 32400,
-    "useSsl": false
+    "useSsl": false,
+    "webAppUrl": "http://192.0.2.242:32400/web"
   },
   "public": {
-    "initialized": false
+    "initialized": true
   },
-  "radarr": [],
+  "radarr": [
+    {
+      "activeDirectory": "/data/media/movies",
+      "activeProfileId": 7,
+      "activeProfileName": "HD Bluray + WEB",
+      "apiKey": "<REDACTED>",
+      "baseUrl": "",
+      "externalUrl": "http://192.0.2.242:7878",
+      "hostname": "radarr",
+      "id": 0,
+      "is4k": false,
+      "isDefault": true,
+      "minimumAvailability": "released",
+      "name": "Radarr",
+      "port": 7878,
+      "preventSearch": false,
+      "syncEnabled": true,
+      "tagRequests": false,
+      "tags": [],
+      "useSsl": false
+    }
+  ],
   "sessionSecret": "<REDACTED>",
-  "sonarr": [],
-  "tautulli": {},
+  "sonarr": [
+    {
+      "activeAnimeDirectory": "/data/media/tv",
+      "activeAnimeProfileId": 7,
+      "activeAnimeProfileName": "WEB-1080p",
+      "activeDirectory": "/data/media/tv",
+      "activeProfileId": 7,
+      "activeProfileName": "WEB-1080p",
+      "animeSeriesType": "anime",
+      "apiKey": "<REDACTED>",
+      "baseUrl": "",
+      "enableSeasonFolders": true,
+      "externalUrl": "http://192.0.2.242:8989",
+      "hostname": "sonarr",
+      "id": 0,
+      "is4k": false,
+      "isDefault": true,
+      "name": "Sonarr",
+      "port": 8989,
+      "preventSearch": false,
+      "seriesType": "standard",
+      "syncEnabled": true,
+      "tagRequests": false,
+      "tags": [],
+      "useSsl": false
+    }
+  ],
+  "tautulli": {
+    "apiKey": "<REDACTED>",
+    "externalUrl": "http://192.0.2.242:8181",
+    "hostname": "tautulli",
+    "port": 8181,
+    "urlBase": "",
+    "useSsl": false
+  },
   "vapidPrivate": "<REDACTED>",
   "vapidPublic": "<REDACTED>"
 }

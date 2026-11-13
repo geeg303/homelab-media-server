@@ -2,9 +2,9 @@
   {
     "configContract": "NewznabSettings",
     "downloadClientId": 0,
-    "enableAutomaticSearch": false,
+    "enableAutomaticSearch": true,
     "enableInteractiveSearch": true,
-    "enableRss": false,
+    "enableRss": true,
     "fields": [
       {
         "advanced": false,
