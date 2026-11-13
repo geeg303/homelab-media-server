@@ -97,7 +97,7 @@ services:
       TZ: ${TZ}
     volumes:
       - /opt/media/config/filebrowser:/home/filebrowser/data
-      - /mnt/disk1:/storage/disk1:ro      # READ-ONLY during the migration; becomes /data:/storage (rw) after round 5
+      - /data:/storage/data:ro           # whole pool, READ-ONLY until the migration rounds are done (user Nov 13); rw after round 5
       - /scratch:/storage/scratch:ro       # NVMe scratch (Tdarr pilot output, SAB incomplete, backups), view only
 
   wud:
