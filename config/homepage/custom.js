@@ -27,7 +27,7 @@
     siteBannerText: "🚧 UNDER CONSTRUCTION 🚧",
     refreshMs: 60000,                              // ticker refresh
     fetchTimeoutMs: 15000,
-    tickerPxPerSec: 70,                            // scroll speed
+    tickerPxPerSec: 45,                            // scroll speed
     counterKey: "y2k-hit-counter",
     counterSeed: 13370,                            // first value if none stored
     counterDigits: 6,
@@ -330,8 +330,11 @@
     m.classList.toggle("y2k-static", static_);
     if (!static_) {
       var w = track.scrollWidth || plain.length * 9;
-      var dur = Math.max(20, Math.round(w / CONFIG.tickerPxPerSec));
+      var dur = Math.max(30, Math.round(w / CONFIG.tickerPxPerSec));
       track.style.setProperty("--y2k-dur", dur + "s");
+      // start with the text already at the left edge, not an empty bar while it scrolls in
+      track.style.animationDelay = (-dur * Math.min(0.9, (m.clientWidth || 800) * 0.97 / w)).toFixed(1) + "s";
+      m.setAttribute("data-y2k-dur", dur);
     }
   }
 

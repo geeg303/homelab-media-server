@@ -287,8 +287,7 @@ li.bookmark > a:hover .bookmark-name { color: #ffff00 !important; }
 #y2k-marquee .y2k-marquee-track {
   display: inline-block;
   padding-left: 100%;
-  animation: y2k-marquee 28s linear infinite;
-  animation-delay: -9s;   /* start with text already on screen */
+  animation: y2k-marquee var(--y2k-dur, 90s) linear infinite;   /* duration set by custom.js from text length */
 }
 #y2k-marquee:hover .y2k-marquee-track { animation-play-state: paused; }
 #y2k-marquee marquee { display: block; line-height: 26px; }
@@ -402,12 +401,28 @@ li.bookmark > a:hover .bookmark-name { color: #ffff00 !important; }
   #myTab button[role="tab"] { font-size: 13px; padding: 5px 6px; }
   .service-group-name, .bookmark-group-name { font-size: 1.1rem !important; }
   li.service::before { font-size: 11px; }
-  #y2k-marquee { font-size: 13px; }
+  #y2k-marquee { font-size: 14px; }
   .y2k-construction > *, .y2k-construction .y2k-construction-text { font-size: 13px; padding: 3px 6px; }
   .y2k-construction::before { width: 34px; height: 38px; }
   #bookmarks::before { height: 28px; background-size: auto 28px; }
   #y2k-footer { font-size: 12px; }
 }
+
+
+/* ---------- Ticker in trans flag colours (user, Nov 13) ------------------ */
+#y2k-marquee {
+  height: 40px;
+  background: linear-gradient(to bottom,
+    #5BCEFA 0 5px, #F5A9B8 5px 10px, #FFFFFF 10px 30px, #F5A9B8 30px 35px, #5BCEFA 35px 40px);
+  border-top: 2px outset #5BCEFA; border-bottom: 2px outset #F5A9B8;
+  color: #13294B;
+  font: bold 16px/40px var(--y2k-mono);
+  text-shadow: none;
+  letter-spacing: 0.02em;
+}
+#y2k-marquee a { color: #0B5FA5 !important; }
+#y2k-marquee .y2k-star { color: #E0457B; text-shadow: 0 0 1px #13294B; }
+#y2k-marquee .y2k-sep { color: #1E88C8; }
 
 /* ---------- 13. Reduced motion: everything stops --------------------------- */
 @media (prefers-reduced-motion: reduce) {
