@@ -771,3 +771,18 @@
   window.__hpPro = { config: CONFIG, refresh: refresh, parseWhen: parseWhen, retroSlug: retroSlug,
                      state: function () { return JSON.parse(JSON.stringify(chipState)); } };
 })();
+
+/* pro-strip-h sync: keep the sticky tabs just under the (possibly wrapped) KPI strip */
+(function () {
+  if (window.__proStripSync) return; window.__proStripSync = true;
+  var ro = null, cur = null;
+  function hook() {
+    var s = document.getElementById("pro-strip");
+    if (!s || s === cur) return;
+    cur = s; if (ro) ro.disconnect();
+    var set = function () { document.documentElement.style.setProperty("--pro-strip-h", Math.ceil(s.getBoundingClientRect().height) + "px"); };
+    if (window.ResizeObserver) { ro = new ResizeObserver(set); ro.observe(s); }
+    set();
+  }
+  setInterval(hook, 1000); hook();
+})();

@@ -624,3 +624,9 @@ dialog [class*="bg-theme-300"], [class*="z-40"] [class*="bg-theme-300"] { backgr
 .service-block-value { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
 .service-container:has(> .service-block:nth-child(4)) .service-block { padding: 7px 7px 8px !important; }
 .service-container:has(> .service-block:nth-child(4)) .service-block-value { font-size: 13px !important; }
+
+/* ---------- KPI strip wraps on desktop (Nov 13 fix: chips after Backup were hidden in a scrollbar-less scroller) */
+@media (min-width: 1025px) {
+  #pro-strip { height: auto; min-height: 44px; padding-top: 8px; padding-bottom: 8px; flex-wrap: wrap; row-gap: 6px; }
+  #pro-strip .pro-kpis { flex-wrap: wrap; row-gap: 6px; overflow: visible; -webkit-mask-image: none; mask-image: none; padding-right: 0; }
+}
