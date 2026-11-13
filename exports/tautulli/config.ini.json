@@ -64,7 +64,7 @@
     "git_user": "Tautulli",
     "group_history_tables": "0",
     "history_table_activity": "0",
-    "home_library_cards": ",",
+    "home_library_cards": "2, 1",
     "home_refresh_interval": "10",
     "home_sections": "current_activity, watch_stats, library_stats, recently_added",
     "home_stats_cards": "top_movies, popular_movies, top_tv, popular_tv, top_music, popular_music, last_watched, top_libraries, top_users, top_platforms, most_concurrent",

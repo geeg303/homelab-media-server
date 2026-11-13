@@ -1,7 +1,7 @@
 # Homepage services — 90s redesign (Nov 13 2026). Tabs/groups: see settings.yaml layout.
 # Secrets come from /opt/media/stacks/ops/homepage.env as {{HOMEPAGE_VAR_*}}.
-# Plex widget is PARKED on purpose (empty library list crashes it); SWITCHOVER-PLAN re-enables it:
-#   widget: {type: plex, url: "http://192.0.2.242:32400", key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}", fields: [streams, movies, tv, albums]}
+# Plex native widget is LIVE (un-parked Nov 13 2026 once real libraries existed: TV Shows = section 1, Movies = section 2).
+#   It talks to Plex directly (http://192.0.2.242:32400, {{HOMEPAGE_VAR_PLEX_TOKEN}}); extra library detail comes from Tautulli get_library.
 - Today on the Box:
   - The Box (host):
       href: "http://192.0.2.242:61208"
@@ -119,12 +119,34 @@
   - Plex:
       href: "http://192.0.2.242:32400/web"
       icon: plex.png
-      description: The big kahuna of the home theater! Plex streams every movie & show on the box to any TV, phone or browser, like a video store that never closes and never charges late fees. Libraries
-        arrive at the switch-over; the stats widget wakes up then.
+      description: The big kahuna of the home theater! Plex streams every movie & show on the box to any TV, phone or browser, like a video store that never closes and never charges late fees. Live
+        streams and the shelf count (movies, shows, episodes) show right here.
       server: box
       container: plex
       showStats: true
       siteMonitor: "http://192.0.2.242:32400/identity"
+      widgets:
+      - type: plex
+        url: "http://192.0.2.242:32400"
+        key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+        fields:
+        - streams
+        - movies
+        - tv
+        - albums
+      - type: customapi
+        url: "http://tautulli:8181/api/v2?cmd=get_library&section_id=1&apikey={{HOMEPAGE_VAR_TAUTULLI_KEY}}"
+        refreshInterval: 900000
+        mappings:
+        - field: response.data.count
+          label: Shows
+          format: number
+        - field: response.data.parent_count
+          label: Seasons
+          format: number
+        - field: response.data.child_count
+          label: Episodes
+          format: number
   - Tautulli:
       href: "http://192.0.2.242:8181"
       icon: tautulli.png

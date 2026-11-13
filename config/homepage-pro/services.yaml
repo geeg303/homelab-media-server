@@ -3,8 +3,8 @@
 # Secrets: same {{HOMEPAGE_VAR_*}} names as the :3000 instance (homepage.env); nothing new required.
 # Hostnames: container names on the `media` network (homepage-pro is attached), Glances/Plex/PrismCast via 192.0.2.242.
 # Calendar tiles reference group "Acquisition" + services "Sonarr"/"Radarr": rename together or events disappear.
-# Plex widget is PARKED on purpose (empty library list crashes it); SWITCHOVER-PLAN re-enables it:
-#   widget: {type: plex, url: "http://192.0.2.242:32400", key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}", fields: [streams, movies, tv, albums]}
+# Plex native widget is LIVE (un-parked Nov 13 2026 once real libraries existed: TV Shows = section 1, Movies = section 2).
+#   It talks to Plex directly (http://192.0.2.242:32400, {{HOMEPAGE_VAR_PLEX_TOKEN}}); extra library detail comes from Tautulli get_library.
 
 # =====================================================================================
 # TAB: Overview
@@ -1329,13 +1329,34 @@
   - Plex:
       href: "http://192.0.2.242:32400/web"
       icon: plex.png
-      description: media server · version via Tautulli (native widget parked until libraries exist)
+      description: media server · streams + library counts (native) · TV seasons/episodes, version via Tautulli
       server: box
       container: plex
       showStats: true
       siteMonitor: "http://192.0.2.242:32400/identity"
-      widget:
-        type: customapi
+      widgets:
+      - type: plex
+        url: "http://192.0.2.242:32400"
+        key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+        fields:
+        - streams
+        - movies
+        - tv
+        - albums
+      - type: customapi
+        url: "http://tautulli:8181/api/v2?cmd=get_library&section_id=1&apikey={{HOMEPAGE_VAR_TAUTULLI_KEY}}"
+        refreshInterval: 900000
+        mappings:
+        - field: response.data.count
+          label: Shows
+          format: number
+        - field: response.data.parent_count
+          label: Seasons
+          format: number
+        - field: response.data.child_count
+          label: Episodes
+          format: number
+      - type: customapi
         url: "http://tautulli:8181/api/v2?cmd=get_server_info&apikey={{HOMEPAGE_VAR_TAUTULLI_KEY}}"
         refreshInterval: 300000
         mappings:

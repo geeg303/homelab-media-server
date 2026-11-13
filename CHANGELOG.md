@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-13
+- Homepage: native Plex widget un-parked on both dashboards (libraries exist now). Plex tile shows streams / albums / movies / TV shows straight from Plex plus a Tautulli `get_library` (section 1) block with shows / seasons / episodes; Pro view also keeps the version / platform / Plex Pass block. Header comments updated (no longer parked). Overview key metrics left as is (Key Metrics row is full at 5 columns). Backups `services.yaml.bak-20261113-155509`; no new errors in either container's logs.
 - **/data pool live; Plex watching; parity dropped** (user: pool + folders + apps "Yes"; swap rounds "Yes"; "lets not worry about parity actually ... the backups of sonarr and radarr will be enough"):
   - mergerfs 2.40.2 at `/data` over disk1-6 (44 TB, 13 TB used); `disk4=NC` while round 4 writes there. `chattr +i /data` underneath; docker waits for `data.mount` (drop-in `10-wait-data.conf`). Kuma "Mount /data" push monitor (kuma-mounts rerun, tokens rotated).
   - Layout: `/data/media/{tv,movies,music}`, `/data/usenet/complete/{tv,movies}`; SAB incomplete on `/scratch/sabnzbd/incomplete`, complete to `/data/usenet/complete`.
