@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "accessible": true,
+    "freeSpace": 34175045365760,
+    "id": 1,
+    "path": "/data/media/movies",
+    "unmappedFolders": []
+  }
+]

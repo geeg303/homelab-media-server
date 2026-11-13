@@ -1,0 +1,12 @@
+[Unit]
+Description=Start migration round 4 once, after the post-round-3 reboot
+After=data.mount docker.service network-online.target mnt-mig-sdb.mount mnt-disk4.mount
+ConditionPathExists=/var/lib/media-server/reboot-after-round3.stamp
+ConditionPathExists=!/var/lib/media-server/round4.started
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/round4-start
+
+[Install]
+WantedBy=multi-user.target

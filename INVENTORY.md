@@ -41,6 +41,7 @@ mount-push.timer
 ## Mounts (fstab-managed media/scratch)
 
 ```
+/data fuse.mergerfs rw
 /mnt/disk1 ext4 rw
 /mnt/disk2 ext4 rw
 /mnt/disk3 ext4 rw
@@ -60,7 +61,7 @@ mount-push.timer
 docker-ce 5:29.9.3-1~ubuntu.26.04~resolute
 docker-compose-plugin 5.7.0-1~ubuntu.26.04~resolute
 tailscale 1.104.5
-mergerfs not installed
+mergerfs 2.40.2-5build1
 snapraid not installed
 smartmontools 7.5-2
 ```

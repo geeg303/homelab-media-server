@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "Location": [
+      {
+        "id": 2,
+        "path": "/data/media/movies"
+      }
+    ],
+    "agent": "tv.plex.agents.movie",
+    "language": "en-US",
+    "scanner": "Plex Movie",
+    "title": "Movies",
+    "type": "movie"
+  },
+  {
+    "Location": [
+      {
+        "id": 1,
+        "path": "/data/media/tv"
+      }
+    ],
+    "agent": "tv.plex.agents.series",
+    "language": "en-US",
+    "scanner": "Plex TV Series",
+    "title": "TV Shows",
+    "type": "show"
+  }
+]
