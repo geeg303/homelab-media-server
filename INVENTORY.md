@@ -51,7 +51,6 @@ mount-push.timer
 /mnt/mig/sdb ntfs3 ro
 /mnt/mig/sdd ntfs3 ro
 /mnt/mig/sde ntfs3 ro
-/mnt/parity2 ext4 rw
 /scratch ext4 rw
 ```
 

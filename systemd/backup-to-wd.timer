@@ -1,0 +1,7 @@
+[Unit]
+Description=Daily WD backup at 05:15 (after the 04:30 config backup)
+[Timer]
+OnCalendar=*-*-* 05:15:00
+Persistent=true
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily backup of /data/review + config backups to the WD backup drive
+After=data.mount mnt-backup.mount media-config-backup.service
+[Service]
+Type=oneshot
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/local/sbin/backup-to-wd

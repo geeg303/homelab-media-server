@@ -6,7 +6,7 @@ import json, os, subprocess, time, datetime
 OUT = "/opt/media/status"
 MOUNTS = [("root", "/", "OS (NVMe)"), ("scratch", "/scratch", "scratch (NVMe)")] + \
     [(f"disk{i}", f"/mnt/disk{i}", f"disk{i}") for i in range(1, 7)] + \
-    [("parity2", "/mnt/parity2", "parity2"),
+    [("backup", "/mnt/backup", "backup"),
      ("mig_sdb", "/mnt/mig/sdb", "NTFS source sdb"),
      ("mig_sdd", "/mnt/mig/sdd", "NTFS source sdd"),
      ("mig_sde", "/mnt/mig/sde", "NTFS source sde")]

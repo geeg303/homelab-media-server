@@ -19,7 +19,7 @@ UUID=c2081479-fe62-4a4a-84c2-f90b9ae978f5  /mnt/disk3  ext4  defaults,noatime,no
 UUID=58d6b1bf-4fea-4cfc-82aa-e3de1a1653fe  /mnt/disk4  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2
 UUID=410ba706-2ce7-48ac-8631-67a3da8c5614  /mnt/disk5  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2
 UUID=5ccc773e-9452-4ff4-8c43-57abdc5dbd9d  /mnt/disk6  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2
-UUID=78c7e5ec-98fc-46ee-8c68-114995e2d6d8  /mnt/parity2  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2
+UUID=78c7e5ec-98fc-46ee-8c68-114995e2d6d8  /mnt/backup  ext4  defaults,noatime,nofail,x-systemd.device-timeout=30s  0 2
 # mergerfs pool (Nov 13). disk4=NC: round 4 (sdb -> disk4) is writing there, so no NEW files from apps land on it; its files are still visible.
 # After the rounds: drop =NC, add disk7/disk8 (formatted sdd/sde) to the list.
 /mnt/disk1:/mnt/disk2:/mnt/disk3:/mnt/disk4=NC:/mnt/disk5:/mnt/disk6  /data  fuse.mergerfs  cache.files=off,category.create=mfs,func.getattr=newest,dropcacheonclose=true,moveonenospc=true,minfreespace=100G,inodecalc=path-hash,fsname=mergerfs,nofail,x-systemd.requires-mounts-for=/mnt/disk1,x-systemd.requires-mounts-for=/mnt/disk2,x-systemd.requires-mounts-for=/mnt/disk3,x-systemd.requires-mounts-for=/mnt/disk4,x-systemd.requires-mounts-for=/mnt/disk5,x-systemd.requires-mounts-for=/mnt/disk6  0 0

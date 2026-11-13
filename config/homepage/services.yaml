@@ -885,8 +885,8 @@
           label: disk5
         - field: disk6
           label: disk6
-        - field: parity2
-          label: parity2
+        - field: backup
+          label: backup (WD)
   - NVMe + migration sources:
       icon: mdi-expansion-card
       description: the two NVMe drives, plus the old NTFS disks still waiting to be moved
@@ -982,7 +982,7 @@
         version: 4
         metric: "disk:sdi"
         chart: false
-  - parity2 I/O (sdj):
+  - backup WD I/O (sdj):
       icon: mdi-harddisk
       widget:
         type: glances
