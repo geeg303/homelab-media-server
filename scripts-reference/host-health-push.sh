@@ -38,7 +38,7 @@ h=$(journalctl -k --since "-10 min" --no-pager 2>/dev/null | grep -c "GPU HANG")
 systemctl is-failed --quiet tdarr-swap.service && RES["Tdarr swap job"]="down|tdarr-swap.service failed" || RES["Tdarr swap job"]="up|ok"
 # --- dashboard status tiles fresh (only jobs whose timer is enabled)
 st=""
-for j in tdarr:tdarr migration:migration selftest:selftest dash:disks; do u=${j%%:*}-status; f=/opt/media/status/${j#*:}.json
+for j in tdarr:tdarr migration:migration selftest:selftest dash:disks eng:eng; do u=${j%%:*}-status; f=/opt/media/status/${j#*:}.json
   systemctl is-enabled --quiet "$u.timer" 2>/dev/null || continue
   systemctl is-failed --quiet "$u.service" && { st="$st $u failed;"; continue; }
   [ -f "$f" ] || { st="$st ${f##*/} missing;"; continue; }

@@ -1,0 +1,152 @@
+---
+# Homepage "Pro" ops view (:3010). Engineering IA, Nov 13 2026. Rationale: README.md.
+# Look: dark/slate, no blur, flat header. Any design-helper CSS lives in custom.css (not here).
+title: box · operations
+description: Operational dashboard for the media server (192.0.2.242)
+favicon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/homepage.png
+theme: dark
+color: slate
+headerStyle: clean
+statusStyle: dot
+useEqualHeights: true
+hideVersion: true
+cardBlur: none
+fullWidth: true
+target: _blank
+language: en
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: false
+  showSearchSuggestions: true
+pwa:
+  shortcuts:
+    - name: Overview
+      url: "/#overview"
+    - name: Pipelines
+      url: "/#pipelines"
+    - name: Runbook
+      url: "/#runbook"
+
+layout:
+  # ---------- Overview: is anything broken, what is it doing right now ----------
+  Service Health:
+    tab: Overview
+    icon: mdi-heart-pulse
+    style: row
+    columns: 4
+  Key Metrics:
+    tab: Overview
+    icon: mdi-chart-line
+    style: row
+    columns: 5
+  Active Jobs:
+    tab: Overview
+    icon: mdi-progress-clock
+    style: row
+    columns: 4
+  # ---------- Compute ----------
+  CPU & Memory:
+    tab: Compute
+    icon: mdi-cpu-64-bit
+    style: row
+    columns: 4
+  Thermals:
+    tab: Compute
+    icon: mdi-thermometer
+    style: row
+    columns: 4
+  GPU & Processes:
+    tab: Compute
+    icon: mdi-expansion-card-variant
+    style: row
+    columns: 2
+  Containers:
+    tab: Compute
+    icon: mdi-docker
+    style: row
+    columns: 4
+  # ---------- Storage ----------
+  Capacity:
+    tab: Storage
+    icon: mdi-database
+    style: row
+    columns: 3
+  Disk Health:
+    tab: Storage
+    icon: mdi-harddisk
+    style: row
+    columns: 3
+  Disk I/O:
+    tab: Storage
+    icon: mdi-swap-vertical
+    style: row
+    columns: 5
+  # ---------- Network ----------
+  WAN & Gateway:
+    tab: Network
+    icon: mdi-web
+    style: row
+    columns: 4
+  Host Links:
+    tab: Network
+    icon: mdi-lan
+    style: row
+    columns: 4
+  Home Assistant:
+    tab: Network
+    icon: mdi-home-automation
+    style: row
+    columns: 3
+  # ---------- Pipelines ----------
+  Batch Jobs:
+    tab: Pipelines
+    icon: mdi-cogs
+    style: row
+    columns: 4
+  Download Pipeline:
+    tab: Pipelines
+    icon: mdi-download-network
+    style: row
+    columns: 4
+  Release Schedule:
+    tab: Pipelines
+    icon: mdi-calendar-clock
+    style: row
+    columns: 2
+  Maintenance:
+    tab: Pipelines
+    icon: mdi-wrench-clock
+    style: row
+    columns: 4
+  # ---------- Applications ----------
+  Media Delivery:
+    tab: Applications
+    icon: mdi-play-network
+    style: row
+    columns: 4
+  Acquisition:
+    tab: Applications
+    icon: mdi-cloud-download-outline
+    style: row
+    columns: 3
+  Platform:
+    tab: Applications
+    icon: mdi-server-network
+    style: row
+    columns: 5
+  # ---------- Runbook (bookmarks.yaml) ----------
+  Consoles:
+    tab: Runbook
+    icon: mdi-console
+  Infrastructure:
+    tab: Runbook
+    icon: mdi-router-wireless
+  Observability:
+    tab: Runbook
+    icon: mdi-radar
+  Documentation:
+    tab: Runbook
+    icon: mdi-book-open-variant
+  Views:
+    tab: Runbook
+    icon: mdi-view-dashboard-outline

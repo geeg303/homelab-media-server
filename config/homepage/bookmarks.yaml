@@ -55,6 +55,10 @@
           description: Video conversions (:8265)
 
 - "Cool Links: Server Cockpit":
+    - Pro View (engineering):
+        - icon: mdi-view-dashboard-variant
+          href: http://192.0.2.242:3010/
+          description: The clean, professional ops dashboard (:3010)
     - Dockge Control Room:
         - icon: dockge.png
           href: http://192.0.2.242:5001

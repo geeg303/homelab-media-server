@@ -1,0 +1,38 @@
+---
+# Info row for the ops view (shown on every tab). Docs: https://gethomepage.dev/widgets/info/
+# Order = priority: host vitals, gateway, clock, search. No weather/greeting text: not operational data.
+- glances:
+    label: box
+    url: http://192.0.2.242:61208
+    version: 4
+    cpu: true
+    mem: true
+    cputemp: true
+    cpuSensorLabel: Package id
+    unit: metric
+    uptime: true
+    disk: /etc/hostname   # Glances' bind mount on the OS root LV (Glances fs can't see host mounts)
+    expanded: true
+
+- unifi_console:
+    url: https://192.0.2.1
+    site: Default
+    key: "{{HOMEPAGE_VAR_UNIFI_KEY}}"
+
+- datetime:
+    text_size: md
+    locale: en-CA          # yields ISO-style yyyy-mm-dd
+    format:
+      year: numeric
+      month: 2-digit
+      day: 2-digit
+      hour: 2-digit
+      minute: 2-digit
+      hourCycle: h23
+      timeZoneName: short
+
+- search:
+    provider: [duckduckgo, google]
+    focus: false
+    showSearchSuggestions: true
+    target: _blank

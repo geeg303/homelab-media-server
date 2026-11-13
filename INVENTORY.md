@@ -10,6 +10,7 @@ filebrowser           gtstef/filebrowser:stable                running
 glances               nicolargo/glances:4.5.9-full             running
 glances-socket-proxy  lscr.io/linuxserver/socket-proxy:latest  running
 homepage              ghcr.io/gethomepage/homepage:latest      running
+homepage-pro          ghcr.io/gethomepage/homepage:latest      running
 kometa                lscr.io/linuxserver/kometa:latest        running
 maintainerr           ghcr.io/maintainerr/maintainerr:latest   running
 plex                  lscr.io/linuxserver/plex:latest          running

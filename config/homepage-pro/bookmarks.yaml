@@ -1,0 +1,123 @@
+---
+# Runbook tab. Group names must be listed in settings.yaml layout with `tab: Runbook`.
+- Consoles:
+    - Dockge:
+        - icon: dockge.png
+          href: http://192.0.2.242:5001
+          description: compose stacks, logs · :5001
+    - Uptime Kuma:
+        - icon: uptime-kuma.png
+          href: http://192.0.2.242:3001
+          description: monitors, notifications · :3001
+    - Glances:
+        - icon: glances.png
+          href: http://192.0.2.242:61208
+          description: live host metrics · :61208
+    - What's Up Docker:
+        - icon: whats-up-docker.png
+          href: http://192.0.2.242:3002
+          description: image update audit · :3002
+    - FileBrowser:
+        - icon: filebrowser.png
+          href: http://192.0.2.242:8099
+          description: file access · :8099
+    - Tdarr:
+        - icon: tdarr.png
+          href: http://192.0.2.242:8265
+          description: transcode server · :8265
+
+- Infrastructure:
+    - UniFi Network:
+        - icon: unifi.png
+          href: https://192.0.2.1
+          description: UDR7 gateway, Wi-Fi, clients
+    - Home Assistant:
+        - icon: home-assistant.png
+          href: http://192.0.2.150
+          description: HAOS VM · :80
+    - Tailscale admin:
+        - icon: tailscale.png
+          href: https://login.tailscale.com/admin/machines
+          description: tailnet machines, keys
+    - PrismCast console:
+        - icon: mdi-monitor-screenshot
+          href: http://192.0.2.242:6080/vnc.html?autoconnect=1&resize=scale
+          description: tuner Chrome via noVNC · :6080
+
+- Observability:
+    - Status page 'box':
+        - icon: mdi-list-status
+          href: http://192.0.2.242:3001/status/box
+          description: Kuma public status page
+    - Config backup monitor:
+        - icon: mdi-backup-restore
+          href: http://192.0.2.242:3001/dashboard/25
+          description: Kuma push monitor #25
+    - Glances API:
+        - icon: mdi-api
+          href: http://192.0.2.242:61208/docs
+          description: Glances 4 REST API (OpenAPI)
+
+- Documentation:
+    - Repository:
+        - icon: github.png
+          href: https://github.com/example-owner/media-server
+          description: example-owner/media-server (private) · configs, scripts, units
+    - README:
+        - icon: mdi-file-document-outline
+          href: https://github.com/example-owner/media-server/blob/main/README.md
+          description: stack overview, port map
+    - CHANGELOG:
+        - icon: mdi-history
+          href: https://github.com/example-owner/media-server/blob/main/CHANGELOG.md
+          description: dated change record
+    - INVENTORY:
+        - icon: mdi-clipboard-list-outline
+          href: https://github.com/example-owner/media-server/blob/main/INVENTORY.md
+          description: generated host/container inventory
+    - Switch-over plan:
+        - icon: mdi-file-tree-outline
+          href: https://github.com/example-owner/media-server/blob/main/docs/SWITCHOVER-PLAN.md
+          description: docs/SWITCHOVER-PLAN.md
+    - Migration plan:
+        - icon: mdi-harddisk-plus
+          href: https://github.com/example-owner/media-server/blob/main/docs/MIGRATION-PLAN.md
+          description: docs/MIGRATION-PLAN.md
+    - SnapRAID primer:
+        - icon: mdi-shield-half-full
+          href: https://github.com/example-owner/media-server/blob/main/docs/SNAPRAID-PRIMER.md
+          description: docs/SNAPRAID-PRIMER.md
+    - Coverage audit:
+        - icon: mdi-checkbox-marked-outline
+          href: https://github.com/example-owner/media-server/blob/main/docs/COVERAGE-AUDIT.md
+          description: docs/COVERAGE-AUDIT.md
+    - Build plan:
+        - icon: mdi-map-outline
+          href: https://github.com/example-owner/media-server/blob/main/docs/PLAN.md
+          description: docs/PLAN.md
+    - Home Assistant plan:
+        - icon: mdi-home-automation
+          href: https://github.com/example-owner/media-server/blob/main/docs/HOME-ASSISTANT-PLAN.md
+          description: docs/HOME-ASSISTANT-PLAN.md
+    - Public mirror:
+        - icon: github.png
+          href: https://github.com/example-owner/homelab-media-server
+          description: example-owner/homelab-media-server (scrubbed)
+    - Homepage docs:
+        - icon: homepage.png
+          href: https://gethomepage.dev/
+          description: widget and config reference
+
+- Views:
+    - Retro view:
+        - icon: mdi-star-four-points-outline
+          href: http://192.0.2.242:3000/
+          description: 90s dashboard · :3000
+    - Ops view:
+        - icon: homepage.png
+          href: http://192.0.2.242:3010/
+          description: this dashboard · :3010
+    - Plex:
+        - icon: plex.png
+          href: http://192.0.2.242:32400/web
+          description: media server UI · :32400

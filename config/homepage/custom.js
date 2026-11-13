@@ -521,3 +521,100 @@
   }
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot); else boot();
 })();
+
+/* ---- Pro view switch (append to the 90s custom.js) -------------------------------
+ * Adds a beveled Win95 button "Switch to Pro view" at the top-right of the page
+ * (end of the information-widgets row, below the ticker; falls back to #footer),
+ * linking to the Pro dashboard on the closest tab. Self-contained, idempotent,
+ * re-inserted if React re-renders it away. Fallback styles are :where() (zero
+ * specificity) so the 90s theme can restyle #y2k-pro-switch / .y2k-pro-switch.
+ * ------------------------------------------------------------------------------ */
+(function () {
+  "use strict";
+  if (window.__y2kProSwitch) return;
+  window.__y2kProSwitch = true;
+
+  var PRO_URL = "http://192.0.2.242:3010/";
+  // 90s tab slug -> Pro tab slug. Unknown/wrong targets are safe: the Pro custom.js
+  // self-heals any hash that is not one of its tabs (keyword match, else first tab),
+  // so by default we simply pass the 90s slug through. Fill in exact Pro slugs if known.
+  var TAB_MAP = {
+    "home-page": "overview",
+    "media-mania": "applications",
+    "download-o-rama": "pipelines",
+    "server-room": "compute",
+    "net-%26-home": "network",
+    "jobs": "pipelines",
+    "cool-links": "runbook",
+  };
+  var LABEL = "Switch to Pro view";
+
+  var doc = document;
+  var CSS = [
+    ":where(#y2k-pro-switch-wrap){display:flex;align-items:center;margin-left:auto;padding:4px 0}",
+    ":where(#y2k-pro-switch){display:inline-flex;align-items:center;gap:6px;padding:3px 12px;font:bold 12px/1.4 'MS Sans Serif',Tahoma,Verdana,sans-serif;",
+    "  color:#000;background:#c0c0c0;text-decoration:none;white-space:nowrap;cursor:pointer;",
+    "  border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:inset -1px -1px 0 #808080,inset 1px 1px 0 #dfdfdf}",
+    ":where(#y2k-pro-switch):hover{background:#d4d0c8}",
+    ":where(#y2k-pro-switch):active{border-color:#404040 #fff #fff #404040;box-shadow:inset 1px 1px 0 #808080;padding:4px 11px 2px 13px}",
+    ":where(#y2k-pro-switch):focus-visible{outline:1px dotted #000;outline-offset:-5px}",
+    ":where(#y2k-pro-switch) .y2k-pro-switch-icon{display:inline-block;width:10px;height:10px;background:#000080;border:1px solid #fff;box-shadow:1px 1px 0 #000}",
+    ":where(#footer #y2k-pro-switch-wrap){justify-content:center;margin:8px auto 0}",
+  ].join("\n");
+
+  function slug() {
+    var h = (location.hash || "").replace(/^#/, "").toLowerCase();
+    if (h) return h;
+    var b = doc.querySelector('#myTab button[aria-selected="true"]');
+    return b ? encodeURIComponent(b.textContent.trim().toLowerCase().replace(/\s+/g, "-")) : "";
+  }
+  function href() {
+    var s = slug(), t = Object.prototype.hasOwnProperty.call(TAB_MAP, s) && TAB_MAP[s] ? TAB_MAP[s] : s;
+    return PRO_URL + (t ? "#" + t : "");
+  }
+  function build() {
+    var wrap = doc.createElement("div");
+    wrap.id = "y2k-pro-switch-wrap";
+    var a = doc.createElement("a");
+    a.id = "y2k-pro-switch";
+    a.className = "y2k-pro-switch";
+    a.setAttribute("role", "button");
+    a.title = "Open the professional dashboard (same tab)";
+    var i = doc.createElement("span");
+    i.className = "y2k-pro-switch-icon";
+    i.setAttribute("aria-hidden", "true");
+    a.appendChild(i);
+    a.appendChild(doc.createTextNode(LABEL));
+    a.addEventListener("click", function () { a.href = href(); });   // freshest tab at click time
+    wrap.appendChild(a);
+    return wrap;
+  }
+  var obs = null;
+  function ensure() {
+    if (!doc.getElementById("y2k-pro-switch-style")) {
+      var s = doc.createElement("style");
+      s.id = "y2k-pro-switch-style";
+      s.textContent = CSS;
+      var h = doc.head || doc.documentElement;
+      h.insertBefore(s, h.firstChild);
+    }
+    var host = doc.getElementById("information-widgets") || doc.getElementById("footer");
+    if (!host) return;
+    var w = doc.getElementById("y2k-pro-switch-wrap");
+    if (obs) obs.disconnect();
+    if (!w || w.parentNode !== host || host.lastElementChild !== w) host.appendChild(w || build());
+    var a = doc.getElementById("y2k-pro-switch");
+    if (a && a.getAttribute("href") !== href()) a.setAttribute("href", href());
+    if (window.MutationObserver) {
+      obs = obs || new MutationObserver(function () { if (!pending) { pending = true; (window.requestAnimationFrame || setTimeout)(function () { pending = false; ensure(); }); } });
+      obs.observe(doc.getElementById("__next") || doc.body, { childList: true, subtree: true });
+    }
+  }
+  var pending = false;
+  function boot() {
+    ensure();
+    window.addEventListener("hashchange", function () { setTimeout(ensure, 50); });
+    var n = 0, t = setInterval(function () { ensure(); if (++n > 10) clearInterval(t); }, 1000);
+  }
+  if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", boot); else boot();
+})();

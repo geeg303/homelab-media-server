@@ -39,6 +39,22 @@ services:
       - /opt/media/config/homepage:/app/config
       - /opt/media/config/homepage/images:/app/public/images:ro
 
+  homepage-pro:                # "Pro" engineering view of the dashboard; 90s view stays on :3000
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage-pro
+    env_file: [homepage.env]
+    restart: unless-stopped
+    networks: [media]
+    ports: ["3010:3000"]
+    depends_on: [socket-proxy]
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      HOMEPAGE_ALLOWED_HOSTS: 192.0.2.242:3010,box:3010
+    volumes:
+      - /opt/media/config/homepage-pro:/app/config
+      - /opt/media/config/homepage-pro/images:/app/public/images:ro
+
   diun:
     image: crazymax/diun:latest
     container_name: diun
