@@ -3,6 +3,7 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-14
+- **ntfy, missed notification:** the server got "Round 4 copy done" (08:19, priority 3), but user's phone never showed it, and neither did Friday ~17:19's "Round 3 finished" / "rebooting". Normal-priority messages are delivered via Firebase, which Android can delay or drop in doze, and the app's refresh only fetches messages newer than its latest one, so gaps never back-fill. Fixes: user turns on "Instant delivery" for the subscription; `migrate-round5` milestones now send at priority high (errors stay urgent). The running round 4 / round5-start scripts were left untouched (editing a running bash script is unsafe).
 - user: "1. Yes 2. Yes 3. Wait".
   - **PrismCast watchdog:** `/usr/local/sbin/prismcast-watchdog` + timer (every minute). If `/health` isn't healthy or the browser is disconnected for 2+ min AND 0 streams are active, it restarts the prismcast container (max 3 per 6 h, then an ntfy alert only). Log: `/var/log/media-server/prismcast-watchdog.log`.
   - **Round 5 auto-start:** `round5-start` (unit started 07:07) waits for `migrate-round4`. Only on `ROUND4 VERIFY TOTAL differences=0` does it switch the pool branches live via the mergerfs xattr (`disk4` RW again, `disk5`+`disk6` NC) and in fstab, set up the Migration tile, and start `migrate-round5`: sde (SERIAL-SDE) `TV Shows` (7.91 TB) -> disk5, non-media (ROM archives etc.) -> `disk6/review/sde`, with a space check first.

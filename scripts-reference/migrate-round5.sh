@@ -8,7 +8,7 @@ DEST=/mnt/disk5/media/tv
 REVIEW=/mnt/disk6/review/sde      # on disk6: sde's TV (7.91 TB) nearly fills disk5 (8.0 TB)
 MEDIA_DIRS='^(TV Shows|System Volume Information|\$RECYCLE\.BIN)$'
 T=$(grep -m1 '^NTFY_TOPIC=' /opt/media/stacks/ops/.env | cut -d= -f2)
-alert(){ curl -fsS -m 10 -H "Title: box migration R5" ${2:+-H "Priority: high"} -d "$1" "https://ntfy.sh/$T" >/dev/null || true; }
+alert(){ curl -fsS -m 10 -H "Title: box migration R5" -H "Priority: $([ -n "${2:-}" ] && echo urgent || echo high)" -d "$1" "https://ntfy.sh/$T" >/dev/null || true; }
 die(){ echo "$(date -Is) ABORT: $1" >> $LOG; alert "ROUND 5 ABORTED: $1" high; exit 1; }
 mkdir -p /var/log/migrate; : > $LOG; : > $V
 echo "===== ROUND 5 start $(date -Is)" >> $LOG
