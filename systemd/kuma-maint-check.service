@@ -1,0 +1,6 @@
+[Unit]
+Description=Turn Uptime Kuma planned-work maintenance off when its expiry passes
+After=docker.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/kuma-maint check

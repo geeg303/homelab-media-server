@@ -8,6 +8,7 @@ echo "=== $(date -Is) docker update"
 systemctl is-active --quiet migrate-round3 || { echo "ABORT: round 3 runner not active (unexpected)"; exit 1; }
 w=$(curl -s -m 5 "http://127.0.0.1:8181/api/v2?apikey=$(sed -n 's/^api_key *= *//p' /opt/media/config/tautulli/config.ini | head -1)&cmd=get_activity" | python3 -c "import json,sys; print(json.load(sys.stdin)['response']['data'].get('stream_count','?'))" 2>/dev/null || echo "?")
 echo "Plex streams now: $w"
+/usr/local/sbin/kuma-maint on 45m || echo "WARN: kuma-maint on failed"
 # 1. rollback record: container -> image ref + image id + repo digest
 for c in $(docker ps --format '{{.Names}}'); do
   img=$(docker inspect -f '{{.Config.Image}}' "$c"); id=$(docker inspect -f '{{.Image}}' "$c")
@@ -37,4 +38,5 @@ done < "$RB"
 echo "--- status"; sleep 30
 docker ps -a --format '{{.Names}}|{{.Status}}' | sort
 systemctl is-active migrate-round3 && echo "round 3 still running"
+sleep 60; /usr/local/sbin/kuma-maint off || true
 echo "=== done $(date -Is)"

@@ -1,0 +1,5 @@
+[Unit]
+Description=Daily container-update digest to ntfy
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/update-digest

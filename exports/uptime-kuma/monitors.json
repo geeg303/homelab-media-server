@@ -52,6 +52,23 @@
   ],
   "maintenance": [
     {
+      "active": 0,
+      "cron": "",
+      "days_of_month": [],
+      "description": "Turned on by box scripts around planned reboots and container updates, with an expiry; turned off automatically.",
+      "end_date": null,
+      "end_time": null,
+      "id": 3,
+      "interval_day": 1,
+      "start_date": null,
+      "start_time": null,
+      "strategy": "manual",
+      "timezone": "Region/City",
+      "title": "Planned work (updates / reboot)",
+      "user_id": 1,
+      "weekdays": []
+    },
+    {
       "active": 1,
       "cron": "25 4 * * *",
       "days_of_month": [],
@@ -69,7 +86,13 @@
       "weekdays": []
     }
   ],
-  "maintenance_status_page": [],
+  "maintenance_status_page": [
+    {
+      "id": 1,
+      "maintenance_id": 3,
+      "status_page_id": 1
+    }
+  ],
   "monitor": [
     {
       "accepted_statuscodes_json": [
@@ -7913,6 +7936,301 @@
       "id": 225,
       "maintenance_id": 1,
       "monitor_id": 57
+    },
+    {
+      "id": 285,
+      "maintenance_id": 3,
+      "monitor_id": 1
+    },
+    {
+      "id": 286,
+      "maintenance_id": 3,
+      "monitor_id": 2
+    },
+    {
+      "id": 287,
+      "maintenance_id": 3,
+      "monitor_id": 3
+    },
+    {
+      "id": 288,
+      "maintenance_id": 3,
+      "monitor_id": 4
+    },
+    {
+      "id": 289,
+      "maintenance_id": 3,
+      "monitor_id": 5
+    },
+    {
+      "id": 290,
+      "maintenance_id": 3,
+      "monitor_id": 6
+    },
+    {
+      "id": 291,
+      "maintenance_id": 3,
+      "monitor_id": 7
+    },
+    {
+      "id": 292,
+      "maintenance_id": 3,
+      "monitor_id": 8
+    },
+    {
+      "id": 293,
+      "maintenance_id": 3,
+      "monitor_id": 9
+    },
+    {
+      "id": 294,
+      "maintenance_id": 3,
+      "monitor_id": 10
+    },
+    {
+      "id": 295,
+      "maintenance_id": 3,
+      "monitor_id": 11
+    },
+    {
+      "id": 296,
+      "maintenance_id": 3,
+      "monitor_id": 12
+    },
+    {
+      "id": 297,
+      "maintenance_id": 3,
+      "monitor_id": 13
+    },
+    {
+      "id": 298,
+      "maintenance_id": 3,
+      "monitor_id": 14
+    },
+    {
+      "id": 299,
+      "maintenance_id": 3,
+      "monitor_id": 15
+    },
+    {
+      "id": 300,
+      "maintenance_id": 3,
+      "monitor_id": 16
+    },
+    {
+      "id": 301,
+      "maintenance_id": 3,
+      "monitor_id": 17
+    },
+    {
+      "id": 302,
+      "maintenance_id": 3,
+      "monitor_id": 18
+    },
+    {
+      "id": 303,
+      "maintenance_id": 3,
+      "monitor_id": 19
+    },
+    {
+      "id": 304,
+      "maintenance_id": 3,
+      "monitor_id": 20
+    },
+    {
+      "id": 305,
+      "maintenance_id": 3,
+      "monitor_id": 21
+    },
+    {
+      "id": 306,
+      "maintenance_id": 3,
+      "monitor_id": 22
+    },
+    {
+      "id": 307,
+      "maintenance_id": 3,
+      "monitor_id": 23
+    },
+    {
+      "id": 308,
+      "maintenance_id": 3,
+      "monitor_id": 24
+    },
+    {
+      "id": 309,
+      "maintenance_id": 3,
+      "monitor_id": 25
+    },
+    {
+      "id": 310,
+      "maintenance_id": 3,
+      "monitor_id": 26
+    },
+    {
+      "id": 311,
+      "maintenance_id": 3,
+      "monitor_id": 27
+    },
+    {
+      "id": 312,
+      "maintenance_id": 3,
+      "monitor_id": 28
+    },
+    {
+      "id": 313,
+      "maintenance_id": 3,
+      "monitor_id": 29
+    },
+    {
+      "id": 314,
+      "maintenance_id": 3,
+      "monitor_id": 30
+    },
+    {
+      "id": 315,
+      "maintenance_id": 3,
+      "monitor_id": 31
+    },
+    {
+      "id": 316,
+      "maintenance_id": 3,
+      "monitor_id": 32
+    },
+    {
+      "id": 317,
+      "maintenance_id": 3,
+      "monitor_id": 33
+    },
+    {
+      "id": 318,
+      "maintenance_id": 3,
+      "monitor_id": 34
+    },
+    {
+      "id": 319,
+      "maintenance_id": 3,
+      "monitor_id": 35
+    },
+    {
+      "id": 320,
+      "maintenance_id": 3,
+      "monitor_id": 36
+    },
+    {
+      "id": 321,
+      "maintenance_id": 3,
+      "monitor_id": 37
+    },
+    {
+      "id": 322,
+      "maintenance_id": 3,
+      "monitor_id": 38
+    },
+    {
+      "id": 323,
+      "maintenance_id": 3,
+      "monitor_id": 39
+    },
+    {
+      "id": 324,
+      "maintenance_id": 3,
+      "monitor_id": 40
+    },
+    {
+      "id": 325,
+      "maintenance_id": 3,
+      "monitor_id": 41
+    },
+    {
+      "id": 326,
+      "maintenance_id": 3,
+      "monitor_id": 42
+    },
+    {
+      "id": 327,
+      "maintenance_id": 3,
+      "monitor_id": 43
+    },
+    {
+      "id": 328,
+      "maintenance_id": 3,
+      "monitor_id": 44
+    },
+    {
+      "id": 329,
+      "maintenance_id": 3,
+      "monitor_id": 45
+    },
+    {
+      "id": 330,
+      "maintenance_id": 3,
+      "monitor_id": 46
+    },
+    {
+      "id": 331,
+      "maintenance_id": 3,
+      "monitor_id": 47
+    },
+    {
+      "id": 332,
+      "maintenance_id": 3,
+      "monitor_id": 48
+    },
+    {
+      "id": 333,
+      "maintenance_id": 3,
+      "monitor_id": 49
+    },
+    {
+      "id": 334,
+      "maintenance_id": 3,
+      "monitor_id": 50
+    },
+    {
+      "id": 335,
+      "maintenance_id": 3,
+      "monitor_id": 51
+    },
+    {
+      "id": 336,
+      "maintenance_id": 3,
+      "monitor_id": 52
+    },
+    {
+      "id": 337,
+      "maintenance_id": 3,
+      "monitor_id": 53
+    },
+    {
+      "id": 338,
+      "maintenance_id": 3,
+      "monitor_id": 54
+    },
+    {
+      "id": 339,
+      "maintenance_id": 3,
+      "monitor_id": 56
+    },
+    {
+      "id": 340,
+      "maintenance_id": 3,
+      "monitor_id": 57
+    },
+    {
+      "id": 341,
+      "maintenance_id": 3,
+      "monitor_id": 58
+    },
+    {
+      "id": 342,
+      "maintenance_id": 3,
+      "monitor_id": 59
+    },
+    {
+      "id": 343,
+      "maintenance_id": 3,
+      "monitor_id": 60
     }
   ],
   "monitor_notification": [

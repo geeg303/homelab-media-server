@@ -1,0 +1,7 @@
+[Unit]
+Description=kuma-maint expiry check every 2 min
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=2min
+[Install]
+WantedBy=timers.target

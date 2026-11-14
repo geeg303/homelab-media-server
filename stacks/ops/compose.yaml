@@ -70,8 +70,7 @@ services:
       DIUN_PROVIDERS_DOCKER: "true"
       DIUN_PROVIDERS_DOCKER_ENDPOINT: tcp://socket-proxy:2375
       DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
-      DIUN_NOTIF_NTFY_ENDPOINT: https://ntfy.sh
-      DIUN_NOTIF_NTFY_TOPIC: ${NTFY_TOPIC}
+      DIUN_NOTIF_SCRIPT_CMD: /data/record-update.sh   # one daily digest instead of a message per image (user Nov 14)
     volumes:
       - /opt/media/config/diun:/data
 
