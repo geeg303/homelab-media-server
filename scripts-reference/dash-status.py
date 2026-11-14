@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-# dash-status: writes /opt/media/status/disks.json and host.json for Homepage tiles.
+# dash-status: writes /opt/media/status/disks.json, host.json and diskio.json for Homepage tiles.
+# diskio.json: per-disk read/write MB/s from /proc/diskstats deltas, keyed by role and resolved BY SERIAL
+# (/dev/disk/by-id), so sdX renumbering after a reboot can't mislabel tiles.
 # Read-only: statfs (df) on fixed mount points, systemctl/docker/tailscale queries. No disk I/O on the data drives.
 import json, os, subprocess, time, datetime
 
@@ -109,3 +111,101 @@ failed = [l.split()[0] for l in sh("systemctl", "--failed", "--no-legend", "--pl
 host["failed_units"] = "✅ none" if not failed else "❌ " + ", ".join(failed)
 host["updated"] = stamp
 write("host.json", host)
+
+
+# ---------------- diskio.json (per-disk throughput, keyed by serial) ----------------
+DISKIO_ROLES = [  # (role, serial, label)
+    ("system", "240246A1D2E0", "system NVMe"),
+    ("scratch", "NVME-SERIAL-2", "scratch NVMe"),
+    ("disk1", "SERIAL-DISK1", "disk1 Seagate"),
+    ("disk2", "SERIAL-DISK2", "disk2 IronWolf"),
+    ("disk3", "SERIAL-WD1", "disk3 WD"),
+    ("disk4", "7SJ8JDXW", "disk4 WD"),
+    ("disk5", "7HJY59ZF", "disk5 WD"),
+    ("disk6", "7HJY82BF", "disk6 WD"),
+    ("backup", "7HK2YR2H", "backup WD"),
+    ("src_sdb", "SERIAL-SDB", "source IronWolf (ex-sdb)"),
+    ("src_sdd", "SERIAL-SDD", "source Seagate (ex-sdd)"),
+    ("src_sde", "SERIAL-SDE", "source Seagate (ex-sde)"),
+]
+DISKIO_PREV = "/var/lib/media-server/diskio-prev.json"
+BYID = "/dev/disk/by-id"
+
+
+def diskio_dev(serial):
+    try:
+        names = os.listdir(BYID)
+    except OSError:
+        return None
+    for n in sorted(names):
+        if (n.startswith("ata-") or n.startswith("nvme-")) and n.endswith("_" + serial):
+            return os.path.basename(os.path.realpath(os.path.join(BYID, n)))
+    return None
+
+
+def diskio_mbs(v):
+    return f"{v:.1f} MB/s" if v >= 0.05 or v == 0 else "<0.1 MB/s"
+
+
+def diskio():
+    stats = {}
+    for line in open("/proc/diskstats"):
+        f = line.split()
+        if len(f) >= 14:  # name, reads, rmerged, rsect, rms, writes, wmerged, wsect, wms, inflight, io_ticks
+            stats[f[2]] = {"rs": int(f[5]), "ws": int(f[9]), "ticks": int(f[12])}
+    try:
+        boot = open("/proc/sys/kernel/random/boot_id").read().strip()
+    except OSError:
+        boot = "?"
+    t = time.monotonic()
+    try:
+        prev = json.load(open(DISKIO_PREV))
+        if prev.get("boot") != boot:
+            prev = {}
+    except Exception:
+        prev = {}
+    pdisks = prev.get("disks", {})
+    dt = t - prev["t"] if prev.get("t") else 0
+    out, cur = {}, {}
+    total_r = total_w = 0.0
+    for role, serial, label in DISKIO_ROLES:
+        dev = diskio_dev(serial)
+        d = {"role": role, "serial": serial, "label": label, "dev": dev or "absent"}
+        st = stats.get(dev) if dev else None
+        if st is None:
+            d.update(read="— not present", write="—", busy="—", rw="— not present",
+                     line=f"absent · {serial}", read_mbs=None, write_mbs=None, busy_pct=None)
+        else:
+            cur[serial] = dict(st, dev=dev)
+            p = pdisks.get(serial)
+            if p and p.get("dev") == dev and dt > 5 and st["rs"] >= p["rs"] and st["ws"] >= p["ws"]:
+                r = (st["rs"] - p["rs"]) * 512 / dt / 1e6
+                w = (st["ws"] - p["ws"]) * 512 / dt / 1e6
+                b = min(100.0, max(0.0, (st["ticks"] - p["ticks"]) / (dt * 1000) * 100))
+                total_r += r
+                total_w += w
+                d.update(read=diskio_mbs(r), write=diskio_mbs(w), busy=f"{b:.0f}%",
+                         rw=f"R {diskio_mbs(r)} · W {diskio_mbs(w)}",
+                         line=f"{dev} · R {r:.1f} · W {w:.1f} MB/s · {b:.0f}% busy",
+                         read_mbs=round(r, 2), write_mbs=round(w, 2), busy_pct=round(b, 1))
+            else:
+                d.update(read="… warming up", write="…", busy="…", rw="… warming up (next run)",
+                         line=f"{dev} · warming up", read_mbs=None, write_mbs=None, busy_pct=None)
+        out[role] = d
+        # flat keys for customapi mappings (field: disk4_read etc.)
+        for k in ("dev", "serial", "read", "write", "busy", "rw", "line"):
+            out[f"{role}_{k}"] = d[k]
+    out["total"] = f"R {diskio_mbs(total_r)} · W {diskio_mbs(total_w)}" if dt > 5 else "… warming up"
+    out["interval"] = f"{dt:.0f} s average" if dt > 5 else "first sample"
+    out["updated"] = stamp
+    write("diskio.json", out)
+    tmp = DISKIO_PREV + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump({"boot": boot, "t": t, "disks": cur}, f)
+    os.replace(tmp, DISKIO_PREV)
+
+
+try:
+    diskio()
+except Exception as e:
+    write("diskio.json", {"updated": stamp, "error": f"diskio failed: {e}"})

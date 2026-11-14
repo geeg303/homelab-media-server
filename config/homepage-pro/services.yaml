@@ -574,9 +574,9 @@
         display: list
         mappings:
         - field: root
-          label: nvme1 · /
+          label: system NVMe · /
         - field: scratch
-          label: nvme0 · /scratch
+          label: scratch NVMe · /scratch
         - field: updated
           label: Sampled
   - Migration sources:
@@ -589,11 +589,11 @@
         display: list
         mappings:
         - field: mig_sdb
-          label: NTFS sdb
+          label: NTFS SERIAL-SDB (ex-sdb)
         - field: mig_sdd
-          label: NTFS sdd
+          label: NTFS SERIAL-SDD (ex-sdd)
         - field: mig_sde
-          label: NTFS sde
+          label: NTFS SERIAL-SDE (ex-sde)
 
 - Disk Health:
   - Drive checks (24 h):
@@ -746,87 +746,161 @@
           label: Health
 
 - Disk I/O:
-  - nvme1n1 · system:
+  # Disk I/O tiles read diskio.json (dash-status, 2-min /proc/diskstats deltas), keyed by drive SERIAL;
+  # 'Now' = the drive's current kernel name, which can change on every reboot.
+  - system NVMe · 240246A1D2E0:
       icon: mdi-expansion-card-variant
+      description: "2-min avg · by serial"
       widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:nvme1n1"
-        chart: true
-  - nvme0n1 · scratch:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: system_read
+          label: Read
+        - field: system_write
+          label: Write
+        - field: system_busy
+          label: Busy
+        - field: system_dev
+          label: Now
+  - scratch NVMe · NVME-SERIAL-2:
       icon: mdi-expansion-card
       widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:nvme0n1"
-        chart: true
-  - sdd · migration source:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: scratch_read
+          label: Read
+        - field: scratch_write
+          label: Write
+        - field: scratch_busy
+          label: Busy
+        - field: scratch_dev
+          label: Now
+  - disk1 · Seagate SERIAL-DISK1:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk1_read
+          label: Read
+        - field: disk1_write
+          label: Write
+        - field: disk1_busy
+          label: Busy
+        - field: disk1_dev
+          label: Now
+  - disk2 · IronWolf SERIAL-DISK2:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk2_read
+          label: Read
+        - field: disk2_write
+          label: Write
+        - field: disk2_busy
+          label: Busy
+        - field: disk2_dev
+          label: Now
+  - disk3 · WD SERIAL-WD1:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk3_read
+          label: Read
+        - field: disk3_write
+          label: Write
+        - field: disk3_busy
+          label: Busy
+        - field: disk3_dev
+          label: Now
+  - disk4 · WD 7SJ8JDXW:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk4_read
+          label: Read
+        - field: disk4_write
+          label: Write
+        - field: disk4_busy
+          label: Busy
+        - field: disk4_dev
+          label: Now
+  - disk5 · WD 7HJY59ZF:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk5_read
+          label: Read
+        - field: disk5_write
+          label: Write
+        - field: disk5_busy
+          label: Busy
+        - field: disk5_dev
+          label: Now
+  - disk6 · WD 7HJY82BF:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk6_read
+          label: Read
+        - field: disk6_write
+          label: Write
+        - field: disk6_busy
+          label: Busy
+        - field: disk6_dev
+          label: Now
+  - backup · WD 7HK2YR2H:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: backup_read
+          label: Read
+        - field: backup_write
+          label: Write
+        - field: backup_busy
+          label: Busy
+        - field: backup_dev
+          label: Now
+  - Migration sources:
       icon: mdi-harddisk-remove
-      description: round 3 source (sdb, sde idle)
+      description: "NTFS sources by serial · round 4 reads SERIAL-SDB"
       widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sdd"
-        chart: true
-  - disk1 · sdc:
-      icon: mdi-harddisk
-      widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sdc"
-        chart: false
-  - disk2 · sda:
-      icon: mdi-harddisk
-      widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sda"
-        chart: false
-  - disk3 · sdf:
-      icon: mdi-harddisk
-      widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sdf"
-        chart: false
-  - disk4 · sdg:
-      icon: mdi-harddisk
-      widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sdg"
-        chart: false
-  - disk5 · sdh:
-      icon: mdi-harddisk
-      widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sdh"
-        chart: false
-  - disk6 · sdi:
-      icon: mdi-harddisk
-      widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sdi"
-        chart: false
-  - backup WD · sdj:
-      icon: mdi-harddisk
-      widget:
-        type: glances
-        url: "http://192.0.2.242:61208"
-        version: 4
-        metric: "disk:sdj"
-        chart: false
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        display: list
+        mappings:
+        - field: src_sdb_line
+          label: IronWolf SERIAL-SDB
+        - field: src_sdd_line
+          label: Seagate SERIAL-SDD
+        - field: src_sde_line
+          label: Seagate SERIAL-SDE
+        - field: updated
+          label: Sampled
 
 # =====================================================================================
 # TAB: Network
