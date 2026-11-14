@@ -1,0 +1,6 @@
+[Unit]
+Description=Restart PrismCast if its browser is down 2+ min and nothing is streaming
+After=docker.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/prismcast-watchdog

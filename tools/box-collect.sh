@@ -20,7 +20,7 @@ done
 cp_if /opt/media/dockge/compose.yaml dockge/compose.yaml
 
 # --- host scripts (text only) ---
-for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers docker-update-all dash-status eng-status reboot-after-round3 migrate-round4 round4-start backup-to-wd set-vnc-password; do
+for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers docker-update-all dash-status eng-status reboot-after-round3 migrate-round4 round4-start backup-to-wd set-vnc-password migrate-round5 round5-start prismcast-watchdog; do
   [ -f /usr/local/sbin/$f ] || continue
   ext=.sh; head -1 /usr/local/sbin/$f | grep -q python && ext=.py
   cp_if /usr/local/sbin/$f scripts-reference/$f$ext
@@ -30,7 +30,7 @@ done
 for u in media-config-backup.service media-config-backup.timer migration-status.service migration-status.timer \
          tdarr-status.service tdarr-status.timer tdarr-swap.service tdarr-swap.timer selftest-status.service selftest-status.timer host-health-push.service host-health-push.timer \
          mount-push.service mount-push.timer usb-watchdog.service wifi-powersave-off.service \
-         snapraid-nightly.service snapraid-nightly.timer wd-format-when-passed.service wd-format-when-passed.timer \n         dash-status.service dash-status.timer eng-status.service eng-status.timer round4-after-reboot.service backup-to-wd.service backup-to-wd.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
+         snapraid-nightly.service snapraid-nightly.timer wd-format-when-passed.service wd-format-when-passed.timer \n         dash-status.service dash-status.timer eng-status.service eng-status.timer round4-after-reboot.service backup-to-wd.service backup-to-wd.timer prismcast-watchdog.service prismcast-watchdog.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
 for f in /usr/local/share/media-server/*.js; do cp_if "$f" "scripts-reference/share/$(basename "$f")"; done
 for f in /etc/systemd/system/docker.service.d/*.conf; do cp_if "$f" "systemd/docker.service.d/$(basename "$f")"; done
 for f in /etc/systemd/system/systemd-networkd-wait-online.service.d/*.conf; do cp_if "$f" "systemd/systemd-networkd-wait-online.service.d/$(basename "$f")"; done

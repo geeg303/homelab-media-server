@@ -2,6 +2,13 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-14
+- user: "1. Yes 2. Yes 3. Wait".
+  - **PrismCast watchdog:** `/usr/local/sbin/prismcast-watchdog` + timer (every minute). If `/health` isn't healthy or the browser is disconnected for 2+ min AND 0 streams are active, it restarts the prismcast container (max 3 per 6 h, then an ntfy alert only). Log: `/var/log/media-server/prismcast-watchdog.log`.
+  - **Round 5 auto-start:** `round5-start` (unit started 07:07) waits for `migrate-round4`. Only on `ROUND4 VERIFY TOTAL differences=0` does it switch the pool branches live via the mergerfs xattr (`disk4` RW again, `disk5`+`disk6` NC) and in fstab, set up the Migration tile, and start `migrate-round5`: sde (SERIAL-SDE) `TV Shows` (7.91 TB) -> disk5, non-media (ROM archives etc.) -> `disk6/review/sde`, with a space check first.
+  - **sdd:** stays untouched until all rounds are done.
+- 07:02: round 4 copy at 221/233 movies, 0 errors; 212 movies in Plex.
+
 ## 2026-11-13
 - New `/usr/local/sbin/set-vnc-password` (user asked how to reset the PrismCast noVNC password): `ssh -t mss sudo set-vnc-password` asks for the new password twice at a hidden prompt, rewrites `NOVNC_PASSWORD` in livetv.env (root 600, short-lived backup), recreates prismcast and checks :6080 answers. VNC auth only uses the first 8 characters.
 - **Disk I/O tiles are now keyed by serial, so a reboot can't mislabel them.** `dash-status` also writes `/opt/media/status/diskio.json`: per-role read/write MB/s, busy % and the current kernel name, from `/proc/diskstats` deltas over the 2-min timer interval (previous sample in `/var/lib/media-server/diskio-prev.json`, reset on boot_id change). Disks are resolved by serial via `/dev/disk/by-id/{ata,nvme}-*_<serial>`. Both dashboards' sdX/nvmeX Glances `disk:` tiles (90s "Disk I/O Blinkenlights", Pro Storage "Disk I/O") became customapi tiles (Read / Write / Busy / Now): system and scratch NVMe, disk1-6, backup, plus one migration-sources list. The Glances charts went away with them. Labels that used device names were also fixed: NTFS sources show their serial (ex-sdX), and Pro's NVMe fill rows say system/scratch instead of nvme1/nvme0, which had swapped at boot.
