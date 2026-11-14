@@ -11,14 +11,20 @@
    "/mnt/mig/sdd/TV Shows",
    "/mnt/mig/sdd/_from_sdc/TV Shows"
   ],
-  "dest_shows": "/mnt/disk3/media/tv"
+  "dest_shows": "/mnt/disk3/media/tv",
+  "next": "round 4 running"
  },
  "4": {
-  "label": "sde → disk4 (WD #2)",
-  "format": "sde → disk8"
+  "label": "sdb → disk4 (WD 7SJ8JDXW) · movies",
+  "total": 6900000000000.0,
+  "format": "sdb → (your call)",
+  "sources": [
+   "/mnt/mig/sdb/Movies"
+  ],
+  "dest_shows": "/mnt/disk4/media/movies"
  },
  "5": {
-  "label": "sdb → disk5 (WD #3)",
-  "format": "sdb → parity1"
+  "label": "sde → disk5 (WD 7HJY59ZF)",
+  "format": "sde → disk8"
  }
 }

@@ -1,9 +1,15 @@
 [
   {
     "accessible": true,
-    "freeSpace": 34175045365760,
+    "freeSpace": 34154196774912,
     "id": 1,
     "path": "/data/media/movies",
-    "unmappedFolders": []
+    "unmappedFolders": [
+      {
+        "name": "Movie 002",
+        "path": "/data/media/movies/Movie 002",
+        "relativePath": "Movie 002"
+      }
+    ]
   }
 ]
