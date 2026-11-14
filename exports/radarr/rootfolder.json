@@ -1,14 +1,54 @@
 [
   {
     "accessible": true,
-    "freeSpace": 34154196774912,
+    "freeSpace": 34031883436032,
     "id": 1,
     "path": "/data/media/movies",
     "unmappedFolders": [
       {
+        "name": "Movie 001",
+        "path": "/data/media/movies/Movie 001",
+        "relativePath": "Movie 001"
+      },
+      {
         "name": "Movie 002",
         "path": "/data/media/movies/Movie 002",
         "relativePath": "Movie 002"
+      },
+      {
+        "name": "Movie 003",
+        "path": "/data/media/movies/Movie 003",
+        "relativePath": "Movie 003"
+      },
+      {
+        "name": "Movie 004",
+        "path": "/data/media/movies/Movie 004",
+        "relativePath": "Movie 004"
+      },
+      {
+        "name": "Movie 005",
+        "path": "/data/media/movies/Movie 005",
+        "relativePath": "Movie 005"
+      },
+      {
+        "name": "Movie 006",
+        "path": "/data/media/movies/Movie 006",
+        "relativePath": "Movie 006"
+      },
+      {
+        "name": "Movie 007",
+        "path": "/data/media/movies/Movie 007",
+        "relativePath": "Movie 007"
+      },
+      {
+        "name": "Movie 008",
+        "path": "/data/media/movies/Movie 008",
+        "relativePath": "Movie 008"
+      },
+      {
+        "name": "Movie 009",
+        "path": "/data/media/movies/Movie 009",
+        "relativePath": "Movie 009"
       }
     ]
   }
