@@ -1113,6 +1113,23 @@
           format: number
         - field: data.0.health.1.gw_version
           label: Firmware
+  - UniFi switch (Flex Mini):
+      href: "https://192.0.2.1"
+      icon: mdi-switch
+      description: 5-port gigabit switch · 192.0.2.95 · new Nov 15
+      widget:
+        type: customapi
+        url: "http://status/unifi.json"
+        refreshInterval: 60000
+        mappings:
+        - field: sw_state
+          label: Status
+        - field: sw_uplink
+          label: Uplink
+        - field: sw_ports_up
+          label: Ports up
+        - field: sw_ping
+          label: Ping
   - Uptime Kuma:
       href: "http://192.0.2.242:3001/status/box"
       icon: uptime-kuma.png

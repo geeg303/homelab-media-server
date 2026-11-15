@@ -81,6 +81,37 @@ for dv in get("/stat/device"):
     for t in dv.get("temperatures", []) or []:
         if float(t.get("value", 0)) >= 85: bad.append(f"{n} {t.get('name')} {t.get('value')}°C")
 print(f"UniFi router health|{'down' if bad else 'up'}|" + ("; ".join(bad) if bad else "all UniFi devices healthy"))
+# switches (USW Flex Mini, Nov 15): own Kuma push + /opt/media/status/unifi.json for the Homepage tiles
+import os, time, subprocess
+info = {"updated": time.strftime("%a %-I:%M %p"), "updated_iso": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "devices": []}
+for dv in get("/stat/device"):
+    if dv.get("type") != "usw": continue
+    n = dv.get("name") or dv.get("model"); up = dv.get("state") == 1
+    ul = dv.get("uplink") or {}; ports = dv.get("port_table") or []
+    errs = sum(int(p.get("rx_errors") or 0) + int(p.get("tx_errors") or 0) for p in ports)
+    sp = lambda p: (("1G" if p.get("speed") == 1000 else f"{p.get('speed')}M") if p.get("up") else "–")
+    ss = dv.get("system-stats") or {}; upt = int(dv.get("uptime") or 0)
+    pg = subprocess.run(["ping", "-c1", "-W2", dv.get("ip") or "0.0.0.0"], capture_output=True, text=True).stdout
+    m = __import__("re").search(r"time=([\d.]+)", pg)
+    d = dict(name=n, model=dv.get("model"), ip=dv.get("ip"), state="online" if up else "OFFLINE",
+             uptime=(f"{upt // 86400}d {upt % 86400 // 3600}h" if upt >= 86400 else f"{upt // 3600}h {upt % 3600 // 60}m"),
+             uplink=((f"{ul.get('speed') / 1000:g} Gbps" if (ul.get("speed") or 0) >= 1000 else f"{ul.get('speed')} Mbps") if ul.get("up") else "DOWN"),
+             uplink_to=f"router port {ul.get('uplink_remote_port')}",
+             ports_up=f"{sum(1 for p in ports if p.get('up'))} of {len(ports)}",
+             ports=" · ".join(f"P{p.get('port_idx')} {sp(p)}" + (" uplink" if p.get("is_uplink") else "") for p in ports),
+             errors=errs, cpu=f"{float(ss.get('cpu') or 0):.0f}%", mem=f"{float(ss.get('mem') or 0):.0f}%",
+             ping=(f"{float(m.group(1)):.0f} ms" if m else "no reply"),
+             firmware=(dv.get("version") or "?") + (" (update available)" if dv.get("upgradable") else ""))
+    info["devices"].append(d)
+    bad2 = ([] if up else ["offline in UniFi"]) + ([] if ul.get("up") else ["uplink down"]) + \
+           ([f"uplink only {ul.get('speed')} Mbps"] if ul.get("up") and (ul.get("speed") or 0) < 1000 else []) + ([] if m else ["no ping reply"])
+    print(f"UniFi switch (Flex Mini)|{'down' if bad2 else 'up'}|" + ("; ".join(bad2) if bad2 else
+          f"online {d['uptime']} · uplink {ul.get('speed')} Mbps · ports {d['ports_up']} up · {errs} port errors · ping {d['ping']}"))
+if info["devices"]: info.update({f"sw_{k}": v for k, v in info["devices"][0].items()})
+else: print("UniFi switch (Flex Mini)|down|switch not found in UniFi")
+tmp = "/opt/media/status/unifi.json.tmp"
+with open(tmp, "w") as f: __import__("json").dump(info, f, indent=1, ensure_ascii=False)
+os.chmod(tmp, 0o644); os.replace(tmp, "/opt/media/status/unifi.json")
 PY
 )
 fi

@@ -432,8 +432,10 @@
       var list = [];
       Object.keys(j).forEach(function (k) {
         if (T.storage.exclude.test(k) || !T.storage.include.test(k)) return;
+        if (/^disk\d+$/i.test(k)) return;   // pool members fill up by design (mergerfs minfreespace); the pool total is judged below (Nov 15)
         var p = pctOf(j[k]); if (p != null) list.push({ k: k, p: p, txt: clean(j[k]).replace(/^[^\d]*/, "") });
       });
+      if (j.array_total) { var pa = pctOf(j.array_total); if (pa != null) list.push({ k: "pool", p: pa, txt: clean(j.array_total).replace(/^[^\d]*/, "") }); }
       if (!list.length) return null;
       list.sort(function (a, b) { return b.p - a.p; });
       var top = list[0], state = level(top.p, T.storage);
