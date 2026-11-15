@@ -9,9 +9,14 @@ EXPECT="SERIAL-DISK2 SERIAL-SDB SERIAL-DISK1 SERIAL-SDD SERIAL-SDE SERIAL-WD1 7S
 declare -A RES
 # --- disk space
 bad=""
-while read -r pct mnt; do p=${pct%\%}; lim=97; case "$mnt" in /|/scratch) lim=90;; esac
+# system disks: percent. Data disks: a full disk is normal in a mergerfs pool (minfreespace=100G keeps new files away),
+# so alert only below 25 GB free; the pool itself alerts at 95% (Nov 15: disk5 holds 7.9 TB of TV at 99% by design).
+while read -r pct mnt; do p=${pct%\%}; lim=90
   [ "$p" -ge "$lim" ] && bad="$bad $mnt ${p}% (limit ${lim}%);"
-done < <(df --output=pcent,target / /scratch /mnt/disk* 2>/dev/null | tail -n +2)
+done < <(df --output=pcent,target / /scratch 2>/dev/null | tail -n +2)
+while read -r avail mnt; do [ "$avail" -lt 25 ] && bad="$bad $mnt only ${avail} GB free (limit 25 GB);"
+done < <(df -B1G --output=avail,target /mnt/disk* 2>/dev/null | tail -n +2)
+p=$(df --output=pcent /data 2>/dev/null | tail -1 | tr -dc 0-9); [ -n "$p" ] && [ "$p" -ge 95 ] && bad="$bad /data pool ${p}% (limit 95%);"
 RES["Disk space"]=${bad:+down|$bad}; RES["Disk space"]=${RES["Disk space"]:-up|all under limits}
 # --- drives connected
 miss=""; for s in $EXPECT; do ls /dev/disk/by-id/ata-*_"$s" >/dev/null 2>&1 || miss="$miss $s"; done

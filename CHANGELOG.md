@@ -2,6 +2,11 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-15
+
+- **Disk-space check fixed for full pool disks.** `host-health-push` alarmed "Disk space DOWN: /mnt/disk5 99%" after round 5 filled disk5 with TV, which is expected in a mergerfs pool (mergerfs `minfreespace` keeps new files off full disks). The check now uses 90% for `/` and `/scratch`, alerts on a data disk only when it has less than 25 GB free, and alerts at 95% for the `/data` pool as a whole. Backup: `/root/host-health-push.bak-20261115-disk`.
+- Round 5 copy finished 11:56 (7.95 TB); checksum check running, ETA Mon ~5 PM.
+
 ## 2026-11-14
 - **PrismCast removed** (user: "Let's remove prismcentral. I'm not going to use it"). Plex had no DVR configured, so nothing in Plex changes.
   - **Box:** `prismcast` container, image and network, `/opt/media/stacks/livetv` and `/opt/media/config/prismcast` deleted (channel settings archived in `/opt/media/config/archive/prismcast-settings-20261114-1753.tar.gz`); `prismcast-watchdog` timer/service/script and `/usr/local/sbin/set-vnc-password` removed; ports 5589/5004/6080/5900 closed. `docker-update-all` no longer loops over the `livetv` stack.
