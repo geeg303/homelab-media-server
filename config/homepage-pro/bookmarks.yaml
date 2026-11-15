@@ -39,10 +39,6 @@
         - icon: tailscale.png
           href: https://login.tailscale.com/admin/machines
           description: tailnet machines, keys
-    - PrismCast console:
-        - icon: mdi-monitor-screenshot
-          href: http://192.0.2.242:6080/vnc.html?autoconnect=1&resize=scale
-          description: tuner Chrome via noVNC · :6080
 
 - Observability:
     - Status page 'box':

@@ -7,14 +7,6 @@
         - icon: plex.png
           href: http://192.0.2.242:32400/web
           description: Watch stuff (:32400)
-    - PrismCast Live TV:
-        - icon: mdi-television-classic
-          href: http://192.0.2.242:5589
-          description: YouTube TV tuner (:5589)
-    - PrismCast Remote Desktop:
-        - icon: mdi-monitor-screenshot
-          href: http://192.0.2.242:6080/vnc.html
-          description: noVNC to the tuner's Chrome (:6080)
     - Tautulli Stats-O-Rama:
         - icon: tautulli.png
           href: http://192.0.2.242:8181

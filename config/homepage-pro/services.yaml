@@ -1,7 +1,7 @@
 # Homepage "Pro" view (box · operations, :3010). Engineering IA, Nov 13 2026.
 # Tabs/groups: see settings.yaml layout. Rationale per tile: README.md.
 # Secrets: same {{HOMEPAGE_VAR_*}} names as the :3000 instance (homepage.env); nothing new required.
-# Hostnames: container names on the `media` network (homepage-pro is attached), Glances/Plex/PrismCast via 192.0.2.242.
+# Hostnames: container names on the `media` network (homepage-pro is attached), Glances/Plex via 192.0.2.242.
 # Calendar tiles reference group "Acquisition" + services "Sonarr"/"Radarr": rename together or events disappear.
 # Plex native widget is LIVE (un-parked Nov 13 2026 once real libraries existed: TV Shows = section 1, Movies = section 2).
 #   It talks to Plex directly (http://192.0.2.242:32400, {{HOMEPAGE_VAR_PLEX_TOKEN}}); extra library detail comes from Tautulli get_library.
@@ -1531,91 +1531,6 @@
             to: available
           - any: true
             to: current
-  - PrismCast:
-      href: "http://192.0.2.242:5589"
-      icon: mdi-television-classic
-      description: live-TV tuner (headless Chrome → HDHomeRun) · health, streams, capture
-      server: box
-      container: prismcast
-      showStats: true
-      siteMonitor: "http://192.0.2.242:5589"
-      widget:
-        type: customapi
-        url: "http://192.0.2.242:5589/health"
-        refreshInterval: 15000
-        display: list
-        mappings:
-        - field: status
-          label: Health
-        - field: streams.active
-          label: Streams
-          format: number
-          additionalField:
-            field: streams.limit
-            color: theme
-        - field: clients.total
-          label: Clients
-          format: number
-        - field: browser.connected
-          label: Browser
-          remap:
-          - value: true
-            to: connected
-          - any: true
-            to: disconnected
-          additionalField:
-            field: chrome
-            color: theme
-        - field: browser.captureImpaired
-          label: Capture
-          remap:
-          - value: false
-            to: ok
-          - any: true
-            to: impaired
-          additionalField:
-            field: captureMode
-            color: theme
-        - field: memory.rss
-          label: RSS
-          format: bytes
-        - field: uptime
-          label: Uptime
-          format: duration
-        - field: version
-          label: Version
-  - HDHomeRun endpoint:
-      href: "http://192.0.2.242:5004/discover.json"
-      icon: mdi-antenna
-      description: tuner PrismCast exposes to Plex · tuners, model, channel lineup size
-      server: box
-      container: prismcast
-      siteMonitor: "http://192.0.2.242:5004/discover.json"
-      widgets:
-      - type: customapi
-        url: "http://192.0.2.242:5004/discover.json"
-        refreshInterval: 300000
-        mappings:
-        - field: TunerCount
-          label: Tuners
-          format: number
-        - field: ModelNumber
-          label: Model
-        - field: FirmwareVersion
-          label: Firmware
-      - type: customapi
-        url: "http://192.0.2.242:5004/lineup.json"
-        refreshInterval: 900000
-        mappings:
-        - label: Channels
-          format: size
-  - PrismCast console (noVNC):
-      href: "http://192.0.2.242:6080/vnc.html?autoconnect=1&resize=scale"
-      icon: mdi-monitor-screenshot
-      description: remote display of the tuner's Chrome (provider logins)
-      server: box
-      container: prismcast
-      siteMonitor: "http://192.0.2.242:6080/vnc.html"
   - Kometa:
       href: "http://192.0.2.242:5001"
       icon: kometa.png

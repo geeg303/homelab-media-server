@@ -3,6 +3,12 @@
 All notable changes to the server, newest first. Times local.
 
 ## 2026-11-14
+- **PrismCast removed** (user: "Let's remove prismcentral. I'm not going to use it"). Plex had no DVR configured, so nothing in Plex changes.
+  - **Box:** `prismcast` container, image and network, `/opt/media/stacks/livetv` and `/opt/media/config/prismcast` deleted (channel settings archived in `/opt/media/config/archive/prismcast-settings-20261114-1753.tar.gz`); `prismcast-watchdog` timer/service/script and `/usr/local/sbin/set-vnc-password` removed; ports 5589/5004/6080/5900 closed. `docker-update-all` no longer loops over the `livetv` stack.
+  - **Uptime Kuma:** monitors "PrismCast (web UI)", "PrismCast (Plex tuner)" and "PrismCast browser (noVNC)" deleted; `box` status page re-saved.
+  - **Homepage 90s (:3000):** Media Mania tiles "Live TV (PrismCast)", "HDHomeRun tuner (PrismCast)" and "PrismCast browser (VNC)" removed; Cool Links "PrismCast Live TV" + "PrismCast Remote Desktop" removed; the ticker's LIVE TV item (custom.js `prismcast` source + service fallback) removed.
+  - **Homepage Pro (:3010):** Applications tiles "PrismCast", "HDHomeRun endpoint", "PrismCast console (noVNC)" and Runbook bookmark "PrismCast console" removed. No groups emptied; layouts unchanged.
+  - **Repo:** `tools/box-collect.sh` no longer mirrors the livetv stack, `config/prismcast`, `set-vnc-password` or the watchdog units, so those mirrored files are gone; README app row removed; HA "Home hub" generator drops the PrismCast check; COVERAGE-AUDIT and IPTV-RESEARCH marked "removed 2026-11-14". History below is unchanged.
 - **Less ntfy noise** (user: "Yes reduce the noise"):
   - **DIUN** no longer sends one message per image every 6 h. Its script notifier (`/data/record-update.sh`) appends to `/opt/media/config/diun/pending-updates.txt`, and `update-digest` (timer, daily 09:00) sends ONE low-priority message listing the images, then clears the list.
   - **Kuma planned-work maintenance:** a manual maintenance "Planned work (updates / reboot)" (id 3) over all monitors + the `box` status page. `kuma-maint on <30m|2h>` / `off` / `status`. The expiry is kept in a file and enforced by `kuma-maint-check.timer` (every 2 min), so it can't be left on by accident, even across a reboot. `docker-update-all` now turns it on (45 min) before updating and off at the end. Friday's reboot and Thursday's update each produced about 50 down + 50 up messages; planned reboots should call `kuma-maint on 30m` first. Retries were already 2 per monitor (about 3 min before a DOWN).

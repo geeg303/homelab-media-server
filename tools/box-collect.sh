@@ -9,7 +9,7 @@ umask 077
 cp_if(){ [ -e "$1" ] && { mkdir -p "$S/$(dirname "$2")"; cp -a "$1" "$S/$2"; } || true; }
 
 # --- compose stacks (+ env as key-only examples) ---
-for st in core plex tdarr ops livetv glances; do
+for st in core plex tdarr ops glances; do
   for f in compose.yaml compose.nodata.yaml; do cp_if /opt/media/stacks/$st/$f stacks/$st/$f; done
   for envf in /opt/media/stacks/$st/.env /opt/media/stacks/$st/*.env; do
     [ -f "$envf" ] || continue
@@ -20,7 +20,7 @@ done
 cp_if /opt/media/dockge/compose.yaml dockge/compose.yaml
 
 # --- host scripts (text only) ---
-for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers docker-update-all dash-status eng-status reboot-after-round3 migrate-round4 round4-start backup-to-wd set-vnc-password migrate-round5 round5-start prismcast-watchdog kuma-maint update-digest; do
+for f in media-config-backup migrate-round1-guard migrate-round1-v2 migrate-round2 migration-status tdarr-status tdarr-pilot-copy tdarr-pilot-report tdarr-swap selftest-status host-health-push mount-push safekeep-copy spin-test usb-watchdog snapraid-nightly ha-ws wd-format-batch wd-format-when-passed kuma-mounts migrate-round3 round3-start tdarr-workers docker-update-all dash-status eng-status reboot-after-round3 migrate-round4 round4-start backup-to-wd migrate-round5 round5-start kuma-maint update-digest; do
   [ -f /usr/local/sbin/$f ] || continue
   ext=.sh; head -1 /usr/local/sbin/$f | grep -q python && ext=.py
   cp_if /usr/local/sbin/$f scripts-reference/$f$ext
@@ -30,7 +30,7 @@ done
 for u in media-config-backup.service media-config-backup.timer migration-status.service migration-status.timer \
          tdarr-status.service tdarr-status.timer tdarr-swap.service tdarr-swap.timer selftest-status.service selftest-status.timer host-health-push.service host-health-push.timer \
          mount-push.service mount-push.timer usb-watchdog.service wifi-powersave-off.service \
-         snapraid-nightly.service snapraid-nightly.timer wd-format-when-passed.service wd-format-when-passed.timer \n         dash-status.service dash-status.timer eng-status.service eng-status.timer round4-after-reboot.service backup-to-wd.service backup-to-wd.timer prismcast-watchdog.service prismcast-watchdog.timer kuma-maint-check.service kuma-maint-check.timer update-digest.service update-digest.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
+         snapraid-nightly.service snapraid-nightly.timer wd-format-when-passed.service wd-format-when-passed.timer \n         dash-status.service dash-status.timer eng-status.service eng-status.timer round4-after-reboot.service backup-to-wd.service backup-to-wd.timer kuma-maint-check.service kuma-maint-check.timer update-digest.service update-digest.timer; do cp_if /etc/systemd/system/$u systemd/$u; done
 for f in /usr/local/share/media-server/*.js; do cp_if "$f" "scripts-reference/share/$(basename "$f")"; done
 cp_if /opt/media/config/diun/record-update.sh scripts-reference/diun-record-update.sh
 for f in /etc/systemd/system/docker.service.d/*.conf; do cp_if "$f" "systemd/docker.service.d/$(basename "$f")"; done
@@ -58,8 +58,6 @@ for f in services.yaml settings.yaml widgets.yaml docker.yaml bookmarks.yaml cus
 if [ -d /opt/media/config/homepage/images ]; then mkdir -p "$S/config/homepage"; ( cd /opt/media/config/homepage/images && for g in *; do [ -f "$g" ] && printf '%s  %s bytes  sha256 %s
 ' "$g" "$(stat -c %s "$g")" "$(sha256sum "$g" | cut -c1-16)"; done ) > "$S/config/homepage/images.txt"; fi
 cp_if /opt/media/config/filebrowser/config.yaml config/filebrowser/config.yaml
-# PrismCast: channel/provider settings only (no logins; Chrome profile + health.json stay on the box)
-for f in config.json provider-lineups.json; do cp_if /opt/media/config/prismcast/$f config/prismcast/$f; done
 for f in /opt/media/config/recyclarr/configs/*.yml; do cp_if "$f" "config/recyclarr/configs/$(basename "$f")"; done
 cp_if /opt/media/config/recyclarr/settings.yml config/recyclarr/settings.yml
 for k in config.yml config.yml.pending; do

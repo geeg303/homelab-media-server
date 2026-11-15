@@ -19,7 +19,7 @@ echo "rollback record: $RB ($(wc -l < "$RB") containers)"
 # 2. fresh config backup (stops/starts core plex tdarr ops itself)
 /usr/local/sbin/media-config-backup || { echo "ABORT: config backup failed"; exit 1; }
 # 3. pull + recreate, one stack at a time
-for st in ops core plex tdarr livetv glances; do
+for st in ops core plex tdarr glances; do
   dir=/opt/media/stacks/$st; echo "--- $st"
   ( cd "$dir" && docker compose pull -q && docker compose up -d --remove-orphans 2>&1 | grep -vE "^\s*$" ) || echo "WARN: $st update failed"
   sleep 5

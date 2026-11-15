@@ -43,7 +43,6 @@
       migration: { group: "Jobs in Progress", service: "NTFS → ext4 migration", index: 0, match: /migrat/i, type: "customapi" },
       selftest: { group: "Jobs in Progress", service: "New drives self-test", index: 0, match: /self.?test/i, type: "customapi" },
       tdarr: { group: "Jobs in Progress", service: "Tdarr conversions (live)", index: 0, match: /tdarr conv/i, type: "customapi" },
-      prismcast: { group: "Media Mania", service: "Live TV (PrismCast)", index: 0, match: /prismcast/i, type: "customapi" },
       kuma: { group: "Net Surfin", service: "Uptime Kuma", index: 0, type: "uptimekuma" },
       tautulli: { group: "Media Mania", service: "Tautulli", index: 0, type: "tautulli" },
       sabnzbd: { group: "Download-O-Rama", service: "SABnzbd", index: 0, type: "sabnzbd" },
@@ -264,13 +263,6 @@
         var n = parseInt(d.stream_count, 10) || 0;
         var tc = d.stream_count_transcode || 0;
         return [{ label: "PLEX", text: n ? plural(n, "stream") + " now playing" + (tc ? " (" + tc + " transcoding)" : "") : "nobody watching" }];
-      });
-    },
-    function prismcast(S) {
-      return fetchJSON(proxyURL(S.prismcast)).then(function (j) {
-        if (!j || !j.status) return null;
-        var st = j.streams || {};
-        return [{ label: "LIVE TV", text: j.status + (st.limit != null ? " · " + (st.active || 0) + "/" + st.limit + " tuners" : ""), bad: j.status !== "healthy" }];
       });
     },
     function sab(S) {

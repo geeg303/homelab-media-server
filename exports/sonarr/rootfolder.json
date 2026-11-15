@@ -1,10 +1,15 @@
 [
   {
     "accessible": true,
-    "freeSpace": 26697316368384,
+    "freeSpace": 26592924057600,
     "id": 1,
     "path": "/data/media/tv",
     "unmappedFolders": [
+      {
+        "name": "Show 35",
+        "path": "/data/media/tv/Show 35",
+        "relativePath": "Show 35"
+      },
       {
         "name": "Show 92",
         "path": "/data/media/tv/Show 92",

@@ -76,7 +76,7 @@ HEALTH = [("disk_space", "Disk space", "mdi:harddisk"), ("drive_health_smart", "
 APPS = [("plex", "Plex", "mdi:plex"), ("sonarr", "Sonarr", "mdi:television-classic"), ("radarr", "Radarr", "mdi:filmstrip"),
         ("sabnzbd", "SABnzbd", "mdi:download"), ("prowlarr", "Prowlarr", "mdi:magnify"), ("bazarr", "Bazarr", "mdi:subtitles-outline"),
         ("tautulli", "Tautulli", "mdi:chart-line"), ("seerr", "Seerr", "mdi:movie-search"), ("tdarr_web_ui", "Tdarr", "mdi:cog-transfer"),
-        ("prismcast_web_ui", "PrismCast", "mdi:television-play"), ("homepage", "Homepage", "mdi:view-dashboard"),
+        ("homepage", "Homepage", "mdi:view-dashboard"),
         ("home_assistant", "Home Assistant", "mdi:home-assistant")]
 def check(e, name, icon):
     return {"type": "custom:mushroom-template-card", "entity": e, "primary": name,

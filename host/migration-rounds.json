@@ -21,10 +21,16 @@
   "sources": [
    "/mnt/mig/sdb/Movies"
   ],
-  "dest_shows": "/mnt/disk4/media/movies"
+  "dest_shows": "/mnt/disk4/media/movies",
+  "next": "round 5 running"
  },
  "5": {
-  "label": "sde → disk5 (WD 7HJY59ZF)",
-  "format": "sde → disk8"
+  "label": "sde → disk5 (WD 7HJY59ZF) · TV",
+  "total": 7954000000000.0,
+  "format": "sde → (your call)",
+  "sources": [
+   "/mnt/mig/sde/TV Shows"
+  ],
+  "dest_shows": "/mnt/disk5/media/tv"
  }
 }
