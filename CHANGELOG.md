@@ -4,6 +4,7 @@ All notable changes to the server, newest first. Times local.
 
 ## 2026-11-15
 
+- **FileBrowser now shows the `/data` pool.** Its `config.yaml` still pointed at `/storage/disk1`, which went away when the container was switched to mount the whole pool (`/data` → `/storage/data`, Nov 13), so the main source was empty and logged "no such file or directory" every 2 h. The source is now `/storage/data` ("Media pool (/data, read-only during migration)"), still read-only. `/data/backups` (root-only, mode 700) stays hidden on purpose. Backup: `config.yaml.bak-20261115-pool`.
 - **Disk-space check fixed for full pool disks.** `host-health-push` alarmed "Disk space DOWN: /mnt/disk5 99%" after round 5 filled disk5 with TV, which is expected in a mergerfs pool (mergerfs `minfreespace` keeps new files off full disks). The check now uses 90% for `/` and `/scratch`, alerts on a data disk only when it has less than 25 GB free, and alerts at 95% for the `/data` pool as a whole. Backup: `/root/host-health-push.bak-20261115-disk`.
 - Round 5 copy finished 11:56 (7.95 TB); checksum check running, ETA Mon ~5 PM.
 
