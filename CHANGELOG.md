@@ -4,6 +4,7 @@ All notable changes to the server, newest first. Times local.
 
 ## 2026-11-16
 
+- **Dashboards + dash-status: disk7-9 replace the NTFS sources.** The 3 ex-NTFS drives are now ext4 pool disks disk7 (Seagate SERIAL-SDD), disk8 (IronWolf SERIAL-SDB), disk9 (Seagate SERIAL-SDE). `dash-status`: MOUNTS covers disk1-9 (mig_* gone, `array_total` now 'on disk1-9'), DISKIO_ROLES src_sdb/sdd/sde -> disk7/8/9 by serial. Both Homepage views: disk7-9 added to the per-disk fill tile and as Disk I/O tiles; the NTFS-source fill and I/O tiles removed (90s 'NVMe + migration sources' is now 'NVMe drives'); Pro Mount checks gained /mnt/disk7-9 (Kuma 63-65) and /mnt/backup now points at monitor 59 (was a non-existent 55); Pro custom.js storage filter drops `mig_`; Migration tile descriptions now in past tense.
 - **Migration finished.** Round 5 checksum check ended ~03:06 with `ROUND5 VERIFY TOTAL differences=0 folders=33`. All 5 rounds verified with 0 differences. The Migration tile is frozen with the final state and `migration-status.timer` is disabled (also dropped from host-health-push's tile-freshness loop). Old NTFS drives (SERIAL-SDD, SERIAL-SDB, SERIAL-SDE) still untouched, read-only at `/mnt/mig/*`, awaiting a per-drive format OK.
 - **Everything switched back on (user: "1. Yes")**, inside a 30-min Kuma maintenance window:
   - Pool: disk5 and disk6 take new files again (`=NC` dropped at runtime and in fstab; fstab backup `.bak-20261116-*`).

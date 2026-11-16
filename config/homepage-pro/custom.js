@@ -43,7 +43,7 @@
                   ignore: /^(Video|dell_smm|Sensor \d)|fan/i },       // sensor labels to skip
       storage:  { warn: 85, crit: 95,                                 // % used, tightest disk
                   include: /^(root|scratch|disk\d+|parity\d*|cache\w*|pool\w*)$/i,
-                  exclude: /^(mig_|array_total|updated)/i },
+                  exclude: /^(array_total|updated)/i },
       backup:   { warnHours: 26, critHours: 50 },
       updates:  { warn: 5, crit: 15 },                                // # images with updates
       plex:     { transcodeWarn: 4 },

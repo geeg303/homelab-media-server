@@ -33,7 +33,7 @@
       href: /#jobs
       target: _self
       icon: mdi-harddisk-plus
-      description: NTFS → ext4 move of the media drives, one disk per round (full details on the Jobs page)
+      description: NTFS → ext4 move of the media drives, finished Nov 16 (all 3 old drives are now disk7-9; full details on the Jobs page)
       widget:
         type: customapi
         url: "http://status/migration.json"
@@ -782,11 +782,17 @@
           label: disk5
         - field: disk6
           label: disk6
+        - field: disk7
+          label: disk7
+        - field: disk8
+          label: disk8
+        - field: disk9
+          label: disk9
         - field: backup
           label: backup (WD)
-  - NVMe + migration sources:
+  - NVMe drives:
       icon: mdi-expansion-card
-      description: the two NVMe drives, plus the old NTFS disks still waiting to be moved
+      description: the two NVMe drives (system and scratch) · refreshed every 2 min by dash-status (df only)
       widget:
         type: customapi
         url: "http://status/disks.json"
@@ -797,12 +803,6 @@
           label: OS NVMe (/)
         - field: scratch
           label: scratch NVMe
-        - field: mig_sdb
-          label: NTFS SERIAL-SDB (ex-sdb)
-        - field: mig_sdd
-          label: NTFS SERIAL-SDD (ex-sdd)
-        - field: mig_sde
-          label: NTFS SERIAL-SDE (ex-sde)
         - field: updated
           label: Updated
   - System disk (/):
@@ -938,6 +938,51 @@
           label: Busy
         - field: disk6_dev
           label: Now
+  - disk7 I/O · Seagate SERIAL-SDD:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk7_read
+          label: Read
+        - field: disk7_write
+          label: Write
+        - field: disk7_busy
+          label: Busy
+        - field: disk7_dev
+          label: Now
+  - disk8 I/O · IronWolf SERIAL-SDB:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk8_read
+          label: Read
+        - field: disk8_write
+          label: Write
+        - field: disk8_busy
+          label: Busy
+        - field: disk8_dev
+          label: Now
+  - disk9 I/O · Seagate SERIAL-SDE:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk9_read
+          label: Read
+        - field: disk9_write
+          label: Write
+        - field: disk9_busy
+          label: Busy
+        - field: disk9_dev
+          label: Now
   - backup WD I/O · 7HK2YR2H:
       icon: mdi-harddisk
       widget:
@@ -953,23 +998,6 @@
           label: Busy
         - field: backup_dev
           label: Now
-  - Migration sources I/O:
-      icon: mdi-harddisk-remove
-      description: "old NTFS drives (by serial) · round 4 reads the IronWolf into disk4"
-      widget:
-        type: customapi
-        url: "http://status/diskio.json"
-        refreshInterval: 60000
-        display: list
-        mappings:
-        - field: src_sdb_line
-          label: IronWolf SERIAL-SDB
-        - field: src_sdd_line
-          label: Seagate SERIAL-SDD
-        - field: src_sde_line
-          label: Seagate SERIAL-SDE
-        - field: updated
-          label: Sampled
 - Container Crew:
   - Containers (top 5):
       icon: mdi-docker
@@ -1317,7 +1345,7 @@
 - Jobs in Progress:
   - NTFS → ext4 migration:
       icon: mdi-harddisk-plus
-      description: live from the box, refreshes every minute
+      description: finished Nov 16 · the 3 old NTFS drives were converted and are now disk7-9 in the pool
       widget:
         type: customapi
         url: "http://status/migration.json"

@@ -7,11 +7,8 @@ import json, os, subprocess, time, datetime
 
 OUT = "/opt/media/status"
 MOUNTS = [("root", "/", "OS (NVMe)"), ("scratch", "/scratch", "scratch (NVMe)")] + \
-    [(f"disk{i}", f"/mnt/disk{i}", f"disk{i}") for i in range(1, 7)] + \
-    [("backup", "/mnt/backup", "backup"),
-     ("mig_sdb", "/mnt/mig/sdb", "NTFS source sdb"),
-     ("mig_sdd", "/mnt/mig/sdd", "NTFS source sdd"),
-     ("mig_sde", "/mnt/mig/sde", "NTFS source sde")]
+    [(f"disk{i}", f"/mnt/disk{i}", f"disk{i}") for i in range(1, 10)] + \
+    [("backup", "/mnt/backup", "backup")]
 
 
 def sh(*cmd):
@@ -64,7 +61,7 @@ for key, path, label in MOUNTS:
         arr_used += used
         arr_size += size
 disks["array_total"] = (f"{bar(arr_used / arr_size * 100)} {arr_used / arr_size * 100:.0f}%  "
-                        f"{human(arr_used)} / {human(arr_size)} on disk1-6") if arr_size else "—"
+                        f"{human(arr_used)} / {human(arr_size)} on disk1-9") if arr_size else "—"
 disks["updated"] = stamp
 write("disks.json", disks)
 
@@ -124,9 +121,9 @@ DISKIO_ROLES = [  # (role, serial, label)
     ("disk5", "7HJY59ZF", "disk5 WD"),
     ("disk6", "7HJY82BF", "disk6 WD"),
     ("backup", "7HK2YR2H", "backup WD"),
-    ("src_sdb", "SERIAL-SDB", "source IronWolf (ex-sdb)"),
-    ("src_sdd", "SERIAL-SDD", "source Seagate (ex-sdd)"),
-    ("src_sde", "SERIAL-SDE", "source Seagate (ex-sde)"),
+    ("disk7", "SERIAL-SDD", "disk7 Seagate"),
+    ("disk8", "SERIAL-SDB", "disk8 IronWolf"),
+    ("disk9", "SERIAL-SDE", "disk9 Seagate"),
 ]
 DISKIO_PREV = "/var/lib/media-server/diskio-prev.json"
 BYID = "/dev/disk/by-id"

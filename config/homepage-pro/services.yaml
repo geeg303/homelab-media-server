@@ -195,7 +195,7 @@
       href: /#pipelines
       target: _self
       icon: mdi-harddisk-plus
-      description: NTFS → ext4, one disk per round · copy, checksum verify, overall
+      description: NTFS → ext4 finished Nov 16 · the 3 sources are now disk7-9
       widget:
         type: customapi
         url: "http://status/migration.json"
@@ -549,7 +549,7 @@
         display: list
         mappings:
         - field: array_total
-          label: Array (disk1-6)
+          label: Array (disk1-9)
         - field: disk1
           label: disk1
         - field: disk2
@@ -562,6 +562,12 @@
           label: disk5
         - field: disk6
           label: disk6
+        - field: disk7
+          label: disk7
+        - field: disk8
+          label: disk8
+        - field: disk9
+          label: disk9
         - field: backup
           label: backup (WD)
   - NVMe:
@@ -579,21 +585,6 @@
           label: scratch NVMe · /scratch
         - field: updated
           label: Sampled
-  - Migration sources:
-      icon: mdi-harddisk-remove
-      description: NTFS source disks still to convert (read-only)
-      widget:
-        type: customapi
-        url: "http://status/disks.json"
-        refreshInterval: 120000
-        display: list
-        mappings:
-        - field: mig_sdb
-          label: NTFS SERIAL-SDB (ex-sdb)
-        - field: mig_sdd
-          label: NTFS SERIAL-SDD (ex-sdd)
-        - field: mig_sde
-          label: NTFS SERIAL-SDE (ex-sde)
 
 - Disk Health:
   - Drive checks (24 h):
@@ -656,7 +647,19 @@
           label: /mnt/disk6
           format: percent
           scale: 100
-        - field: uptimeList.55_24
+        - field: uptimeList.63_24
+          label: /mnt/disk7
+          format: percent
+          scale: 100
+        - field: uptimeList.64_24
+          label: /mnt/disk8
+          format: percent
+          scale: 100
+        - field: uptimeList.65_24
+          label: /mnt/disk9
+          format: percent
+          scale: 100
+        - field: uptimeList.59_24
           label: /mnt/backup
           format: percent
           scale: 100
@@ -869,6 +872,51 @@
           label: Busy
         - field: disk6_dev
           label: Now
+  - disk7 · Seagate SERIAL-SDD:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk7_read
+          label: Read
+        - field: disk7_write
+          label: Write
+        - field: disk7_busy
+          label: Busy
+        - field: disk7_dev
+          label: Now
+  - disk8 · IronWolf SERIAL-SDB:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk8_read
+          label: Read
+        - field: disk8_write
+          label: Write
+        - field: disk8_busy
+          label: Busy
+        - field: disk8_dev
+          label: Now
+  - disk9 · Seagate SERIAL-SDE:
+      icon: mdi-harddisk
+      widget:
+        type: customapi
+        url: "http://status/diskio.json"
+        refreshInterval: 60000
+        mappings:
+        - field: disk9_read
+          label: Read
+        - field: disk9_write
+          label: Write
+        - field: disk9_busy
+          label: Busy
+        - field: disk9_dev
+          label: Now
   - backup · WD 7HK2YR2H:
       icon: mdi-harddisk
       widget:
@@ -884,23 +932,6 @@
           label: Busy
         - field: backup_dev
           label: Now
-  - Migration sources:
-      icon: mdi-harddisk-remove
-      description: "NTFS sources by serial · round 4 reads SERIAL-SDB"
-      widget:
-        type: customapi
-        url: "http://status/diskio.json"
-        refreshInterval: 60000
-        display: list
-        mappings:
-        - field: src_sdb_line
-          label: IronWolf SERIAL-SDB
-        - field: src_sdd_line
-          label: Seagate SERIAL-SDD
-        - field: src_sde_line
-          label: Seagate SERIAL-SDE
-        - field: updated
-          label: Sampled
 
 # =====================================================================================
 # TAB: Network
@@ -1169,7 +1200,7 @@
 - Batch Jobs:
   - Disk migration:
       icon: mdi-harddisk-plus
-      description: NTFS → ext4 rolling conversion · copy, checksum verify, rounds, watchdog
+      description: NTFS → ext4 rolling conversion (complete Nov 16) · copied, checksum-verified, sources now disk7-9
       widget:
         type: customapi
         url: "http://status/migration.json"
