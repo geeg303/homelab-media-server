@@ -1,7 +1,7 @@
 [
   {
     "configContract": "SabnzbdSettings",
-    "enable": false,
+    "enable": true,
     "fields": [
       {
         "advanced": false,

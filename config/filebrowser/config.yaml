@@ -1,10 +1,9 @@
-# FileBrowser Quantum. Storage is READ-ONLY until the migration is finished (user, Nov 8).
+# FileBrowser Quantum. /data pool read-write since Nov 16 (migration finished); scratch stays read-only.
 # Nov 15: source moved from /storage/disk1 to the /data pool (the container has mounted /data since Nov 13).
-# After round 5: make the /data mount read-write in compose.yaml (see SWITCHOVER-PLAN.md).
 server:
   sources:
     - path: "/storage/data"
-      name: "Media pool (/data, read-only during migration)"
+      name: "Media pool (/data)"
       config:
         defaultEnabled: true
     - path: "/storage/scratch"

@@ -33,7 +33,6 @@ wud                   getwud/wud:9                             running
 
 ```
 media-config-backup.timer
-migration-status.timer
 mount-push.timer
 ```
 

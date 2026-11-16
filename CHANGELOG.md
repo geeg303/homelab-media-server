@@ -2,6 +2,17 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-16
+
+- **Migration finished.** Round 5 checksum check ended ~03:06 with `ROUND5 VERIFY TOTAL differences=0 folders=33`. All 5 rounds verified with 0 differences. The Migration tile is frozen with the final state and `migration-status.timer` is disabled (also dropped from host-health-push's tile-freshness loop). Old NTFS drives (SERIAL-SDD, SERIAL-SDB, SERIAL-SDE) still untouched, read-only at `/mnt/mig/*`, awaiting a per-drive format OK.
+- **Everything switched back on (user: "1. Yes")**, inside a 30-min Kuma maintenance window:
+  - Pool: disk5 and disk6 take new files again (`=NC` dropped at runtime and in fstab; fstab backup `.bak-20261116-*`).
+  - Downloads: Sonarr and Radarr download client (SABnzbd) and NZBgeek indexer (RSS + automatic search) re-enabled; SAB queue not paused. Sonarr has 104 series / 1,591 monitored missing episodes; RSS will pick these up as they appear.
+  - Plex: background jobs restored from `plex-prefs-before-rounds.txt` (intro/credits markers asap, ad markers, chapter thumbs and loudness scheduled, BIF never).
+  - FileBrowser: `/data` mounted read-write (folders writable; the pool root itself is not), source renamed "Media pool (/data)".
+  - Tdarr: 2 GPU workers again; Show 36 first (172 queued).
+- **Duplicate episodes removed (user: "3. Delete the double episodes").** 5 episodes had the same file on two pool disks (the pool showed only the first). Deleted the hidden disk5 copies: 4 byte-identical (`cmp`), plus Show 36 S01E12, where the disk1 copy is the verified Tdarr encode and the disk5 copy was the pre-encode original. ~15 GB freed. Log: `/var/log/media-server/dedupe-20261116.log`.
+
 ## 2026-11-15
 
 - **New UniFi switch (USW Flex Mini, 192.0.2.95) monitored.** Two new Kuma checks: "UniFi switch (ping 192.0.2.95)" (Infrastructure) and "UniFi switch (Flex Mini)" (Host health, pushed by `host-health-push`: down if UniFi shows it offline, the uplink is down or below 1 Gbps, or it stops answering ping). Both are on the `box` status page (53 checks). `host-health-push` now also writes `/opt/media/status/unifi.json` (state, uplink, per-port speeds, port errors, ping, uptime, firmware), shown in a new tile on both dashboards (90s Net & Home → Net Surfin; Pro Network → WAN & Gateway). Kuma helper: `kuma_unifi_switch.js`.
