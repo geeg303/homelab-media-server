@@ -805,7 +805,7 @@
       }
     ],
     "scheduledScanFindNew": false,
-    "sizeDiff": 646.1107468623663,
+    "sizeDiff": 649.5204780669878,
     "useFsEvents": false
   },
   {
@@ -6596,7 +6596,7 @@
     "preset": "-Z \"Very Fast 1080p30\"",
     "priority": 0,
     "processHealthChecks": false,
-    "processLibrary": true,
+    "processLibrary": false,
     "processPluginsSequentially": true,
     "processTranscodes": true,
     "scanButtons": true,

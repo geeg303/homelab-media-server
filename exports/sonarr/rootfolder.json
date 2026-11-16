@@ -1,7 +1,7 @@
 [
   {
     "accessible": true,
-    "freeSpace": 42722210357248,
+    "freeSpace": 42693326438400,
     "id": 1,
     "path": "/data/media/tv",
     "unmappedFolders": [
@@ -14,21 +14,6 @@
         "name": "Show 92",
         "path": "/data/media/tv/Show 92",
         "relativePath": "Show 92"
-      },
-      {
-        "name": "Show 99",
-        "path": "/data/media/tv/Show 99",
-        "relativePath": "Show 99"
-      },
-      {
-        "name": "Show 101",
-        "path": "/data/media/tv/Show 101",
-        "relativePath": "Show 101"
-      },
-      {
-        "name": "Show 105",
-        "path": "/data/media/tv/Show 105",
-        "relativePath": "Show 105"
       }
     ]
   }

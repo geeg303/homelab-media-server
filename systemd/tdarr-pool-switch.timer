@@ -1,0 +1,9 @@
+[Unit]
+Description=Check every 10 min whether Show 36 is done, then switch Tdarr to the whole pool (one time)
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=10min
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,7 @@
+[Unit]
+Description=Point Tdarr at the whole /data pool once the Show 36 queue is finished (user, Nov 16)
+After=docker.service data.mount
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/tdarr-pool-switch

@@ -7,9 +7,11 @@ services:
       - /opt/media/config/tdarr/logs:/app/logs
       - /scratch/tdarr:/scratch/tdarr
       - /mnt/disk1/media/tv:/media/disk1/tv:ro   # 4K run (Nov 9): read-only; tdarr-swap does the replacing
+      - /data/media:/media/pool:ro      # whole pool, read-only; encodes go to /scratch, tdarr-swap replaces (Nov 16)
   tdarr-node:
     volumes: !override
       - /opt/media/config/tdarr/node-configs:/app/configs
       - /opt/media/config/tdarr/node-logs:/app/logs
       - /scratch/tdarr:/scratch/tdarr
       - /mnt/disk1/media/tv:/media/disk1/tv:ro   # 4K run (Nov 9): read-only; tdarr-swap does the replacing
+      - /data/media:/media/pool:ro      # whole pool, read-only; encodes go to /scratch, tdarr-swap replaces (Nov 16)

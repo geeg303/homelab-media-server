@@ -52,7 +52,7 @@
   ],
   "maintenance": [
     {
-      "active": 1,
+      "active": 0,
       "cron": "",
       "days_of_month": [],
       "description": "Turned on by box scripts around planned reboots and container updates, with an expiry; turned off automatically.",
