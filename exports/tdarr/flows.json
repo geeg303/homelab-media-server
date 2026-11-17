@@ -1906,7 +1906,7 @@
   },
   {
     "_id": "poolAuto",
-    "description": "Router by height into the approved 1080p and 4K HDR10 flows (copied Nov 16). Dolby Vision, already-encoded and low-bitrate files are skipped.",
+    "description": "Router by height into the approved 1080p and 4K HDR10 flows (copied Nov 16). Dolby Vision, already-encoded and low-bitrate files are skipped. | 1080p: GPU decode (tested Nov 17), CPU-decode retry if frames are lost",
     "flowEdges": [
       {
         "id": "e_in_route",
@@ -2154,13 +2154,6 @@
         "targetHandle": null
       },
       {
-        "id": "h_e_frames_2_framesFail_2",
-        "source": "h_frames",
-        "sourceHandle": "2",
-        "target": "h_framesFail",
-        "targetHandle": null
-      },
-      {
         "id": "h_e_dur_1_ratio_1",
         "source": "h_dur",
         "sourceHandle": "1",
@@ -2191,6 +2184,118 @@
       {
         "id": "h_e_ratio_2_tooSmall_2",
         "source": "h_ratio",
+        "sourceHandle": "2",
+        "target": "h_tooSmall",
+        "targetHandle": null
+      },
+      {
+        "id": "e_h_frames_2_c_set",
+        "source": "h_frames",
+        "sourceHandle": "2",
+        "target": "c_set",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_set_1_c_start",
+        "source": "c_set",
+        "sourceHandle": "1",
+        "target": "c_start",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_start_1_c_enc",
+        "source": "c_start",
+        "sourceHandle": "1",
+        "target": "c_enc",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_enc_1_c_isMkv",
+        "source": "c_enc",
+        "sourceHandle": "1",
+        "target": "c_isMkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_isMkv_1_c_mkv",
+        "source": "c_isMkv",
+        "sourceHandle": "1",
+        "target": "c_mkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_isMkv_2_c_mp4",
+        "source": "c_isMkv",
+        "sourceHandle": "2",
+        "target": "c_mp4",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_mkv_1_c_exec",
+        "source": "c_mkv",
+        "sourceHandle": "1",
+        "target": "c_exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_mp4_1_c_exec",
+        "source": "c_mp4",
+        "sourceHandle": "1",
+        "target": "c_exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_exec_1_c_frames",
+        "source": "c_exec",
+        "sourceHandle": "1",
+        "target": "c_frames",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_frames_1_c_dur",
+        "source": "c_frames",
+        "sourceHandle": "1",
+        "target": "c_dur",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_frames_2_h_framesFail",
+        "source": "c_frames",
+        "sourceHandle": "2",
+        "target": "h_framesFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_dur_1_c_ratio",
+        "source": "c_dur",
+        "sourceHandle": "1",
+        "target": "c_ratio",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_dur_2_h_durFail",
+        "source": "c_dur",
+        "sourceHandle": "2",
+        "target": "h_durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_dur_3_h_durFail",
+        "source": "c_dur",
+        "sourceHandle": "3",
+        "target": "h_durFail",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_ratio_1_h_out",
+        "source": "c_ratio",
+        "sourceHandle": "1",
+        "target": "h_out",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_ratio_2_h_tooSmall",
+        "source": "c_ratio",
         "sourceHandle": "2",
         "target": "h_tooSmall",
         "targetHandle": null
@@ -2548,7 +2653,7 @@
           "ffmpegQuality": "22",
           "ffmpegQualityEnabled": "true",
           "forceEncoding": "true",
-          "hardwareDecoding": "false",
+          "hardwareDecoding": "true",
           "hardwareEncoding": "true",
           "hardwareType": "qsv",
           "outputCodec": "hevc"
@@ -2723,6 +2828,154 @@
         "position": {
           "x": 900,
           "y": 300
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_start",
+        "inputsDB": {},
+        "name": "Begin Command",
+        "pluginName": "ffmpegCommandStart",
+        "position": {
+          "x": 1800,
+          "y": 680
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_isMkv",
+        "inputsDB": {
+          "extensions": "mkv"
+        },
+        "name": "Source is MKV?",
+        "pluginName": "checkFileExtension",
+        "position": {
+          "x": 1800,
+          "y": 900
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_mkv",
+        "inputsDB": {
+          "container": "mkv",
+          "forceConform": "false"
+        },
+        "name": "Keep MKV",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 1650,
+          "y": 1010
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_mp4",
+        "inputsDB": {
+          "container": "mp4",
+          "forceConform": "true"
+        },
+        "name": "MP4 (conform streams)",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 1950,
+          "y": 1010
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_exec",
+        "inputsDB": {},
+        "name": "Execute (audio + subs copied)",
+        "pluginName": "ffmpegCommandExecute",
+        "position": {
+          "x": 1800,
+          "y": 1120
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_frames",
+        "inputsDB": {
+          "code": "\nmodule.exports = async (args) => {\n  // Output 1 = new file has the same number of video frames as the original (±0.1%, min 2). Output 2 = frames lost: fail.\n  // Catches encodes that ffmpeg reports as successful but that silently lost video (e.g. after a GPU decoder hang).\n  const { execFile } = require('child_process');\n  const count = (f) => new Promise((res, rej) => execFile('/usr/local/bin/ffprobe',\n    ['-v', 'error', '-select_streams', 'v:0', '-count_packets', '-show_entries', 'stream=nb_read_packets', '-of', 'csv=p=0', f],\n    { maxBuffer: 1e7 }, (e, out) => (e ? rej(e) : res(parseInt(String(out).trim().replace(/,/g, ''), 10)))));\n  const a = await count(args.originalLibraryFile._id);\n  const b = await count(args.inputFileObj._id);\n  const ok = a > 0 && Math.abs(a - b) <= Math.max(2, a * 0.001);\n  args.jobLog('Frame check: original ' + a + ', new ' + b + (ok ? ' OK' : ' -> FRAMES LOST, failing'));\n  return { outputFileObj: args.inputFileObj, outputNumber: ok ? 1 : 2, variables: args.variables };\n};"
+        },
+        "name": "Same number of video frames as original?",
+        "pluginName": "customFunction",
+        "position": {
+          "x": 1400,
+          "y": 1500
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_dur",
+        "inputsDB": {
+          "greaterThan": "99.5",
+          "lessThan": "100.5"
+        },
+        "name": "Same length as original (99.5-100.5%)?",
+        "pluginName": "compareFileDurationRatio",
+        "position": {
+          "x": 2050,
+          "y": 1230
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_ratio",
+        "inputsDB": {
+          "greaterThan": "5",
+          "lessThan": "95"
+        },
+        "name": "New file 5-95% of original? (5% = sanity floor; remuxes shrink a lot)",
+        "pluginName": "compareFileSizeRatio",
+        "position": {
+          "x": 1800,
+          "y": 1230
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_enc",
+        "inputsDB": {
+          "ffmpegPreset": "medium",
+          "ffmpegPresetEnabled": "true",
+          "ffmpegQuality": "22",
+          "ffmpegQualityEnabled": "true",
+          "forceEncoding": "true",
+          "hardwareDecoding": "false",
+          "hardwareEncoding": "true",
+          "hardwareType": "qsv",
+          "outputCodec": "hevc"
+        },
+        "name": "HEVC Quick Sync, quality 22 (CPU decode)",
+        "pluginName": "ffmpegCommandSetVideoEncoder",
+        "position": {
+          "x": 1800,
+          "y": 790
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_set",
+        "inputsDB": {
+          "source": "originalFile"
+        },
+        "name": "Set Working File",
+        "pluginName": "setWorkingFile",
+        "position": {
+          "x": 1800,
+          "y": 570
         },
         "sourceRepo": "Community"
       }
