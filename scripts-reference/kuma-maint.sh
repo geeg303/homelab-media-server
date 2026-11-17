@@ -9,7 +9,7 @@ run(){ for i in $(seq 1 20); do curl -fs -o /dev/null -m 3 http://127.0.0.1:3001
 case "${1:-status}" in
   on)  d=${2:-30m}; d=${d/m/ min}; d=${d/h/ hour}; until=$(date -d "now + $d" +%s 2>/dev/null || date -d "now + 30 min" +%s); echo "$until" > $U; run on && echo "until $(date -d @$until '+%a %H:%M')";;
   off) rm -f $U; run off;;
-  check) [ -f $U ] || exit 0; [ "$(date +%s)" -ge "$(cat $U)" ] && { rm -f $U; run off; };;
+  check) [ -f $U ] || exit 0; if [ "$(date +%s)" -ge "$(cat $U)" ]; then rm -f $U; run off; fi; exit 0;;   # not expired yet = success (was exit 1 -> unit "failed")
   setup|status) run "$1";;
   *) echo "usage: kuma-maint on [30m|2h] | off | status"; exit 1;;
 esac
