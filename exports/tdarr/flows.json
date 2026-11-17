@@ -436,7 +436,7 @@
   },
   {
     "_id": "hevcQsv1080p",
-    "description": "Approved Nov 9 (pilot settings): H.264/other -> HEVC q22; existing HEVC only if video > 10 Mbps; skips ours, >1080p, AV1/VP9, HDR. CPU decode + hevc_qsv encode, frame-count check, duration 99.5-100.5%, size 5-95%. Writes to /scratch/tdarr/output-1080p; tdarr-swap verifies and replaces the original (original deleted).",
+    "description": "Approved Nov 9 (pilot settings): H.264/other -> HEVC q22; existing HEVC only if video > 10 Mbps; skips ours, >1080p, AV1/VP9, HDR. CPU decode + hevc_qsv encode, frame-count check, duration 99.5-100.5%, size 5-95%. Writes to /scratch/tdarr/output-1080p; tdarr-swap verifies and replaces the original (original deleted). | GPU decode (tested Nov 17), CPU-decode retry if frames are lost",
     "flowEdges": [
       {
         "id": "e_in_1_gate",
@@ -530,13 +530,6 @@
         "targetHandle": null
       },
       {
-        "id": "e_frames_2_framesFail",
-        "source": "frames",
-        "sourceHandle": "2",
-        "target": "framesFail",
-        "targetHandle": null
-      },
-      {
         "id": "e_dur_1_ratio",
         "source": "dur",
         "sourceHandle": "1",
@@ -569,6 +562,83 @@
         "source": "ratio",
         "sourceHandle": "2",
         "target": "tooSmall",
+        "targetHandle": null
+      },
+      {
+        "id": "e_frames_2_c_set",
+        "source": "frames",
+        "sourceHandle": "2",
+        "target": "c_set",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_set_1_c_start",
+        "source": "c_set",
+        "sourceHandle": "1",
+        "target": "c_start",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_start_1_c_enc",
+        "source": "c_start",
+        "sourceHandle": "1",
+        "target": "c_enc",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_enc_1_c_isMkv",
+        "source": "c_enc",
+        "sourceHandle": "1",
+        "target": "c_isMkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_isMkv_1_c_mkv",
+        "source": "c_isMkv",
+        "sourceHandle": "1",
+        "target": "c_mkv",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_isMkv_2_c_mp4",
+        "source": "c_isMkv",
+        "sourceHandle": "2",
+        "target": "c_mp4",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_mkv_1_c_exec",
+        "source": "c_mkv",
+        "sourceHandle": "1",
+        "target": "c_exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_mp4_1_c_exec",
+        "source": "c_mp4",
+        "sourceHandle": "1",
+        "target": "c_exec",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_exec_1_c_frames",
+        "source": "c_exec",
+        "sourceHandle": "1",
+        "target": "c_frames",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_frames_1_dur",
+        "source": "c_frames",
+        "sourceHandle": "1",
+        "target": "dur",
+        "targetHandle": null
+      },
+      {
+        "id": "e_c_frames_2_framesFail",
+        "source": "c_frames",
+        "sourceHandle": "2",
+        "target": "framesFail",
         "targetHandle": null
       }
     ],
@@ -644,7 +714,7 @@
           "ffmpegQuality": "22",
           "ffmpegQualityEnabled": "true",
           "forceEncoding": "true",
-          "hardwareDecoding": "false",
+          "hardwareDecoding": "true",
           "hardwareEncoding": "true",
           "hardwareType": "qsv",
           "outputCodec": "hevc"
@@ -819,6 +889,124 @@
         "position": {
           "x": 400,
           "y": 60
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_start",
+        "inputsDB": {},
+        "name": "Begin Command",
+        "pluginName": "ffmpegCommandStart",
+        "position": {
+          "x": 1300,
+          "y": 440
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_isMkv",
+        "inputsDB": {
+          "extensions": "mkv"
+        },
+        "name": "Source is MKV?",
+        "pluginName": "checkFileExtension",
+        "position": {
+          "x": 1300,
+          "y": 660
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_mkv",
+        "inputsDB": {
+          "container": "mkv",
+          "forceConform": "false"
+        },
+        "name": "Keep MKV",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 1150,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_mp4",
+        "inputsDB": {
+          "container": "mp4",
+          "forceConform": "true"
+        },
+        "name": "MP4 (conform streams)",
+        "pluginName": "ffmpegCommandSetContainer",
+        "position": {
+          "x": 1450,
+          "y": 770
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_exec",
+        "inputsDB": {},
+        "name": "Execute (audio + subs copied)",
+        "pluginName": "ffmpegCommandExecute",
+        "position": {
+          "x": 1300,
+          "y": 880
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_frames",
+        "inputsDB": {
+          "code": "\nmodule.exports = async (args) => {\n  // Output 1 = new file has the same number of video frames as the original (±0.1%, min 2). Output 2 = frames lost: fail.\n  // Catches encodes that ffmpeg reports as successful but that silently lost video (e.g. after a GPU decoder hang).\n  const { execFile } = require('child_process');\n  const count = (f) => new Promise((res, rej) => execFile('/usr/local/bin/ffprobe',\n    ['-v', 'error', '-select_streams', 'v:0', '-count_packets', '-show_entries', 'stream=nb_read_packets', '-of', 'csv=p=0', f],\n    { maxBuffer: 1e7 }, (e, out) => (e ? rej(e) : res(parseInt(String(out).trim().replace(/,/g, ''), 10)))));\n  const a = await count(args.originalLibraryFile._id);\n  const b = await count(args.inputFileObj._id);\n  const ok = a > 0 && Math.abs(a - b) <= Math.max(2, a * 0.001);\n  args.jobLog('Frame check: original ' + a + ', new ' + b + (ok ? ' OK' : ' -> FRAMES LOST, failing'));\n  return { outputFileObj: args.inputFileObj, outputNumber: ok ? 1 : 2, variables: args.variables };\n};"
+        },
+        "name": "Same number of video frames as original?",
+        "pluginName": "customFunction",
+        "position": {
+          "x": 900,
+          "y": 1260
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_enc",
+        "inputsDB": {
+          "ffmpegPreset": "medium",
+          "ffmpegPresetEnabled": "true",
+          "ffmpegQuality": "22",
+          "ffmpegQualityEnabled": "true",
+          "forceEncoding": "true",
+          "hardwareDecoding": "false",
+          "hardwareEncoding": "true",
+          "hardwareType": "qsv",
+          "outputCodec": "hevc"
+        },
+        "name": "HEVC Quick Sync, quality 22 (CPU decode)",
+        "pluginName": "ffmpegCommandSetVideoEncoder",
+        "position": {
+          "x": 1300,
+          "y": 550
+        },
+        "sourceRepo": "Community"
+      },
+      {
+        "fpEnabled": true,
+        "id": "c_set",
+        "inputsDB": {
+          "source": "originalFile"
+        },
+        "name": "Set Working File",
+        "pluginName": "setWorkingFile",
+        "position": {
+          "x": 1300,
+          "y": 330
         },
         "sourceRepo": "Community"
       }

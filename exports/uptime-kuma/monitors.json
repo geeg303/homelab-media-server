@@ -52,7 +52,7 @@
   ],
   "maintenance": [
     {
-      "active": 0,
+      "active": 1,
       "cron": "",
       "days_of_month": [],
       "description": "Turned on by box scripts around planned reboots and container updates, with an expiry; turned off automatically.",
@@ -8185,307 +8185,307 @@
       "monitor_id": 57
     },
     {
-      "id": 877,
+      "id": 938,
       "maintenance_id": 3,
       "monitor_id": 1
     },
     {
-      "id": 878,
+      "id": 939,
       "maintenance_id": 3,
       "monitor_id": 2
     },
     {
-      "id": 879,
+      "id": 940,
       "maintenance_id": 3,
       "monitor_id": 3
     },
     {
-      "id": 880,
+      "id": 941,
       "maintenance_id": 3,
       "monitor_id": 4
     },
     {
-      "id": 881,
+      "id": 942,
       "maintenance_id": 3,
       "monitor_id": 5
     },
     {
-      "id": 882,
+      "id": 943,
       "maintenance_id": 3,
       "monitor_id": 6
     },
     {
-      "id": 883,
+      "id": 944,
       "maintenance_id": 3,
       "monitor_id": 7
     },
     {
-      "id": 884,
+      "id": 945,
       "maintenance_id": 3,
       "monitor_id": 8
     },
     {
-      "id": 885,
+      "id": 946,
       "maintenance_id": 3,
       "monitor_id": 9
     },
     {
-      "id": 886,
+      "id": 947,
       "maintenance_id": 3,
       "monitor_id": 10
     },
     {
-      "id": 887,
+      "id": 948,
       "maintenance_id": 3,
       "monitor_id": 11
     },
     {
-      "id": 888,
+      "id": 949,
       "maintenance_id": 3,
       "monitor_id": 12
     },
     {
-      "id": 889,
+      "id": 950,
       "maintenance_id": 3,
       "monitor_id": 13
     },
     {
-      "id": 890,
+      "id": 951,
       "maintenance_id": 3,
       "monitor_id": 14
     },
     {
-      "id": 891,
+      "id": 952,
       "maintenance_id": 3,
       "monitor_id": 15
     },
     {
-      "id": 892,
+      "id": 953,
       "maintenance_id": 3,
       "monitor_id": 16
     },
     {
-      "id": 893,
+      "id": 954,
       "maintenance_id": 3,
       "monitor_id": 17
     },
     {
-      "id": 894,
+      "id": 955,
       "maintenance_id": 3,
       "monitor_id": 18
     },
     {
-      "id": 895,
+      "id": 956,
       "maintenance_id": 3,
       "monitor_id": 19
     },
     {
-      "id": 896,
+      "id": 957,
       "maintenance_id": 3,
       "monitor_id": 20
     },
     {
-      "id": 897,
+      "id": 958,
       "maintenance_id": 3,
       "monitor_id": 21
     },
     {
-      "id": 898,
+      "id": 959,
       "maintenance_id": 3,
       "monitor_id": 22
     },
     {
-      "id": 899,
+      "id": 960,
       "maintenance_id": 3,
       "monitor_id": 23
     },
     {
-      "id": 900,
+      "id": 961,
       "maintenance_id": 3,
       "monitor_id": 24
     },
     {
-      "id": 901,
+      "id": 962,
       "maintenance_id": 3,
       "monitor_id": 25
     },
     {
-      "id": 902,
+      "id": 963,
       "maintenance_id": 3,
       "monitor_id": 26
     },
     {
-      "id": 903,
+      "id": 964,
       "maintenance_id": 3,
       "monitor_id": 27
     },
     {
-      "id": 904,
+      "id": 965,
       "maintenance_id": 3,
       "monitor_id": 28
     },
     {
-      "id": 905,
+      "id": 966,
       "maintenance_id": 3,
       "monitor_id": 29
     },
     {
-      "id": 906,
+      "id": 967,
       "maintenance_id": 3,
       "monitor_id": 30
     },
     {
-      "id": 907,
+      "id": 968,
       "maintenance_id": 3,
       "monitor_id": 33
     },
     {
-      "id": 908,
+      "id": 969,
       "maintenance_id": 3,
       "monitor_id": 34
     },
     {
-      "id": 909,
+      "id": 970,
       "maintenance_id": 3,
       "monitor_id": 35
     },
     {
-      "id": 910,
+      "id": 971,
       "maintenance_id": 3,
       "monitor_id": 36
     },
     {
-      "id": 911,
+      "id": 972,
       "maintenance_id": 3,
       "monitor_id": 37
     },
     {
-      "id": 912,
+      "id": 973,
       "maintenance_id": 3,
       "monitor_id": 38
     },
     {
-      "id": 913,
+      "id": 974,
       "maintenance_id": 3,
       "monitor_id": 39
     },
     {
-      "id": 914,
+      "id": 975,
       "maintenance_id": 3,
       "monitor_id": 40
     },
     {
-      "id": 915,
+      "id": 976,
       "maintenance_id": 3,
       "monitor_id": 41
     },
     {
-      "id": 916,
+      "id": 977,
       "maintenance_id": 3,
       "monitor_id": 43
     },
     {
-      "id": 917,
+      "id": 978,
       "maintenance_id": 3,
       "monitor_id": 44
     },
     {
-      "id": 918,
+      "id": 979,
       "maintenance_id": 3,
       "monitor_id": 45
     },
     {
-      "id": 919,
+      "id": 980,
       "maintenance_id": 3,
       "monitor_id": 46
     },
     {
-      "id": 920,
+      "id": 981,
       "maintenance_id": 3,
       "monitor_id": 47
     },
     {
-      "id": 921,
+      "id": 982,
       "maintenance_id": 3,
       "monitor_id": 48
     },
     {
-      "id": 922,
+      "id": 983,
       "maintenance_id": 3,
       "monitor_id": 49
     },
     {
-      "id": 923,
+      "id": 984,
       "maintenance_id": 3,
       "monitor_id": 50
     },
     {
-      "id": 924,
+      "id": 985,
       "maintenance_id": 3,
       "monitor_id": 51
     },
     {
-      "id": 925,
+      "id": 986,
       "maintenance_id": 3,
       "monitor_id": 52
     },
     {
-      "id": 926,
+      "id": 987,
       "maintenance_id": 3,
       "monitor_id": 53
     },
     {
-      "id": 927,
+      "id": 988,
       "maintenance_id": 3,
       "monitor_id": 54
     },
     {
-      "id": 928,
+      "id": 989,
       "maintenance_id": 3,
       "monitor_id": 56
     },
     {
-      "id": 929,
+      "id": 990,
       "maintenance_id": 3,
       "monitor_id": 57
     },
     {
-      "id": 930,
+      "id": 991,
       "maintenance_id": 3,
       "monitor_id": 58
     },
     {
-      "id": 931,
+      "id": 992,
       "maintenance_id": 3,
       "monitor_id": 59
     },
     {
-      "id": 932,
+      "id": 993,
       "maintenance_id": 3,
       "monitor_id": 60
     },
     {
-      "id": 933,
+      "id": 994,
       "maintenance_id": 3,
       "monitor_id": 61
     },
     {
-      "id": 934,
+      "id": 995,
       "maintenance_id": 3,
       "monitor_id": 62
     },
     {
-      "id": 935,
+      "id": 996,
       "maintenance_id": 3,
       "monitor_id": 63
     },
     {
-      "id": 936,
+      "id": 997,
       "maintenance_id": 3,
       "monitor_id": 64
     },
     {
-      "id": 937,
+      "id": 998,
       "maintenance_id": 3,
       "monitor_id": 65
     }
