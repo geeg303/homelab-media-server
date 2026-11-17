@@ -4,6 +4,7 @@ All notable changes to the server, newest first. Times local.
 
 ## 2026-11-17
 
+- **Show 53 cap off (user: "Turn off the power cap").** `cpu-power-cap.service` disabled and limits back to Dell's 65 W / 154 W on both RAPL interfaces. The script stays installed (`PL1_W/PL2_W` env, defaults 35/65) for quick re-use. With the fan override, 2 Tdarr encodes uncapped: 41–48 °C, 0 throttle events.
 - **Fan set to full speed: problem solved (user: "Yes set the fan to full speed do the necessary reboots and test again").** BIOS attribute `FanCtrlOvrd` = Enabled, set from Linux via `/sys/class/firmware-attributes/dell-wmi-sysman` (no BIOS admin password set); reboot 11:43, back 11:47 (HAOS shut down first via `ha-ws`). Fan now ~5,580 rpm constantly (was 1,950–2,500). Results under Tdarr:
   - 1 encode, UNcapped (Dell 65/154 W): 41–47 °C, 0 throttle events (was 99 °C in 80 s).
   - 2 encodes with the 35/65 W cap: 41–49 °C, 0 throttle events.
