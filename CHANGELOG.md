@@ -4,6 +4,7 @@ All notable changes to the server, newest first. Times local.
 
 ## 2026-11-17
 
+- **Hardware-decode retest (user: "Test option 1"): still broken.** On copies (4-min stream-copy clips in `/scratch/hwdec-test`, deleted afterwards; report kept at `/var/tmp/hwdec-test-report-20261117.txt`), with BIOS 1.31.0, kernel 7.0.0-43 and iHD 26.3.2: CPU decode (current) 1× 4K + 1× 1080p = 73 W package, 22% CPU, all 4K frames kept. QSV hardware decode on the same pair = 25 W and 9% CPU, but **3 GPU hangs** (`GPU HANG ... in dec0:0:hevc_qsv`, vcs1 reset) and a broken 4K output (201 of 5,779 frames). Stopped before the 2×4K phase. The GPU recovered and Tdarr resumed on 2 workers. Tdarr stays on CPU decode, and the fan override stays on.
 - **Show 53 cap off (user: "Turn off the power cap").** `cpu-power-cap.service` disabled and limits back to Dell's 65 W / 154 W on both RAPL interfaces. The script stays installed (`PL1_W/PL2_W` env, defaults 35/65) for quick re-use. With the fan override, 2 Tdarr encodes uncapped: 41–48 °C, 0 throttle events.
 - **Fan set to full speed: problem solved (user: "Yes set the fan to full speed do the necessary reboots and test again").** BIOS attribute `FanCtrlOvrd` = Enabled, set from Linux via `/sys/class/firmware-attributes/dell-wmi-sysman` (no BIOS admin password set); reboot 11:43, back 11:47 (HAOS shut down first via `ha-ws`). Fan now ~5,580 rpm constantly (was 1,950–2,500). Results under Tdarr:
   - 1 encode, UNcapped (Dell 65/154 W): 41–47 °C, 0 throttle events (was 99 °C in 80 s).
