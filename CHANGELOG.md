@@ -4,6 +4,7 @@ All notable changes to the server, newest first. Times local.
 
 ## 2026-11-17
 
+- **Final cooling setup (user picked option 1): automatic fan with the 35/65 W cap at every boot.** `cpu-power-cap.service` re-enabled; both RAPL interfaces read 35/65 W. 2 Tdarr encodes (1080p on GPU decode): 84–87 °C, fan ~2,100–2,450 rpm, ~72 fps per job.
 - **Fan back to automatic (user: "Let's switch the fan back now and then check temps").** `FanCtrlOvrd` = Disabled via dell-wmi-sysman. `fan-auto-reboot` unit: waited for the running encodes, ran the swap, Kuma maintenance on, HAOS shut down via `ha-ws`, then reboot 16:04, back 16:07. Everything came back (mounts, 24 containers, HAOS).
   - **Result: the auto fan curve is too weak even with GPU decode.** With 2 encodes uncapped, the package drew ~45 W (mostly the iGPU at 1,350 MHz) and hit 90–100 °C, with the fan only reaching 2,000–2,450 rpm and 1,190 throttle events.
   - **Stopgap:** the 35/65 W cap was applied live (boot unit still disabled). It gives 84–87 °C at ~72 fps per job, about the same speed. 0 GPU hangs.
