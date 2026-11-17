@@ -2,8 +2,13 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-17
+
+- **Back on after the repaste; CPU power capped (user: "do number 3 now").** user repasted the CPU and cleaned the fan; box up 07:34, all 12 mounts + pool (disk1–9) OK, 24 containers, HAOS VM running. Idle 54–59 °C (was 66–79), but one Tdarr encode still reached 100 °C in 3 min with the fan stuck at ~2,250 rpm (Dell OptiPlex Micro Plus 7020, i5-14500, BIOS 1.3.1, Dell limits PL1 65 W / PL2 154 W). New `cpu-power-cap` + `cpu-power-cap.service` (boot): PL1 35 W / PL2 65 W on both RAPL interfaces (MSR + MMIO). Under the same encode: 81–86 °C, 0 throttle events, 35 W average, encode speed ~unchanged (141 vs 148 fps). Tdarr back to 1 GPU worker. Replacement fan/heatsink being sourced (Dell K8062 assembly, fan YV0R9).
+
 ## 2026-11-16
 
+- **CPU overheating → Tdarr paused, Plex markers scheduled, box shut down for a repaste (user: "lets pause tdarr", "yes", "lets go ahead and shut down the server for tonight").** With 2 Tdarr encodes + Plex credit detection the CPU sat at 92–100 °C (package throttle count 1.46 M). Tdarr workers 1 (06:55) → 0 (15:12); Plex `GenerateIntroMarkerBehavior` / `GenerateCreditsMarkerBehavior` asap → scheduled (Butler window 02–05), running detection cancelled; idle afterwards 66–79 °C. Box powered off 16:00 (HAOS VM didn't finish its ACPI shutdown in 3 min; systemd shutdown stopped it). New thermal paste Nov 17. Box-side record `plex-prefs-before-rounds.txt` updated. (Sync pending: the box is off.)
 - **Old NTFS drives formatted and added to the pool (user: "format SERIAL-SDD SERIAL-SDB SERIAL-SDE").** `ntfs-format-batch` (own unit, log `/var/log/migrate/format-ntfs.log`), gated per drive on serial, the round's verify line (R3 0/71, R4 0/234, R5 0/33) and SMART: SERIAL-SDD → disk7, SERIAL-SDB → disk8, SERIAL-SDE → disk9 (ext4, `-m 0 -T largefile`, mounted by UUID `nofail`). Pool `/data` = disk1–9 (~66 TB, ~39 TB free), runtime + fstab. Kuma "Mount /mnt/disk7-9" added. The first run aborted before writing anything: `smartctl -H | grep PASSED` under `pipefail` failed on exit code 32 (IronWolf Airflow_Temperature below threshold *in the past*, max 65 °C); the gate now judges the text.
 - **Tdarr → whole pool after Show 36 (user: "Point it the whole pool so it starts automatically once show-x is completed").**
   - `tdarr` + `tdarr-node` now also mount `/data/media` read-only at `/media/pool` (in `compose.nodata.yaml`, the active volume list); containers recreated 06:19.

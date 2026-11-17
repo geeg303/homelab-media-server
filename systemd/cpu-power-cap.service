@@ -1,0 +1,11 @@
+[Unit]
+Description=Cap CPU package power to 35 W / 65 W (fan does not ramp; user Nov 17)
+After=sysinit.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/cpu-power-cap
+
+[Install]
+WantedBy=multi-user.target
