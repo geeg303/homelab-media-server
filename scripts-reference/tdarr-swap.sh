@@ -6,7 +6,7 @@
 #   - Pool library encodes keep their path relative to /data/media (tv/<show>/..., movies/<movie>/...): original = /data/media/<rel>.
 #   - Older disk1 per-show libraries (legacy): original found by file name under /mnt/disk1/media/tv.
 #   The rename happens on the REAL disk (mergerfs user.mergerfs.fullpath), next to the original, so it stays atomic.
-# Per encode: verify (same duration ±2 s, same video frame count, same audio track count, HDR10 kept if the original is
+# Per encode: verify (same duration ±2 s, video frame count within ±0.1% (min 2), same audio track count, HDR10 kept if the original is
 # PQ/HDR10), copy encode next to the original as a temp file, check sha256, rename over the original, delete the encode.
 set -euo pipefail
 SRC_DIR=${1:?encode dir}; DRY=${2:-}
@@ -54,7 +54,10 @@ while IFS= read -r -d '' enc; do
     case "$te" in *"Main 10"*smpte2084*) [ "$md" -ge 1 ] || hdr_ok=no;; *) hdr_ok=no;; esac
   fi
   dd=$(( ${da:-0} > ${de:-0} ? ${da:-0} - ${de:-0} : ${de:-0} - ${da:-0} ))
-  if [ -z "$da" ] || [ -z "$fa" ] || [ "$dd" -gt 2 ] || [ "$fa" != "$fe" ] || [ "$aa" != "$ae" ] || [ "$hdr_ok" != yes ]; then
+  # frame tolerance = the flow's own frame check: +-0.1% of the original, at least 2 frames (user Nov 21: "That sounds good")
+  # VC-1 remuxes and HDTV captures come out 1-6 frames off out of ~135k; a decoder hang loses thousands, so it still fails.
+  fd=$(( ${fa:-0} > ${fe:-0} ? ${fa:-0} - ${fe:-0} : ${fe:-0} - ${fa:-0} )); ft=$(( ${fa:-0} / 1000 )); [ "$ft" -lt 2 ] && ft=2
+  if [ -z "$da" ] || [ -z "$fa" ] || [ -z "$fe" ] || [ "$dd" -gt 2 ] || [ "$fd" -gt "$ft" ] || [ "$aa" != "$ae" ] || [ "$hdr_ok" != yes ]; then
     log "FAIL verify (left untouched): $key | dur $da/$de frames $fa/$fe audio $aa/$ae hdr10 $hdr_ok"; bad=$((bad+1)); continue
   fi
   real=$(realpath_of "$orig")       # /mnt/diskN/... for pool paths

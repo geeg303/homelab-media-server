@@ -222,6 +222,12 @@
           },
           {
             "dividerAfter": false,
+            "name": "Irish",
+            "order": 0,
+            "value": 58
+          },
+          {
+            "dividerAfter": false,
             "name": "Italian",
             "order": 0,
             "value": 5
@@ -458,34 +464,6 @@
     "implementationName": "Kodi (XBMC) / Emby",
     "infoLink": "https://wiki.servarr.com/radarr/supported#xbmcmetadata",
     "name": "Kodi (XBMC) / Emby",
-    "tags": []
-  },
-  {
-    "configContract": "KometaMetadataSettings",
-    "enable": false,
-    "fields": [
-      {
-        "advanced": false,
-        "hidden": "hidden",
-        "isFloat": false,
-        "label": "Deprecated",
-        "name": "deprecated",
-        "order": 0,
-        "privacy": "normal",
-        "section": "image",
-        "type": "checkbox",
-        "value": true
-      }
-    ],
-    "id": 5,
-    "implementation": "KometaMetadata",
-    "implementationName": "Kometa",
-    "infoLink": "https://wiki.servarr.com/radarr/supported#kometametadata",
-    "message": {
-      "message": "Kometa files will no longer be created, support will be removed completely in v6",
-      "type": "warning"
-    },
-    "name": "Kometa",
     "tags": []
   },
   {

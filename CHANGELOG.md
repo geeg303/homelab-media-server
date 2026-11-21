@@ -2,6 +2,14 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-21
+
+- **Back to option 2 + all containers updated (user: "lets go back to option 2 and also update all the docker containers").** One `option2-update` unit (log `/var/log/media-server/option2-update.log`): Tdarr to 0 and waited for the short job (the ~2 h 4K job was interrupted and requeued), `tdarr-swap`, then `docker-update-all`, then `cpu-power-cap.service` disabled, then `FanCtrlOvrd` = Enabled, then HAOS `host_shutdown`, then reboot 10:18, back 10:22.
+  - **Updated:** tdarr, tdarr-node (iHD 26.3.2 → 26.3.5), plex, sonarr, radarr, prowlarr, bazarr, sabnzbd, maintainerr, uptime-kuma, diun, socket-proxy, glances-socket-proxy. Rollback record `/var/lib/media-server/image-rollback-20261121-1013.txt`.
+  - **After boot:** fan ~5,600 rpm, Dell default limits (MSR 65/154 W). 2 4K encodes (CPU decode) at 65–66 W: 65–74 °C, 0 throttle events. 24 containers up, HA up, 0 GPU hangs.
+- **`docker-update-all` v2:** the migration-era round-3 gate and the forced Tdarr re-pause are removed; old images are pruned. Backup `.bak-20261121`.
+- **`tdarr-swap` frame tolerance (user: "That sounds good"):** the frame count must now be within ±0.1% (min 2), the same as the flow's own frame check, instead of an exact match. 15 encodes (VC-1 movie remuxes, Show 36 HDTV S07) had been stuck since Nov 17, each 1–6 frames off out of ~135k frames, and were re-verified every 20 min. Backup `.bak-20261121`.
+
 ## 2026-11-17
 
 - **Final cooling setup (user picked option 1): automatic fan with the 35/65 W cap at every boot.** `cpu-power-cap.service` re-enabled; both RAPL interfaces read 35/65 W. 2 Tdarr encodes (1080p on GPU decode): 84–87 °C, fan ~2,100–2,450 rpm, ~72 fps per job.

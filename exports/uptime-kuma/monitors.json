@@ -4293,7 +4293,7 @@
       "database_connection_string": null,
       "database_query": null,
       "description": "Resolves one.one.one.one via 1.1.1.1; down with Router up = ISP/WAN outage",
-      "dns_last_result": "Records: 1.1.1.1 | 1.0.0.1",
+      "dns_last_result": "Records: 1.0.0.1 | 1.1.1.1",
       "dns_resolve_server": "1.1.1.1",
       "dns_resolve_type": "A",
       "docker_container": "",
@@ -8050,6 +8050,311 @@
   ],
   "monitor_maintenance": [
     {
+      "id": 1121,
+      "maintenance_id": 3,
+      "monitor_id": 1
+    },
+    {
+      "id": 1122,
+      "maintenance_id": 3,
+      "monitor_id": 2
+    },
+    {
+      "id": 1123,
+      "maintenance_id": 3,
+      "monitor_id": 3
+    },
+    {
+      "id": 1124,
+      "maintenance_id": 3,
+      "monitor_id": 4
+    },
+    {
+      "id": 1125,
+      "maintenance_id": 3,
+      "monitor_id": 5
+    },
+    {
+      "id": 1126,
+      "maintenance_id": 3,
+      "monitor_id": 6
+    },
+    {
+      "id": 1127,
+      "maintenance_id": 3,
+      "monitor_id": 7
+    },
+    {
+      "id": 1128,
+      "maintenance_id": 3,
+      "monitor_id": 8
+    },
+    {
+      "id": 1129,
+      "maintenance_id": 3,
+      "monitor_id": 9
+    },
+    {
+      "id": 1130,
+      "maintenance_id": 3,
+      "monitor_id": 10
+    },
+    {
+      "id": 1131,
+      "maintenance_id": 3,
+      "monitor_id": 11
+    },
+    {
+      "id": 1132,
+      "maintenance_id": 3,
+      "monitor_id": 12
+    },
+    {
+      "id": 1133,
+      "maintenance_id": 3,
+      "monitor_id": 13
+    },
+    {
+      "id": 1134,
+      "maintenance_id": 3,
+      "monitor_id": 14
+    },
+    {
+      "id": 1135,
+      "maintenance_id": 3,
+      "monitor_id": 15
+    },
+    {
+      "id": 1136,
+      "maintenance_id": 3,
+      "monitor_id": 16
+    },
+    {
+      "id": 1137,
+      "maintenance_id": 3,
+      "monitor_id": 17
+    },
+    {
+      "id": 1138,
+      "maintenance_id": 3,
+      "monitor_id": 18
+    },
+    {
+      "id": 1139,
+      "maintenance_id": 3,
+      "monitor_id": 19
+    },
+    {
+      "id": 1140,
+      "maintenance_id": 3,
+      "monitor_id": 20
+    },
+    {
+      "id": 1141,
+      "maintenance_id": 3,
+      "monitor_id": 21
+    },
+    {
+      "id": 1142,
+      "maintenance_id": 3,
+      "monitor_id": 22
+    },
+    {
+      "id": 1143,
+      "maintenance_id": 3,
+      "monitor_id": 23
+    },
+    {
+      "id": 1144,
+      "maintenance_id": 3,
+      "monitor_id": 24
+    },
+    {
+      "id": 1145,
+      "maintenance_id": 3,
+      "monitor_id": 25
+    },
+    {
+      "id": 1146,
+      "maintenance_id": 3,
+      "monitor_id": 26
+    },
+    {
+      "id": 1147,
+      "maintenance_id": 3,
+      "monitor_id": 27
+    },
+    {
+      "id": 1148,
+      "maintenance_id": 3,
+      "monitor_id": 28
+    },
+    {
+      "id": 1149,
+      "maintenance_id": 3,
+      "monitor_id": 29
+    },
+    {
+      "id": 1150,
+      "maintenance_id": 3,
+      "monitor_id": 30
+    },
+    {
+      "id": 1151,
+      "maintenance_id": 3,
+      "monitor_id": 33
+    },
+    {
+      "id": 1152,
+      "maintenance_id": 3,
+      "monitor_id": 34
+    },
+    {
+      "id": 1153,
+      "maintenance_id": 3,
+      "monitor_id": 35
+    },
+    {
+      "id": 1154,
+      "maintenance_id": 3,
+      "monitor_id": 36
+    },
+    {
+      "id": 1155,
+      "maintenance_id": 3,
+      "monitor_id": 37
+    },
+    {
+      "id": 1156,
+      "maintenance_id": 3,
+      "monitor_id": 38
+    },
+    {
+      "id": 1157,
+      "maintenance_id": 3,
+      "monitor_id": 39
+    },
+    {
+      "id": 1158,
+      "maintenance_id": 3,
+      "monitor_id": 40
+    },
+    {
+      "id": 1159,
+      "maintenance_id": 3,
+      "monitor_id": 41
+    },
+    {
+      "id": 1160,
+      "maintenance_id": 3,
+      "monitor_id": 43
+    },
+    {
+      "id": 1161,
+      "maintenance_id": 3,
+      "monitor_id": 44
+    },
+    {
+      "id": 1162,
+      "maintenance_id": 3,
+      "monitor_id": 45
+    },
+    {
+      "id": 1163,
+      "maintenance_id": 3,
+      "monitor_id": 46
+    },
+    {
+      "id": 1164,
+      "maintenance_id": 3,
+      "monitor_id": 47
+    },
+    {
+      "id": 1165,
+      "maintenance_id": 3,
+      "monitor_id": 48
+    },
+    {
+      "id": 1166,
+      "maintenance_id": 3,
+      "monitor_id": 49
+    },
+    {
+      "id": 1167,
+      "maintenance_id": 3,
+      "monitor_id": 50
+    },
+    {
+      "id": 1168,
+      "maintenance_id": 3,
+      "monitor_id": 51
+    },
+    {
+      "id": 1169,
+      "maintenance_id": 3,
+      "monitor_id": 52
+    },
+    {
+      "id": 1170,
+      "maintenance_id": 3,
+      "monitor_id": 53
+    },
+    {
+      "id": 1171,
+      "maintenance_id": 3,
+      "monitor_id": 54
+    },
+    {
+      "id": 1172,
+      "maintenance_id": 3,
+      "monitor_id": 56
+    },
+    {
+      "id": 1173,
+      "maintenance_id": 3,
+      "monitor_id": 57
+    },
+    {
+      "id": 1174,
+      "maintenance_id": 3,
+      "monitor_id": 58
+    },
+    {
+      "id": 1175,
+      "maintenance_id": 3,
+      "monitor_id": 59
+    },
+    {
+      "id": 1176,
+      "maintenance_id": 3,
+      "monitor_id": 60
+    },
+    {
+      "id": 1177,
+      "maintenance_id": 3,
+      "monitor_id": 61
+    },
+    {
+      "id": 1178,
+      "maintenance_id": 3,
+      "monitor_id": 62
+    },
+    {
+      "id": 1179,
+      "maintenance_id": 3,
+      "monitor_id": 63
+    },
+    {
+      "id": 1180,
+      "maintenance_id": 3,
+      "monitor_id": 64
+    },
+    {
+      "id": 1181,
+      "maintenance_id": 3,
+      "monitor_id": 65
+    },
+    {
       "id": 196,
       "maintenance_id": 1,
       "monitor_id": 1
@@ -8183,311 +8488,6 @@
       "id": 225,
       "maintenance_id": 1,
       "monitor_id": 57
-    },
-    {
-      "id": 938,
-      "maintenance_id": 3,
-      "monitor_id": 1
-    },
-    {
-      "id": 939,
-      "maintenance_id": 3,
-      "monitor_id": 2
-    },
-    {
-      "id": 940,
-      "maintenance_id": 3,
-      "monitor_id": 3
-    },
-    {
-      "id": 941,
-      "maintenance_id": 3,
-      "monitor_id": 4
-    },
-    {
-      "id": 942,
-      "maintenance_id": 3,
-      "monitor_id": 5
-    },
-    {
-      "id": 943,
-      "maintenance_id": 3,
-      "monitor_id": 6
-    },
-    {
-      "id": 944,
-      "maintenance_id": 3,
-      "monitor_id": 7
-    },
-    {
-      "id": 945,
-      "maintenance_id": 3,
-      "monitor_id": 8
-    },
-    {
-      "id": 946,
-      "maintenance_id": 3,
-      "monitor_id": 9
-    },
-    {
-      "id": 947,
-      "maintenance_id": 3,
-      "monitor_id": 10
-    },
-    {
-      "id": 948,
-      "maintenance_id": 3,
-      "monitor_id": 11
-    },
-    {
-      "id": 949,
-      "maintenance_id": 3,
-      "monitor_id": 12
-    },
-    {
-      "id": 950,
-      "maintenance_id": 3,
-      "monitor_id": 13
-    },
-    {
-      "id": 951,
-      "maintenance_id": 3,
-      "monitor_id": 14
-    },
-    {
-      "id": 952,
-      "maintenance_id": 3,
-      "monitor_id": 15
-    },
-    {
-      "id": 953,
-      "maintenance_id": 3,
-      "monitor_id": 16
-    },
-    {
-      "id": 954,
-      "maintenance_id": 3,
-      "monitor_id": 17
-    },
-    {
-      "id": 955,
-      "maintenance_id": 3,
-      "monitor_id": 18
-    },
-    {
-      "id": 956,
-      "maintenance_id": 3,
-      "monitor_id": 19
-    },
-    {
-      "id": 957,
-      "maintenance_id": 3,
-      "monitor_id": 20
-    },
-    {
-      "id": 958,
-      "maintenance_id": 3,
-      "monitor_id": 21
-    },
-    {
-      "id": 959,
-      "maintenance_id": 3,
-      "monitor_id": 22
-    },
-    {
-      "id": 960,
-      "maintenance_id": 3,
-      "monitor_id": 23
-    },
-    {
-      "id": 961,
-      "maintenance_id": 3,
-      "monitor_id": 24
-    },
-    {
-      "id": 962,
-      "maintenance_id": 3,
-      "monitor_id": 25
-    },
-    {
-      "id": 963,
-      "maintenance_id": 3,
-      "monitor_id": 26
-    },
-    {
-      "id": 964,
-      "maintenance_id": 3,
-      "monitor_id": 27
-    },
-    {
-      "id": 965,
-      "maintenance_id": 3,
-      "monitor_id": 28
-    },
-    {
-      "id": 966,
-      "maintenance_id": 3,
-      "monitor_id": 29
-    },
-    {
-      "id": 967,
-      "maintenance_id": 3,
-      "monitor_id": 30
-    },
-    {
-      "id": 968,
-      "maintenance_id": 3,
-      "monitor_id": 33
-    },
-    {
-      "id": 969,
-      "maintenance_id": 3,
-      "monitor_id": 34
-    },
-    {
-      "id": 970,
-      "maintenance_id": 3,
-      "monitor_id": 35
-    },
-    {
-      "id": 971,
-      "maintenance_id": 3,
-      "monitor_id": 36
-    },
-    {
-      "id": 972,
-      "maintenance_id": 3,
-      "monitor_id": 37
-    },
-    {
-      "id": 973,
-      "maintenance_id": 3,
-      "monitor_id": 38
-    },
-    {
-      "id": 974,
-      "maintenance_id": 3,
-      "monitor_id": 39
-    },
-    {
-      "id": 975,
-      "maintenance_id": 3,
-      "monitor_id": 40
-    },
-    {
-      "id": 976,
-      "maintenance_id": 3,
-      "monitor_id": 41
-    },
-    {
-      "id": 977,
-      "maintenance_id": 3,
-      "monitor_id": 43
-    },
-    {
-      "id": 978,
-      "maintenance_id": 3,
-      "monitor_id": 44
-    },
-    {
-      "id": 979,
-      "maintenance_id": 3,
-      "monitor_id": 45
-    },
-    {
-      "id": 980,
-      "maintenance_id": 3,
-      "monitor_id": 46
-    },
-    {
-      "id": 981,
-      "maintenance_id": 3,
-      "monitor_id": 47
-    },
-    {
-      "id": 982,
-      "maintenance_id": 3,
-      "monitor_id": 48
-    },
-    {
-      "id": 983,
-      "maintenance_id": 3,
-      "monitor_id": 49
-    },
-    {
-      "id": 984,
-      "maintenance_id": 3,
-      "monitor_id": 50
-    },
-    {
-      "id": 985,
-      "maintenance_id": 3,
-      "monitor_id": 51
-    },
-    {
-      "id": 986,
-      "maintenance_id": 3,
-      "monitor_id": 52
-    },
-    {
-      "id": 987,
-      "maintenance_id": 3,
-      "monitor_id": 53
-    },
-    {
-      "id": 988,
-      "maintenance_id": 3,
-      "monitor_id": 54
-    },
-    {
-      "id": 989,
-      "maintenance_id": 3,
-      "monitor_id": 56
-    },
-    {
-      "id": 990,
-      "maintenance_id": 3,
-      "monitor_id": 57
-    },
-    {
-      "id": 991,
-      "maintenance_id": 3,
-      "monitor_id": 58
-    },
-    {
-      "id": 992,
-      "maintenance_id": 3,
-      "monitor_id": 59
-    },
-    {
-      "id": 993,
-      "maintenance_id": 3,
-      "monitor_id": 60
-    },
-    {
-      "id": 994,
-      "maintenance_id": 3,
-      "monitor_id": 61
-    },
-    {
-      "id": 995,
-      "maintenance_id": 3,
-      "monitor_id": 62
-    },
-    {
-      "id": 996,
-      "maintenance_id": 3,
-      "monitor_id": 63
-    },
-    {
-      "id": 997,
-      "maintenance_id": 3,
-      "monitor_id": 64
-    },
-    {
-      "id": 998,
-      "maintenance_id": 3,
-      "monitor_id": 65
     }
   ],
   "monitor_notification": [

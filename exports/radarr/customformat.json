@@ -3818,6 +3818,27 @@
         "name": "sbR",
         "negate": false,
         "required": false
+      },
+      {
+        "fields": [
+          {
+            "advanced": false,
+            "helpText": "Custom Format RegEx is Case Insensitive",
+            "isFloat": false,
+            "label": "Regular Expression",
+            "name": "value",
+            "order": 0,
+            "privacy": "normal",
+            "type": "textbox",
+            "value": "^(SoLaR)$"
+          }
+        ],
+        "implementation": "ReleaseGroupSpecification",
+        "implementationName": "Release Group",
+        "infoLink": "https://wiki.servarr.com/radarr/settings#custom-formats-2",
+        "name": "SoLaR",
+        "negate": false,
+        "required": false
       }
     ]
   },
@@ -10002,6 +10023,27 @@
         "implementationName": "Release Group",
         "infoLink": "https://wiki.servarr.com/radarr/settings#custom-formats-2",
         "name": "Dooky",
+        "negate": false,
+        "required": false
+      },
+      {
+        "fields": [
+          {
+            "advanced": false,
+            "helpText": "Custom Format RegEx is Case Insensitive",
+            "isFloat": false,
+            "label": "Regular Expression",
+            "name": "value",
+            "order": 0,
+            "privacy": "normal",
+            "type": "textbox",
+            "value": "^(FIEND)$"
+          }
+        ],
+        "implementation": "ReleaseGroupSpecification",
+        "implementationName": "Release Group",
+        "infoLink": "https://wiki.servarr.com/radarr/settings#custom-formats-2",
+        "name": "FIEND",
         "negate": false,
         "required": false
       },
