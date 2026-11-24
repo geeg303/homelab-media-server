@@ -52,7 +52,7 @@
   ],
   "maintenance": [
     {
-      "active": 1,
+      "active": 0,
       "cron": "",
       "days_of_month": [],
       "description": "Turned on by box scripts around planned reboots and container updates, with an expiry; turned off automatically.",
@@ -4293,7 +4293,7 @@
       "database_connection_string": null,
       "database_query": null,
       "description": "Resolves one.one.one.one via 1.1.1.1; down with Router up = ISP/WAN outage",
-      "dns_last_result": "Records: 1.0.0.1 | 1.1.1.1",
+      "dns_last_result": "Records: 1.1.1.1 | 1.0.0.1",
       "dns_resolve_server": "1.1.1.1",
       "dns_resolve_type": "A",
       "docker_container": "",

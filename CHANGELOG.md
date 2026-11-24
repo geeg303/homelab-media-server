@@ -2,6 +2,12 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-23
+
+- **Uptime Kuma stuck in planned maintenance since Nov 21 10:18 (user: "Uptime kuma doesn't show anything up").** Cause: right after the container update, `kuma-maint off` hung (Kuma had just restarted) and I killed it. `off` removed the expiry file BEFORE talking to Kuma, so `kuma-maint-check` thought there was nothing to turn off and never retried, which left the alerts silenced for ~2.5 days. Turned off at 20:13; 54/56 checks up immediately. The 2 nightly-backup push checks (25, 60) show maintenance until their next push about 04:30 and 05:15.
+  - **Fix in `kuma-maint`:** the expiry file is removed only after Kuma confirms "off". `check` now also turns planned maintenance off if it is ON with no expiry file, and each Kuma call is bounded with `timeout 90`. Backup `.bak-20261123`.
+  - **During the silenced window nothing was down:** 0 failed units, 24 containers, all mounts, both nightly backups ran on Nov 22 and 23, 0 GPU hangs, and the swap backlog cleared (4.3 GB left in scratch, 0 verify failures since Nov 22).
+
 ## 2026-11-21
 
 - **Back to option 2 + all containers updated (user: "lets go back to option 2 and also update all the docker containers").** One `option2-update` unit (log `/var/log/media-server/option2-update.log`): Tdarr to 0 and waited for the short job (the ~2 h 4K job was interrupted and requeued), `tdarr-swap`, then `docker-update-all`, then `cpu-power-cap.service` disabled, then `FanCtrlOvrd` = Enabled, then HAOS `host_shutdown`, then reboot 10:18, back 10:22.

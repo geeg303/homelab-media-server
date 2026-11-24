@@ -4,12 +4,14 @@
 set -uo pipefail
 U=/var/lib/media-server/kuma-maint-until; SH=/usr/local/share/media-server
 run(){ for i in $(seq 1 20); do curl -fs -o /dev/null -m 3 http://127.0.0.1:3001/ && break; sleep 6; done
-       docker cp $SH/kuma_planned.js uptime-kuma:/app/kuma_planned.js >/dev/null && docker exec -e ACTION="$1" -w /app uptime-kuma node kuma_planned.js; local rc=$?
+       docker cp $SH/kuma_planned.js uptime-kuma:/app/kuma_planned.js >/dev/null && timeout 90 docker exec -e ACTION="$1" -w /app uptime-kuma node kuma_planned.js; local rc=$?
        docker exec uptime-kuma rm -f /app/kuma_planned.js; return $rc; }
 case "${1:-status}" in
   on)  d=${2:-30m}; d=${d/m/ min}; d=${d/h/ hour}; until=$(date -d "now + $d" +%s 2>/dev/null || date -d "now + 30 min" +%s); echo "$until" > $U; run on && echo "until $(date -d @$until '+%a %H:%M')";;
-  off) rm -f $U; run off;;
-  check) [ -f $U ] || exit 0; if [ "$(date +%s)" -ge "$(cat $U)" ]; then rm -f $U; run off; fi; exit 0;;   # not expired yet = success (was exit 1 -> unit "failed")
+  off) run off && rm -f $U;;   # expiry file removed only after Kuma confirmed, so check retries if this fails (Nov 21 stuck-on bug)
+  check) if [ ! -f $U ]; then   # no expiry file but planned maintenance still on (an interrupted `off`): turn it off
+           run status 2>/dev/null | grep -q " ON" && { echo "planned maintenance on without an expiry -> off"; run off; }; exit 0; fi
+         if [ "$(date +%s)" -ge "$(cat $U)" ]; then run off && rm -f $U; fi; exit 0;;   # not expired yet = success
   setup|status) run "$1";;
   *) echo "usage: kuma-maint on [30m|2h] | off | status"; exit 1;;
 esac
