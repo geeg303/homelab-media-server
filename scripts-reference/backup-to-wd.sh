@@ -18,7 +18,7 @@ mkdir -p /mnt/backup/review /mnt/backup/config /mnt/backup/review-deleted
 if [ -d /data/review ]; then
   rsync -a --delete --backup --backup-dir="/mnt/backup/review-deleted/$D" /data/review/ /mnt/backup/review/
 fi
-rsync -a --delete /scratch/backups/config/ /mnt/backup/config/
+mountpoint -q /data && [ -d /data/backups/config/daily ] && rsync -a --delete /data/backups/config/ /mnt/backup/config/   # pool copy has full retention (scratch keeps only 3+1)
 find /mnt/backup/review-deleted -mindepth 1 -maxdepth 1 -type d -mtime +30 -exec rm -rf {} +
 sz=$(du -sh /mnt/backup/review 2>/dev/null | cut -f1); cf=$(find /mnt/backup/config -type f | wc -l)
 echo "$(date -Is) ok: review $sz, $cf config tarballs, free $(df -h --output=avail /mnt/backup | tail -1 | tr -d ' ')"

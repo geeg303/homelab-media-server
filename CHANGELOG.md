@@ -4,6 +4,12 @@ All notable changes to the server, newest first. Times local.
 
 ## 2026-11-23
 
+- **Scratch cleanup (user: "Let's clear some space from the scratch drive" / "Yes do that").** `/scratch` 247 GB → 55 GB used (log `/var/log/media-server/scratch-cleanup-20261123.log`).
+  - **Found first:** `safekeep/sdc/pc-backup folder` (30 GB, 43,249 files) existed ONLY on scratch. It is now copied to `/data/review/sdc/pc-backup folder` and checksum-verified identical, so the nightly `backup-to-wd` picks it up.
+  - **Deleted:** `safekeep/sdd` (Music, 137 GB; identical to review and the WD except 1,663 desktop.ini/thumbnail files) and `safekeep/sde` (in review + WD); config tarballs older than the newest 3 daily + 1 weekly (each byte-compared with the pool copy first); and the website-archive working dirs `tfs-links`, `pkg`, `diyhrt-links` (published as GitHub releases).
+  - **Pending:** a one-off timer at Nov 24 07:00 (`pcbackup-scratch-delete`) deletes the scratch "pc-backup folder" only if the WD copy matches (file count + rsync checksum dry-run), and reports via ntfy either way.
+  - **`media-config-backup`:** the pool now holds the full retention (daily ×14, weekly ×8; copy without `--delete`, pruned there). Scratch keeps the newest 3 daily + 1 weekly and prunes only files with an identical pool copy. The pruning can never fail the backup.
+  - **`backup-to-wd`:** config tarballs are now mirrored from `/data/backups/config` (full retention) instead of scratch.
 - **Uptime Kuma stuck in planned maintenance since Nov 21 10:18 (user: "Uptime kuma doesn't show anything up").** Cause: right after the container update, `kuma-maint off` hung (Kuma had just restarted) and I killed it. `off` removed the expiry file BEFORE talking to Kuma, so `kuma-maint-check` thought there was nothing to turn off and never retried, which left the alerts silenced for ~2.5 days. Turned off at 20:13; 54/56 checks up immediately. The 2 nightly-backup push checks (25, 60) show maintenance until their next push about 04:30 and 05:15.
   - **Fix in `kuma-maint`:** the expiry file is removed only after Kuma confirms "off". `check` now also turns planned maintenance off if it is ON with no expiry file, and each Kuma call is bounded with `timeout 90`. Backup `.bak-20261123`.
   - **During the silenced window nothing was down:** 0 failed units, 24 containers, all mounts, both nightly backups ran on Nov 22 and 23, 0 GPU hangs, and the swap backlog cleared (4.3 GB left in scratch, 0 verify failures since Nov 22).
