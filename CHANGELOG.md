@@ -2,6 +2,12 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-24
+
+- **Disk-alert follow-up (user asked about a 10:42 alert, then "Yes").** The alert was one `Data phase CRC error` read on disk1 (ST8000DM004 SERIAL-DISK1, USB enclosure): a link/cable hiccup. SMART PASSED, 0 pending/reallocated/uncorrectable, lifetime UDMA CRC count 1, the only one in 7 days, and no app saw an I/O error.
+  - **`usb-watchdog` rewritten:** one plain-language ntfy per burst, naming the disk (mount, model, serial), with a hint (CRC/FAILED = cable/enclosure; disconnect = power/connection) plus the related kernel lines. The migration-era `pkill -STOP rsync` is removed: it was for the copy rounds and would have frozen the nightly WD backup. Backup `.bak-20261124`.
+  - **`host-health-push`:** new UDMA_CRC_Error_Count (attr 199) watch in the 30-min SMART pass, with a baseline per serial in `/var/lib/media-server/host-health/crc-<serial>`. Any increase sends one high-priority ntfy ("cable/USB errors rising on /mnt/diskN"). Kuma's SMART check is unchanged. Starting counts: 7HJY59ZF 3, SERIAL-SDB 3, SERIAL-SDE 1, SERIAL-SDD 1, SERIAL-DISK1 1, the rest 0.
+
 ## 2026-11-23
 
 - **Scratch cleanup (user: "Let's clear some space from the scratch drive" / "Yes do that").** `/scratch` 247 GB → 55 GB used (log `/var/log/media-server/scratch-cleanup-20261123.log`).

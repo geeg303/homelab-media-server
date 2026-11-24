@@ -29,6 +29,18 @@ if [ ! -f "$STATE/smart" ] || [ $(( $(date +%s) - $(stat -c %Y "$STATE/smart") )
     echo "$out" | grep -q "PASSED" || sb="$sb $s health-not-PASSED;"
     pend=$(echo "$out" | awk '$1==197{print $NF}'); unc=$(echo "$out" | awk '$1==198{print $NF}')
     [ "${pend:-0}" != 0 ] && sb="$sb $s pending=$pend;"; [ "${unc:-0}" != 0 ] && sb="$sb $s uncorrectable=$unc;"
+    # link/cable error counter (attr 199): ntfy once per increase (user Nov 24), baseline per serial
+    crc=$(echo "$out" | awk '$1==199{print $NF}'); bf="$STATE/crc-$s"
+    if [ -n "$crc" ]; then
+      if [ -f "$bf" ] && [ "$crc" -gt "$(cat "$bf")" ]; then
+        mp=$(lsblk -no MOUNTPOINT "$d" 2>/dev/null | grep -m1 .)
+        NT=$(grep -m1 '^NTFY_TOPIC=' /opt/media/stacks/ops/.env | cut -d= -f2)
+        curl -fsS -m 10 -H "Title: box: cable/USB errors rising on ${mp:-$s}" -H "Priority: high" \
+          -d "Drive $s (${mp:-not mounted}): link (CRC) errors went from $(cat "$bf") to $crc. The disk itself is fine; this points at the SATA/USB cable or the enclosure. Reseat or replace it if it keeps rising." \
+          "https://ntfy.sh/$NT" >/dev/null || true
+      fi
+      echo "$crc" > "$bf"
+    fi
   done
   if [ -n "$sb" ]; then echo "down|$sb" > "$STATE/smart"; else echo "up|10 drives healthy" > "$STATE/smart"; fi
 fi
