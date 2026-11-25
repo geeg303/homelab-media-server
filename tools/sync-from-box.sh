@@ -3,11 +3,11 @@
 # Usage (Hermes bash on user's PC):  tools/sync-from-box.sh "commit message"
 set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DOCS=/c/Users/user/media-server-stack
+DOCS="$(cd "$(dirname "$0")/../.." && pwd)/media-server-stack"   # sibling checkout (box: ~/projects; was /c/Users/user on the PC)
 SSH=(ssh -i "$HOME/.ssh/hermes_mss" -o BatchMode=yes -o IdentitiesOnly=yes user@192.0.2.242)
 SCP=(scp -q -i "$HOME/.ssh/hermes_mss" -o BatchMode=yes -o IdentitiesOnly=yes)
 MSG="${1:-Sync with box}"
-GH="/c/Program Files/GitHub CLI/gh.exe"
+GH="$(command -v gh || echo "/c/Program Files/GitHub CLI/gh.exe")"
 cd "$REPO"
 
 git pull -q --ff-only
@@ -15,7 +15,7 @@ git pull -q --ff-only
 # 1. collect on the box (whitelist + redaction + secret-value scan happen there)
 "${SCP[@]}" tools/box-export.py user@192.0.2.242:box-export.py
 "${SSH[@]}" 'sudo -n bash -s' < tools/box-collect.sh
-TMP="${TMPDIR:-$LOCALAPPDATA/Temp}/reposync.$$"; mkdir -p "$TMP"; trap 'rm -rf "$TMP"' EXIT
+TMP="${TMPDIR:-/tmp}/reposync.$$"; mkdir -p "$TMP"; trap 'rm -rf "$TMP"' EXIT
 "${SCP[@]}" user@192.0.2.242:reposync.tgz "$TMP/r.tgz"
 "${SSH[@]}" 'rm -f ~/reposync.tgz'
 
@@ -40,7 +40,7 @@ fi
 
 publish_public() {   # scrubbed public mirror (example-owner/homelab-media-server); refuses to push if any identifying value survives
   [ "${DRYRUN:-0}" = 1 ] && return 0
-  python "$(dirname "$0")/publish-public.py" --push "$MSG" | grep -E "ABORT|verify|public" || { echo "PUBLIC MIRROR NOT UPDATED (see above)"; return 1; }
+  "$(command -v python3 || command -v python)" "$(dirname "$0")/publish-public.py" --push "$MSG" | grep -E "ABORT|verify|public" || { echo "PUBLIC MIRROR NOT UPDATED (see above)"; return 1; }
 }
 if git diff --cached --quiet; then echo "already in sync, nothing to commit"; publish_public; exit 0; fi
 git diff --cached --stat | tail -n 25

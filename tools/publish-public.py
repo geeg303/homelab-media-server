@@ -3,9 +3,9 @@
 
   python tools/publish-public.py [--push]
 
-Private repo (exact values, for recovery):  C:/Users/user/media-server-repo   -> github.com/example-owner/media-server (private)
-Public mirror (scrubbed, shareable):        C:/Users/user/media-server-public -> github.com/example-owner/homelab-media-server (public)
-Sanitize map (private, never committed):   C:/Users/user/media-server-stack/sanitize-map.json
+Private repo (exact values, for recovery):  ~/projects/media-server-repo   -> github.com/example-owner/media-server (private)
+Public mirror (scrubbed, shareable):        ~/projects/media-server-public -> github.com/example-owner/homelab-media-server (public)
+Sanitize map (private, never committed):   ~/projects/media-server-stack/sanitize-map.json
 
 Show 62: IPs (LAN, Tailscale), MAC addresses, Wi-Fi SSID, disk serials, filesystem/partition UUIDs and other UUIDs
 (Notion IDs etc.), tailnet name, usernames/real name/e-mail/GitHub handle, Discord IDs, Notion links, personal folder
@@ -13,10 +13,14 @@ names, and every TV show / movie / episode title. Placeholders are stable betwee
 Then VERIFIES: no real value from the map and none of the guard regexes may remain anywhere, or nothing is published."""
 import json, os, re, shutil, subprocess, sys, hashlib
 
-PRIV = r"C:/Users/user/media-server-repo"
-PUB = r"C:/Users/user/media-server-public"
-MAP = r"C:/Users/user/media-server-stack/sanitize-map.json"
-GH = r"C:/Program Files/GitHub CLI/gh.exe"
+# paths are relative to this checkout: <projects>/media-server-repo/tools/publish-public.py (moved from the PC to the box Nov 25)
+import os as _os
+_BASE = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+PRIV = _os.path.join(_BASE, "media-server-repo")
+PUB = _os.path.join(_BASE, "media-server-public")
+MAP = _os.path.join(_BASE, "media-server-stack", "sanitize-map.json")
+import shutil as _sh
+GH = _sh.which("gh") or r"C:/Program Files/GitHub CLI/gh.exe"
 TEXT_EXT = (".md", ".xml", ".yml", ".yaml", ".json", ".sh", ".py", ".conf", ".service", ".timer", ".txt", ".tsv", ".example", ".js", ".css",
             ".pending", ".gitignore", ".gitattributes")
 TEXT_NAMES = ("fstab",)
