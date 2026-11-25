@@ -1007,7 +1007,7 @@
         version: 4
         metric: containers
         chart: true
-  - All 23 containers:
+  - All 28 containers:
       icon: mdi-ship-wheel
       href: "http://192.0.2.242:5001"
       widget:
@@ -1161,7 +1161,7 @@
   - Uptime Kuma:
       href: "http://192.0.2.242:3001/status/box"
       icon: uptime-kuma.png
-      description: 48 checks on status page 'box'
+      description: 61 checks on status page 'box'
       server: box
       container: uptime-kuma
       widget:
@@ -1440,6 +1440,15 @@
       description: Quick Sync encoder node
       server: box
       container: tdarr-node
+  - Crypto Bots (fake $$$):
+      href: "http://192.0.2.242:8050"
+      icon: mdi-robot-happy
+      description: "4 play-money trading robots, NO real $$$: futures long/short, alt breakout, BTC trend, ETH/BTC pair · simulated on Coinbase public prices"
+      server: box
+      container: crypto-futures
+      showStats: true
+      siteMonitor: "http://192.0.2.242:8050"
+
 - Update Patrol:
   - Image updates (WUD):
       href: "http://192.0.2.242:3002"

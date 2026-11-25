@@ -4,6 +4,10 @@
 
 ```
 bazarr                lscr.io/linuxserver/bazarr:latest        running
+crypto-alt            local/crypto-bots:py3.14                 running
+crypto-futures        local/crypto-bots:py3.14                 running
+crypto-pair           local/crypto-bots:py3.14                 running
+crypto-trend          local/crypto-bots:py3.14                 running
 diun                  crazymax/diun:latest                     running
 dockge                louislam/dockge:1                        running
 filebrowser           gtstef/filebrowser:stable                running

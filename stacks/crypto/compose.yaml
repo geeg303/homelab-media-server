@@ -1,0 +1,39 @@
+# crypto-bots: the four FAKE-MONEY simulator bots (moved from user's PC, Nov 24).
+# Code + state + logs live in /opt/media/config/crypto-bots (covered by the nightly config backup).
+# All bots trade on local simulators fed by Coinbase PUBLIC market data; no API keys, no real-money path.
+# The futures bot hosts the read-only dashboard on http://<box>:8050 (all tabs read the shared state/ and logs/).
+x-bot: &bot
+  build: .
+  image: local/crypto-bots:py3.14
+  user: "1000:1000"
+  init: true
+  restart: unless-stopped
+  working_dir: /app
+  environment:
+    TZ: Region/City
+    PYTHONUNBUFFERED: "1"
+  volumes:
+    - /opt/media/config/crypto-bots:/app
+    - /etc/localtime:/etc/localtime:ro   # slim image has no tzdata, so TZ alone gave UTC log times
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  crypto-futures:
+    <<: *bot
+    container_name: crypto-futures
+    command: ["python", "run.py", "futures", "--dashboard", "--no-browser", "--host", "0.0.0.0", "--port", "8050"]
+    ports: ["8050:8050"]
+  crypto-alt:
+    <<: *bot
+    container_name: crypto-alt
+    command: ["python", "run.py", "altbot"]
+  crypto-trend:
+    <<: *bot
+    container_name: crypto-trend
+    command: ["python", "run.py", "trend"]
+  crypto-pair:
+    <<: *bot
+    container_name: crypto-pair
+    command: ["python", "run.py", "pair"]

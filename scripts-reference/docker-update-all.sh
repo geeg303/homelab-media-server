@@ -23,6 +23,8 @@ for st in ops core plex tdarr glances; do
   ( cd "$dir" && docker compose pull -q && docker compose up -d --remove-orphans 2>&1 | grep -vE "^\s*$" ) || echo "WARN: $st update failed"
   sleep 5
 done
+echo "--- crypto (locally built: refresh the python base image, rebuild, recreate)"
+( cd /opt/media/stacks/crypto && docker compose build --pull -q && docker compose up -d 2>&1 | grep -vE "^\s*$" ) || echo "WARN: crypto update failed"
 echo "--- dockge"; ( cd /opt/media/dockge && docker compose pull -q && docker compose up -d 2>&1 ) || echo "WARN: dockge update failed"
 # Kuma caches container DNS: after the others got new IPs its checks hit the old ones (ECONNREFUSED). Restart it last.
 sleep 10; docker restart uptime-kuma >/dev/null && echo "uptime-kuma restarted (DNS cache)"

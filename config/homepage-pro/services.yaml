@@ -1293,6 +1293,14 @@
           label: Status feed fresh
           format: percent
           scale: 100
+  - Crypto bots (simulated):
+      href: "http://192.0.2.242:8050"
+      icon: mdi-chart-timeline-variant
+      description: "4 fake-money trading simulators (stack crypto) · futures long/short, alt breakout, BTC trend, ETH/BTC pair · Coinbase public data · dashboard :8050"
+      server: box
+      container: crypto-futures
+      showStats: true
+      siteMonitor: "http://192.0.2.242:8050"
 
 - Download Pipeline:
   - Download client:
