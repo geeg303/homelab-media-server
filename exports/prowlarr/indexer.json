@@ -710,6 +710,17 @@
         ],
         "type": "select",
         "value": 0
+      },
+      {
+        "advanced": true,
+        "helpText": "How long to wait for a response from this indexer before giving up. Leave empty to use the default (100 seconds)",
+        "isFloat": false,
+        "label": "Query Timeout",
+        "name": "baseSettings.queryTimeout",
+        "order": 8,
+        "privacy": "normal",
+        "type": "number",
+        "unit": "seconds"
       }
     ],
     "id": 1,

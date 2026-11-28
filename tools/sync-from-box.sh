@@ -31,7 +31,7 @@ for f in "$DOCS"/*.md "$DOCS"/*.tsv; do [ -f "$f" ] && cp "$f" "$REPO/docs/"; do
 git add -A
 PAT='(tapi_[A-Za-z0-9]{6,}|gh[pousr]_[A-Za-z0-9]{20,}|xox[bp]-|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY|ntfy[.]sh/[A-Za-z0-9_-]{8,}|X-Plex-Token=[A-Za-z0-9]|[?&]apikey=[A-Za-z0-9]{8,}|password: *[^ <$"{]|[0-9a-f]{32})'
 # scan added lines outside tools/; TRaSH trash_ids (bare 32-hex list items, often "# name"-commented) are public ids, not secrets
-ADDED=$(git diff --cached -U0 -- . ':(exclude)tools/' | grep -E '^(\+\+\+ |\+)' | grep -vE '^\+[[:space:]#]*(- *)?(trash_ids?: *)?[0-9a-f]{32}[[:space:]]*(#.*)?$' || true)
+ADDED=$(git diff --cached -U0 -- . ':(exclude)tools/' | grep -E '^(\+\+\+ |\+)' | grep -vE '^\+[[:space:]#]*(- *)?(trash_ids?: *)?[0-9a-f]{32}[[:space:]]*(#.*)?$' | grep -vE '^\+ *"[A-Za-z]*Sha": *"[0-9a-f]{40}",?$' || true)   # Tdarr plugin-repo git commit SHAs are public, not secrets
 if printf '%s\n' "$ADDED" | grep -v '^+++' | grep -qE "$PAT"; then
   echo "ABORT: possible secret in staged changes in:"
   printf '%s\n' "$ADDED" | awk -v pat="$PAT" '/^\+\+\+ /{f=substr($0,7)} !/^\+\+\+ / && $0 ~ pat {print f}' | sort -u

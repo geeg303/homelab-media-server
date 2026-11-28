@@ -2,6 +2,14 @@
 
 All notable changes to the server, newest first. Times local.
 
+## 2026-11-28
+
+- **Hermes now runs on the box** (gateway system service `hermes-gateway`, projects in `~/projects`). The Nov 25 scripted cutover restored the backup but its `sudo hermes gateway install --system` failed an ownership check (uid 0 vs 1000), so Hermes was offline Nov 25 to Nov 28. The service was installed Nov 28 09:32. The cutover script also posted "I'm back" without checking the gateway state (bug noted).
+- **Full health check after the outage (user: "do a thorough check of everything").** 0 failed units, all 12 mounts, 28 containers, HAOS up, Kuma 61/61, nightly config backup + WD backup + update digest ran every day, SMART healthy, no new CRC errors since Nov 24, 0 GPU hangs, 0 throttling, Tailscale route up, arr/SAB health clean. Tdarr: 619 swaps Nov 25-28 with 0 verify failures.
+  - **Tdarr errors 24 -> 80, all safely failed with originals untouched:** Show 33 / Show 28 / Beachbody (31+12+4, MP4 sources whose subtitle codec can't go into MKV: "Subtitle codec 0 is not supported") and VFR sources like Show 38 S08E26 (frame check: 181,803 packets in vs ~104k out on both GPU and CPU decode, i.e. a variable-frame-rate source, not a decode fault). Not changed; options offered.
+- **Containers updated** (`docker-update-all` via a wrapper that let running encodes finish): tdarr, tdarr-node, plex, sonarr, prowlarr, bazarr, sabnzbd, tautulli, kometa, filebrowser, wud, both socket-proxies, plus the 4 crypto bots rebuilt on a fresh python:3.14-slim. All came back; Tdarr back on 2 GPU workers.
+- **`sync-from-box.sh`:** the secret scan false-positived on Tdarr's `pluginCurrentSha`/`pluginLatestKnownSha` (40-hex public git SHAs matching the 32-hex rule), which had silently blocked syncs since Nov 25. Those lines are now exempt.
+
 ## 2026-11-24
 
 - **Crypto bots: monitoring + dashboard coverage.** The 4 fake-money simulator bots (docker stack `crypto`: crypto-futures with the read-only dashboard on :8050, crypto-alt, crypto-trend, crypto-pair) now have an Uptime Kuma group "Crypto bots" (id 66): HTTP check "Crypto dashboard" (67, http://192.0.2.242:8050/) and docker checks 68-71 via the socket-proxy host, ntfy attached, deliberately outside the nightly backup maintenance window (the backup doesn't stop this stack). The group was appended to status page `box` with every existing group kept (56 -> 61 checks). Idempotent script: `/usr/local/share/media-server/kuma_crypto.js`. Homepage: "Crypto Bots (fake $$$)" tile in Jobs in Progress on the 90s view and "Crypto bots (simulated)" in Batch Jobs (Pipelines) on the Pro view, both with siteMonitor :8050, container crypto-futures and stats; the 90s Kuma tile text now says 61 checks and the container list label 28 containers. Backups `services.yaml.bak-20261124-crypto`.
